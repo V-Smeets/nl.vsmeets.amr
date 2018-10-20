@@ -1,0 +1,6 @@
+language: java
+addons:
+  sonarcloud:
+    organization: "v-smeets-github"
+script:
+  - mvn clean install sonar:sonar
