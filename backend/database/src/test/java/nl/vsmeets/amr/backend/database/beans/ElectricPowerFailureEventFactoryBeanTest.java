@@ -1,0 +1,106 @@
+/**
+ * Copyright (C) 2019 Vincent Smeets
+ * <p>
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * <p>
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+package nl.vsmeets.amr.backend.database.beans;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
+
+import nl.vsmeets.amr.backend.database.AbstractTestBase;
+import nl.vsmeets.amr.backend.database.ConstraintViolationException;
+import nl.vsmeets.amr.backend.database.ElectricPowerFailureEvent;
+import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailureEventEntity;
+import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailuresEntity;
+
+/**
+ * Unit tests for the class {@link ElectricPowerFailureEventFactoryBean}.
+ *
+ * @author vincent
+ */
+@ExtendWith(MockitoExtension.class)
+class ElectricPowerFailureEventFactoryBeanTest extends AbstractTestBase {
+
+  /**
+   * The object under test.
+   */
+  private ElectricPowerFailureEventFactoryBean testObject;
+
+  /**
+   * Constructor parameters.
+   */
+  @Mock
+  private ElectricPowerFailureEventRepository repository;
+
+  @BeforeEach
+  void setUp() throws Exception {
+    testObject = new ElectricPowerFailureEventFactoryBean(repository);
+  }
+
+  @Test
+  void testCreate(@Mock final ElectricPowerFailuresEntity electricPowerFailures) {
+    final LocalDateTime endOfFailureTime = randomLocalDateTime();
+    final Duration failureDuration = randomDuration();
+
+    when(repository.save(any(ElectricPowerFailureEventEntity.class))).then(i -> i.getArgument(0));
+
+    final ElectricPowerFailureEvent result =
+        assertDoesNotThrow(() -> testObject.create(electricPowerFailures, endOfFailureTime, failureDuration));
+    verify(repository).refresh(any(ElectricPowerFailureEventEntity.class));
+    // @formatter:off
+    assertAll(
+        () -> assertNull(result.getId()),
+        () -> assertEquals(electricPowerFailures, result.getElectricPowerFailures()),
+        () -> assertEquals(endOfFailureTime, result.getEndOfFailureTime()),
+        () -> assertEquals(failureDuration, result.getFailureDuration()));
+    // @formatter:on
+  }
+
+  @Test
+  void testCreateDataIntegrityViolationException(@Mock final ElectricPowerFailuresEntity electricPowerFailures) {
+    final LocalDateTime endOfFailureTime = randomLocalDateTime();
+    final Duration failureDuration = randomDuration();
+
+    when(repository.save(any(ElectricPowerFailureEventEntity.class)))
+        .thenThrow(new DataIntegrityViolationException(null));
+
+    assertThrows(ConstraintViolationException.class,
+        () -> testObject.create(electricPowerFailures, endOfFailureTime, failureDuration));
+  }
+
+  @Test
+  void testFind(@Mock final ElectricPowerFailuresEntity electricPowerFailures,
+      @Mock final ElectricPowerFailureEvent electricPowerFailureEvent) {
+    final LocalDateTime endOfFailureTime = randomLocalDateTime();
+    final Optional<? extends ElectricPowerFailureEvent> expectedResult = Optional.of(electricPowerFailureEvent);
+
+    when(repository.findByElectricPowerFailuresAndEndOfFailureTime(electricPowerFailures, endOfFailureTime))
+        .then(i -> expectedResult);
+
+    assertEquals(expectedResult, testObject.find(electricPowerFailures, endOfFailureTime));
+  }
+
+}
