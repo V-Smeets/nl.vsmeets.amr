@@ -1,0 +1,42 @@
+databaseChangeLog:
+   - changeSet:
+      id: "p1_telegram-0001"
+      author: "vsmeets"
+      changes:
+         - createTable:
+            tableName: "p1_telegram"
+            remarks: "The P1 telegram."
+            columns:
+               - column:
+                  name: "id"
+                  remarks: "The id is the primary key."
+                  type: "integer"
+                  autoIncrement: true
+                  constraints:
+                     primaryKey: true
+                     primaryKeyName: "pk_p1_telegram_id"
+                     nullable: false
+               - column:
+                  name: "site_id"
+                  remarks: "The site where this P1 telegram is generated."
+                  type: "integer"
+                  constraints:
+                     references: "site"
+                     foreignKeyName: "fk_p1_telegram_site_id"
+                     nullable: false
+               - column:
+                  name: "header_information"
+                  remarks: "The header information."
+                  type: "varchar(16)"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "version_information"
+                  remarks: "1-3:0.2.8.255 The version information."
+                  type: "tinyint"
+                  constraints:
+                     nullable: false
+         - addUniqueConstraint:
+            tableName: "p1_telegram"
+            constraintName: "uq_p1_telegram_1"
+            columnNames: "site_id, header_information, version_information"
