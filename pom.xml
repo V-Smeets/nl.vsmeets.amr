@@ -81,6 +81,12 @@
 
       <!-- test -->
       <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>libs-junit</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava-testlib</artifactId>
         <version>${com.google.guava.guava-testlib.version}</version>

@@ -16,6 +16,7 @@
   <description>A collection of libraries that can be used by any other module.</description>
 
   <modules>
+    <module>junit</module>
     <module>measure</module>
   </modules>
 
