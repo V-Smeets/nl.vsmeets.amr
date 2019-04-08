@@ -23,14 +23,14 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
+import nl.vsmeets.amr.libs.junit.RandomIntGenerator;
 
 /**
  * Unit tests for the class {@link AbstractTableEntity}.
  *
  * @author vincent
  */
-class AbstractTableEntityTest extends AbstractTestBase {
+class AbstractTableEntityTest implements RandomIntGenerator {
 
   private final Integer id1 = randomInt();
   private final Integer id2 = randomInt();

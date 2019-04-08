@@ -27,7 +27,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
+import nl.vsmeets.amr.libs.junit.RandomIntGenerator;
 
 /**
  * Unit tests for the class {@link ElectricPowerFailuresEntity}.
@@ -35,7 +35,7 @@ import nl.vsmeets.amr.backend.database.AbstractTestBase;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPowerFailuresEntityTest extends AbstractTestBase {
+class ElectricPowerFailuresEntityTest implements RandomIntGenerator {
 
   @Mock
   private MeterEntity meter1;

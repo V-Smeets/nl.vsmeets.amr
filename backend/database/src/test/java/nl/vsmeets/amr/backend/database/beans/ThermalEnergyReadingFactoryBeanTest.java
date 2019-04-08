@@ -32,7 +32,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
 import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ThermalEnergyReading;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
@@ -44,7 +43,7 @@ import nl.vsmeets.amr.backend.database.entities.ThermalEnergyReadingEntity;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ThermalEnergyReadingFactoryBeanTest extends AbstractTestBase {
+class ThermalEnergyReadingFactoryBeanTest {
 
   /**
    * The object under test.

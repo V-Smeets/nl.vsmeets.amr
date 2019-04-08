@@ -11,8 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
 import nl.vsmeets.amr.backend.database.MeasuredMedium;
+import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
 
 /**
  * Unit tests for the class {@link MeasuredMediumFactoryBean}.
@@ -20,7 +20,7 @@ import nl.vsmeets.amr.backend.database.MeasuredMedium;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class MeasuredMediumFactoryBeanTest extends AbstractTestBase {
+class MeasuredMediumFactoryBeanTest implements RandomByteGenerator {
 
   /**
    * The object under test.

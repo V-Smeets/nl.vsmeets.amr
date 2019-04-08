@@ -24,14 +24,14 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
+import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link SiteEntity}.
  *
  * @author vincent
  */
-class SiteEntityTest extends AbstractTestBase {
+class SiteEntityTest implements RandomStringGenerator {
 
   private final String name1 = randomString();
   private final String name2 = randomString();

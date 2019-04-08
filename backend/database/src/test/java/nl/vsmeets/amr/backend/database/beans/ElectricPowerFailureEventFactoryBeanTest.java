@@ -30,7 +30,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
 import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricPowerFailureEvent;
 import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailureEventEntity;
@@ -42,7 +41,7 @@ import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailuresEntity;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPowerFailureEventFactoryBeanTest extends AbstractTestBase {
+class ElectricPowerFailureEventFactoryBeanTest {
 
   /**
    * The object under test.

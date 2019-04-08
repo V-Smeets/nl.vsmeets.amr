@@ -26,7 +26,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
+import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
+import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link P1TelegramEntity}.
@@ -34,7 +35,7 @@ import nl.vsmeets.amr.backend.database.AbstractTestBase;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class P1TelegramEntityTest extends AbstractTestBase {
+class P1TelegramEntityTest implements RandomByteGenerator, RandomStringGenerator {
 
   @Mock
   private SiteEntity siteEntity1;

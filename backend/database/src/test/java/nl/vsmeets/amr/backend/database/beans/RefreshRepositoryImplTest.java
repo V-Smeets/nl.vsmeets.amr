@@ -26,15 +26,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
-
 /**
  * Unit tests for the class {@link RefreshRepositoryImpl}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class RefreshRepositoryImplTest<T> extends AbstractTestBase {
+class RefreshRepositoryImplTest<T> {
 
   /**
    * The object under test.

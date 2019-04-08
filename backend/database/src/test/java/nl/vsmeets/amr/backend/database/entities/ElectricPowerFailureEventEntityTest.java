@@ -28,15 +28,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
-
 /**
  * Unit tests for the class {@link ElectricPowerFailureEventEntity}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPowerFailureEventEntityTest extends AbstractTestBase {
+class ElectricPowerFailureEventEntityTest {
 
   @Mock
   private ElectricPowerFailuresEntity electricPowerFailures1;

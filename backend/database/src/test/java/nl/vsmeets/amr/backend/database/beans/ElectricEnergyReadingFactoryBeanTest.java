@@ -32,11 +32,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
 import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricEnergyReading;
 import nl.vsmeets.amr.backend.database.entities.ElectricEnergyReadingEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
+import nl.vsmeets.amr.libs.junit.RandomShortGenerator;
 
 /**
  * Unit tests for the class {@link ElectricEnergyReadingFactoryBean}.
@@ -44,7 +44,7 @@ import nl.vsmeets.amr.backend.database.entities.MeterEntity;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricEnergyReadingFactoryBeanTest extends AbstractTestBase {
+class ElectricEnergyReadingFactoryBeanTest implements RandomShortGenerator {
 
   /**
    * The object under test.
