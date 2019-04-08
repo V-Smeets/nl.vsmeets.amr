@@ -36,6 +36,7 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricMessage;
 import nl.vsmeets.amr.backend.database.entities.ElectricMessageEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
@@ -44,7 +45,7 @@ import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricMessageFactoryBeanTest implements RandomStringGenerator {
+class ElectricMessageFactoryBeanTest implements RandomStringGenerator, RandomLocalDateTimeGenerator {
 
   /**
    * The object under test.

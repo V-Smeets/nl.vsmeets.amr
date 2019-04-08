@@ -28,13 +28,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
+import nl.vsmeets.amr.libs.junit.RandomDurationGenerator;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
+
 /**
  * Unit tests for the class {@link ElectricPowerFailureEventEntity}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPowerFailureEventEntityTest {
+class ElectricPowerFailureEventEntityTest implements RandomDurationGenerator, RandomLocalDateTimeGenerator {
 
   @Mock
   private ElectricPowerFailuresEntity electricPowerFailures1;

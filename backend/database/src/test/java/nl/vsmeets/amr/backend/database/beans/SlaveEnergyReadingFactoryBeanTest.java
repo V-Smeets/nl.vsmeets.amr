@@ -36,6 +36,7 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.SlaveEnergyReading;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
 import nl.vsmeets.amr.backend.database.entities.SlaveEnergyReadingEntity;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link SlaveEnergyReadingFactoryBean}.
@@ -43,7 +44,7 @@ import nl.vsmeets.amr.backend.database.entities.SlaveEnergyReadingEntity;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class SlaveEnergyReadingFactoryBeanTest {
+class SlaveEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
 
   /**
    * The object under test.

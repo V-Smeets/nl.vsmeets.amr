@@ -36,6 +36,7 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.GasVolumeReading;
 import nl.vsmeets.amr.backend.database.entities.GasVolumeReadingEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link GasVolumeReadingFactoryBean}.
@@ -43,7 +44,7 @@ import nl.vsmeets.amr.backend.database.entities.MeterEntity;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class GasVolumeReadingFactoryBeanTest {
+class GasVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
 
   /**
    * The object under test.

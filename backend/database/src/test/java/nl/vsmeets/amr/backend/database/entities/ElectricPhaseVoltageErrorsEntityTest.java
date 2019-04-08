@@ -28,7 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.google.common.testing.EqualsTester;
 
 import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomIntGenerator;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link ElectricPhaseVoltageErrorsEntity}.
@@ -36,7 +36,7 @@ import nl.vsmeets.amr.libs.junit.RandomIntGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPhaseVoltageErrorsEntityTest implements RandomByteGenerator, RandomIntGenerator {
+class ElectricPhaseVoltageErrorsEntityTest implements RandomByteGenerator, RandomLocalDateTimeGenerator {
 
   @Mock
   private MeterEntity meter1;

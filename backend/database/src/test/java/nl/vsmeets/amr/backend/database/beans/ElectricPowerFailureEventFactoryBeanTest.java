@@ -34,6 +34,8 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricPowerFailureEvent;
 import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailureEventEntity;
 import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailuresEntity;
+import nl.vsmeets.amr.libs.junit.RandomDurationGenerator;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link ElectricPowerFailureEventFactoryBean}.
@@ -41,7 +43,7 @@ import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailuresEntity;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPowerFailureEventFactoryBeanTest {
+class ElectricPowerFailureEventFactoryBeanTest implements RandomDurationGenerator, RandomLocalDateTimeGenerator {
 
   /**
    * The object under test.

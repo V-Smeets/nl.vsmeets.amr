@@ -30,6 +30,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 import nl.vsmeets.amr.libs.junit.RandomShortGenerator;
 
 /**
@@ -38,7 +39,7 @@ import nl.vsmeets.amr.libs.junit.RandomShortGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricEnergyReadingEntityTest implements RandomShortGenerator {
+class ElectricEnergyReadingEntityTest implements RandomShortGenerator, RandomLocalDateTimeGenerator {
 
   @Mock
   private MeterEntity meter1;

@@ -34,7 +34,7 @@ import nl.vsmeets.amr.backend.database.ElectricPhaseVoltageErrors;
 import nl.vsmeets.amr.backend.database.entities.ElectricPhaseVoltageErrorsEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
 import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomIntGenerator;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link ElectricPhaseVoltageErrorsFactoryBean}.
@@ -42,7 +42,7 @@ import nl.vsmeets.amr.libs.junit.RandomIntGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPhaseVoltageErrorsFactoryBeanTest implements RandomByteGenerator, RandomIntGenerator {
+class ElectricPhaseVoltageErrorsFactoryBeanTest implements RandomByteGenerator, RandomLocalDateTimeGenerator {
 
   /**
    * The object under test.
