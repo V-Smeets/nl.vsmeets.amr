@@ -28,11 +28,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
 import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.P1Telegram;
 import nl.vsmeets.amr.backend.database.entities.P1TelegramEntity;
 import nl.vsmeets.amr.backend.database.entities.SiteEntity;
+import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
+import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link P1TelegramFactoryBean}.
@@ -40,7 +41,7 @@ import nl.vsmeets.amr.backend.database.entities.SiteEntity;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class P1TelegramFactoryBeanTest extends AbstractTestBase {
+class P1TelegramFactoryBeanTest implements RandomByteGenerator, RandomStringGenerator {
 
   /**
    * The object under test.

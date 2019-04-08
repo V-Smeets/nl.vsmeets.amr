@@ -32,7 +32,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
+import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link ElectricPhasePowerReadingEntity}.
@@ -40,7 +41,7 @@ import nl.vsmeets.amr.backend.database.AbstractTestBase;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPhasePowerReadingEntityTest extends AbstractTestBase {
+class ElectricPhasePowerReadingEntityTest implements RandomByteGenerator, RandomLocalDateTimeGenerator {
 
   @Mock
   private MeterEntity meter1;

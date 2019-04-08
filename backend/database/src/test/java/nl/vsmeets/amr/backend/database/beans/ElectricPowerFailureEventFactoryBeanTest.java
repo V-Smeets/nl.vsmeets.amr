@@ -30,11 +30,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
 import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricPowerFailureEvent;
 import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailureEventEntity;
 import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailuresEntity;
+import nl.vsmeets.amr.libs.junit.RandomDurationGenerator;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link ElectricPowerFailureEventFactoryBean}.
@@ -42,7 +43,7 @@ import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailuresEntity;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPowerFailureEventFactoryBeanTest extends AbstractTestBase {
+class ElectricPowerFailureEventFactoryBeanTest implements RandomDurationGenerator, RandomLocalDateTimeGenerator {
 
   /**
    * The object under test.

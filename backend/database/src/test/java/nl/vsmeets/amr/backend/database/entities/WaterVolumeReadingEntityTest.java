@@ -30,7 +30,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link WaterVolumeReadingEntity}.
@@ -38,7 +38,7 @@ import nl.vsmeets.amr.backend.database.AbstractTestBase;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class WaterVolumeReadingEntityTest extends AbstractTestBase {
+class WaterVolumeReadingEntityTest implements RandomLocalDateTimeGenerator {
 
   @Mock
   private MeterEntity meter1;

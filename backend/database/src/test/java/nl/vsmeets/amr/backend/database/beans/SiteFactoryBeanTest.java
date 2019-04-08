@@ -29,10 +29,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
 import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.Site;
 import nl.vsmeets.amr.backend.database.entities.SiteEntity;
+import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link SiteFactoryBean}.
@@ -40,7 +40,7 @@ import nl.vsmeets.amr.backend.database.entities.SiteEntity;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class SiteFactoryBeanTest extends AbstractTestBase {
+class SiteFactoryBeanTest implements RandomStringGenerator {
 
   /**
    * The object under test.

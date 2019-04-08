@@ -32,11 +32,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
 import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricMessage;
 import nl.vsmeets.amr.backend.database.entities.ElectricMessageEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
+import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
+import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link ElectricMessageFactoryBean}.
@@ -44,7 +45,7 @@ import nl.vsmeets.amr.backend.database.entities.MeterEntity;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricMessageFactoryBeanTest extends AbstractTestBase {
+class ElectricMessageFactoryBeanTest implements RandomStringGenerator, RandomLocalDateTimeGenerator {
 
   /**
    * The object under test.

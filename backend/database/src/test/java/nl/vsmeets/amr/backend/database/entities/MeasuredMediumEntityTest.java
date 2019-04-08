@@ -8,14 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.backend.database.AbstractTestBase;
+import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
+import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link MeasuredMediumEntity}.
  *
  * @author vincent
  */
-class MeasuredMediumEntityTest extends AbstractTestBase {
+class MeasuredMediumEntityTest implements RandomByteGenerator, RandomStringGenerator {
 
   private final Byte mediumId1 = randomByte();
   private final Byte mediumId2 = randomByte();
