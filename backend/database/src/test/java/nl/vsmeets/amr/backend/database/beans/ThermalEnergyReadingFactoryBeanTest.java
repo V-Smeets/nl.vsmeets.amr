@@ -83,21 +83,21 @@ class ThermalEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerato
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Energy> consumedEnergy) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
 
     when(repository.save(any(ThermalEnergyReadingEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
-    assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, dateTime, consumedEnergy));
+    assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, localDateTime, consumedEnergy));
   }
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ThermalEnergyReading thermalEnergyReading) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Optional<? extends ThermalEnergyReading> expectedResult = Optional.of(thermalEnergyReading);
 
-    when(repository.findByMeterAndDateTime(meter, dateTime)).then(i -> expectedResult);
+    when(repository.findByMeterAndLocalDateTime(meter, localDateTime)).then(i -> expectedResult);
 
-    assertEquals(expectedResult, testObject.find(meter, dateTime));
+    assertEquals(expectedResult, testObject.find(meter, localDateTime));
   }
 
 }

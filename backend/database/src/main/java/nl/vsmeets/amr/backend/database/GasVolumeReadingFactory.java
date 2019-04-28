@@ -33,15 +33,15 @@ public interface GasVolumeReadingFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @param consumedGas
    *        The consumed gas.
    * @return The {@link GasVolumeReading}.
    * @throws ConstraintViolationException
    *         A database constraint constraint has been violated.
    */
-  GasVolumeReading create(final Meter meter, final LocalDateTime dateTime, final Quantity<Volume> consumedGas)
+  GasVolumeReading create(final Meter meter, final LocalDateTime localDateTime, final Quantity<Volume> consumedGas)
       throws ConstraintViolationException;
 
   /**
@@ -49,10 +49,10 @@ public interface GasVolumeReadingFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @return The {@link GasVolumeReading}.
    */
-  Optional<? extends GasVolumeReading> find(final Meter meter, final LocalDateTime dateTime);
+  Optional<? extends GasVolumeReading> find(final Meter meter, final LocalDateTime localDateTime);
 
 }

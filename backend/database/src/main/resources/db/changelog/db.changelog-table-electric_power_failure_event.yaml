@@ -27,7 +27,7 @@ databaseChangeLog:
                - column:
                   name: "end_of_failure_time"
                   remarks: "0-0:96.7.19.255 The end of failure time."
-                  type: "timestamp"
+                  type: "timestamp(0)"
                   constraints:
                      nullable: false
                - column:

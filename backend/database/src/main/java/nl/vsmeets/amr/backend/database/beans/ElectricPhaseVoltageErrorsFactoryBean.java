@@ -55,10 +55,10 @@ public class ElectricPhaseVoltageErrorsFactoryBean implements ElectricPhaseVolta
   }
 
   @Override
-  public ElectricPhaseVoltageErrors create(final Meter meter, final LocalDateTime dateTime, final Byte phaseNumber,
+  public ElectricPhaseVoltageErrors create(final Meter meter, final LocalDateTime localDateTime, final Byte phaseNumber,
       final Integer nrOfVoltageSags, final Integer nrOfVoltageSwells) throws ConstraintViolationException {
     final ElectricPhaseVoltageErrorsEntity electricPhaseVoltageErrors = new ElectricPhaseVoltageErrorsEntity(
-        (MeterEntity) meter, dateTime, phaseNumber, nrOfVoltageSags, nrOfVoltageSwells);
+        (MeterEntity) meter, localDateTime, phaseNumber, nrOfVoltageSags, nrOfVoltageSwells);
     try {
       final ElectricPhaseVoltageErrorsEntity entity = repository.save(electricPhaseVoltageErrors);
       repository.refresh(entity);
@@ -69,9 +69,9 @@ public class ElectricPhaseVoltageErrorsFactoryBean implements ElectricPhaseVolta
   }
 
   @Override
-  public Optional<? extends ElectricPhaseVoltageErrors> find(final Meter meter, final LocalDateTime dateTime,
+  public Optional<? extends ElectricPhaseVoltageErrors> find(final Meter meter, final LocalDateTime localDateTime,
       final Byte phaseNumber) {
-    return repository.findByMeterAndDateTimeAndPhaseNumber((MeterEntity) meter, dateTime, phaseNumber);
+    return repository.findByMeterAndLocalDateTimeAndPhaseNumber((MeterEntity) meter, localDateTime, phaseNumber);
   }
 
 }

@@ -85,22 +85,22 @@ class ElectricMessageFactoryBeanTest implements RandomStringGenerator, RandomLoc
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Energy> consumedEnergy, @Mock final Quantity<Energy> producedEnergy) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final String textMessage = randomString();
 
     when(repository.save(any(ElectricMessageEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
-    assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, dateTime, textMessage));
+    assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, localDateTime, textMessage));
   }
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ElectricMessage electricMessage) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Optional<? extends ElectricMessage> expectedResult = Optional.of(electricMessage);
 
-    when(repository.findByMeterAndDateTime(meter, dateTime)).then(i -> expectedResult);
+    when(repository.findByMeterAndLocalDateTime(meter, localDateTime)).then(i -> expectedResult);
 
-    assertEquals(expectedResult, testObject.find(meter, dateTime));
+    assertEquals(expectedResult, testObject.find(meter, localDateTime));
   }
 
 }

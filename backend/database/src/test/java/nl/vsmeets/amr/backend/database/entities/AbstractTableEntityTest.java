@@ -33,7 +33,7 @@ import nl.vsmeets.amr.libs.junit.RandomIntGenerator;
 class AbstractTableEntityTest implements RandomIntGenerator {
 
   private final Integer id1 = randomInt();
-  private final Integer id2 = randomInt();
+  private final Integer id2 = randomInt(id1);
 
   @Test
   void testEquals() {

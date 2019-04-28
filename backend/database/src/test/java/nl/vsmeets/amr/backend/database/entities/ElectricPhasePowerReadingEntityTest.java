@@ -48,9 +48,9 @@ class ElectricPhasePowerReadingEntityTest implements RandomByteGenerator, Random
   @Mock
   private MeterEntity meter2;
   private final LocalDateTime localDateTime1 = randomLocalDateTime();
-  private final LocalDateTime localDateTime2 = randomLocalDateTime();
+  private final LocalDateTime localDateTime2 = randomLocalDateTime(localDateTime1);
   private final Byte phaseNumber1 = randomByte();
-  private final Byte phaseNumber2 = randomByte();
+  private final Byte phaseNumber2 = randomByte(phaseNumber1);
   @Mock
   private Quantity<ElectricPotential> instantaneousVoltage1;
   @Mock

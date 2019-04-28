@@ -33,15 +33,15 @@ public interface WaterVolumeReadingFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @param consumedWater
    *        The consumed water.
    * @return The {@link WaterVolumeReading}.
    * @throws ConstraintViolationException
    *         A database constraint constraint has been violated.
    */
-  WaterVolumeReading create(final Meter meter, final LocalDateTime dateTime, final Quantity<Volume> consumedWater)
+  WaterVolumeReading create(final Meter meter, final LocalDateTime localDateTime, final Quantity<Volume> consumedWater)
       throws ConstraintViolationException;
 
   /**
@@ -49,10 +49,10 @@ public interface WaterVolumeReadingFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @return The {@link WaterVolumeReading}.
    */
-  Optional<? extends WaterVolumeReading> find(final Meter meter, final LocalDateTime dateTime);
+  Optional<? extends WaterVolumeReading> find(final Meter meter, final LocalDateTime localDateTime);
 
 }

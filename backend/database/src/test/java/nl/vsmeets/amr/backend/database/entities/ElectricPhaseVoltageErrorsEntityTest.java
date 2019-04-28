@@ -43,13 +43,13 @@ class ElectricPhaseVoltageErrorsEntityTest implements RandomByteGenerator, Rando
   @Mock
   private MeterEntity meter2;
   private final LocalDateTime localDateTime1 = randomLocalDateTime();
-  private final LocalDateTime localDateTime2 = randomLocalDateTime();
+  private final LocalDateTime localDateTime2 = randomLocalDateTime(localDateTime1);
   private final Byte phaseNumber1 = randomByte();
-  private final Byte phaseNumber2 = randomByte();
+  private final Byte phaseNumber2 = randomByte(phaseNumber1);
   private final Integer nrOfVoltageSags1 = randomInt();
-  private final Integer nrOfVoltageSags2 = randomInt();
+  private final Integer nrOfVoltageSags2 = randomInt(nrOfVoltageSags1);
   private final Integer nrOfVoltageSwells1 = randomInt();
-  private final Integer nrOfVoltageSwells2 = randomInt();
+  private final Integer nrOfVoltageSwells2 = randomInt(nrOfVoltageSwells1);
 
   @Test
   void testEquals() {

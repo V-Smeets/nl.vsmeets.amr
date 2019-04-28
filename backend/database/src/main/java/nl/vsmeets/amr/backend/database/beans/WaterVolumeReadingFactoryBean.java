@@ -58,10 +58,10 @@ public class WaterVolumeReadingFactoryBean implements WaterVolumeReadingFactory 
   }
 
   @Override
-  public WaterVolumeReading create(final Meter meter, final LocalDateTime dateTime,
+  public WaterVolumeReading create(final Meter meter, final LocalDateTime localDateTime,
       final Quantity<Volume> consumedWater) throws ConstraintViolationException {
     final WaterVolumeReadingEntity waterVolumeReadingEntity =
-        new WaterVolumeReadingEntity((MeterEntity) meter, dateTime, consumedWater);
+        new WaterVolumeReadingEntity((MeterEntity) meter, localDateTime, consumedWater);
     try {
       final WaterVolumeReadingEntity entity = repository.save(waterVolumeReadingEntity);
       repository.refresh(entity);
@@ -72,8 +72,8 @@ public class WaterVolumeReadingFactoryBean implements WaterVolumeReadingFactory 
   }
 
   @Override
-  public Optional<? extends WaterVolumeReading> find(final Meter meter, final LocalDateTime dateTime) {
-    return repository.findByMeterAndDateTime((MeterEntity) meter, dateTime);
+  public Optional<? extends WaterVolumeReading> find(final Meter meter, final LocalDateTime localDateTime) {
+    return repository.findByMeterAndLocalDateTime((MeterEntity) meter, localDateTime);
   }
 
 }

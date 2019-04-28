@@ -36,13 +36,13 @@ public interface ElectricPhaseVoltageErrorsRepository extends JpaRepository<Elec
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @param phaseNumber
    *        The phase number.
    * @return The {@link ElectricPhaseVoltageErrorsEntity}.
    */
-  Optional<ElectricPhaseVoltageErrorsEntity> findByMeterAndDateTimeAndPhaseNumber(final MeterEntity meter,
-      final LocalDateTime dateTime, final Byte phaseNumber);
+  Optional<ElectricPhaseVoltageErrorsEntity> findByMeterAndLocalDateTimeAndPhaseNumber(final MeterEntity meter,
+      final LocalDateTime localDateTime, final Byte phaseNumber);
 
 }

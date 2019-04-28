@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,6 +33,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import nl.vsmeets.amr.backend.database.ElectricPowerFailureEvent;
+import nl.vsmeets.amr.backend.database.converters.Duration2LongConverter;
 
 /**
  * The electric power failure event.
@@ -73,6 +75,7 @@ public class ElectricPowerFailureEventEntity extends AbstractTableEntity impleme
   @Getter
   @ToString.Include
   @Column(name = "failure_duration", nullable = false)
+  @Convert(converter = Duration2LongConverter.class)
   private Duration failureDuration;
 
 }

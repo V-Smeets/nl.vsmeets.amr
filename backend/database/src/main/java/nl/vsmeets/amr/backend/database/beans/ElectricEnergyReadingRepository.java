@@ -36,13 +36,13 @@ public interface ElectricEnergyReadingRepository
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @param tariffIndicator
    *        The tariff indicator.
    * @return The {@link ElectricEnergyReadingEntity}.
    */
-  Optional<ElectricEnergyReadingEntity> findByMeterAndDateTimeAndTariffIndicator(final MeterEntity meter,
-      final LocalDateTime dateTime, final Short tariffIndicator);
+  Optional<ElectricEnergyReadingEntity> findByMeterAndLocalDateTimeAndTariffIndicator(final MeterEntity meter,
+      final LocalDateTime localDateTime, final Short tariffIndicator);
 
 }

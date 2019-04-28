@@ -82,24 +82,24 @@ class ElectricPowerFailuresFactoryBeanTest implements RandomLocalDateTimeGenerat
 
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Integer nrOfPowerFailures = randomInt();
     final Integer nrOfLongPowerFailures = randomInt();
 
     when(repository.save(any(ElectricPowerFailuresEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class,
-        () -> testObject.create(meter, dateTime, nrOfPowerFailures, nrOfLongPowerFailures));
+        () -> testObject.create(meter, localDateTime, nrOfPowerFailures, nrOfLongPowerFailures));
   }
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ElectricPowerFailures electricPowerFailures) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Optional<? extends ElectricPowerFailures> expectedResult = Optional.of(electricPowerFailures);
 
-    when(repository.findByMeterAndDateTime(meter, dateTime)).then(i -> expectedResult);
+    when(repository.findByMeterAndLocalDateTime(meter, localDateTime)).then(i -> expectedResult);
 
-    assertEquals(expectedResult, testObject.find(meter, dateTime));
+    assertEquals(expectedResult, testObject.find(meter, localDateTime));
   }
 
 }

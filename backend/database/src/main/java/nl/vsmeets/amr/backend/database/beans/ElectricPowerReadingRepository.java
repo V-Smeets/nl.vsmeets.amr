@@ -36,10 +36,11 @@ public interface ElectricPowerReadingRepository
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @return The {@link ElectricPowerReadingEntity}.
    */
-  Optional<ElectricPowerReadingEntity> findByMeterAndDateTime(final MeterEntity meter, final LocalDateTime dateTime);
+  Optional<ElectricPowerReadingEntity> findByMeterAndLocalDateTime(final MeterEntity meter,
+      final LocalDateTime localDateTime);
 
 }

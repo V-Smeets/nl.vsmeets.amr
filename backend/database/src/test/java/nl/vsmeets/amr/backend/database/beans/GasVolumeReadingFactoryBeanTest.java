@@ -82,21 +82,21 @@ class GasVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Volume> consumedGas) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
 
     when(repository.save(any(GasVolumeReadingEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
-    assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, dateTime, consumedGas));
+    assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, localDateTime, consumedGas));
   }
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final GasVolumeReading gasVolumeReading) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Optional<? extends GasVolumeReading> expectedResult = Optional.of(gasVolumeReading);
 
-    when(repository.findByMeterAndDateTime(meter, dateTime)).then(i -> expectedResult);
+    when(repository.findByMeterAndLocalDateTime(meter, localDateTime)).then(i -> expectedResult);
 
-    assertEquals(expectedResult, testObject.find(meter, dateTime));
+    assertEquals(expectedResult, testObject.find(meter, localDateTime));
   }
 
 }

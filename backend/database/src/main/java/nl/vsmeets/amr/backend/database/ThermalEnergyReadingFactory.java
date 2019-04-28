@@ -33,26 +33,26 @@ public interface ThermalEnergyReadingFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @param consumedEnergy
    *        The consumed thermal energy.
    * @return The {@link ThermalEnergyReading}.
    * @throws ConstraintViolationException
    *         A database constraint constraint has been violated.
    */
-  ThermalEnergyReading create(final Meter meter, final LocalDateTime dateTime, final Quantity<Energy> consumedEnergy)
-      throws ConstraintViolationException;
+  ThermalEnergyReading create(final Meter meter, final LocalDateTime localDateTime,
+      final Quantity<Energy> consumedEnergy) throws ConstraintViolationException;
 
   /**
    * Find a {@link ThermalEnergyReading}.
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @return The {@link ThermalEnergyReading}.
    */
-  Optional<? extends ThermalEnergyReading> find(final Meter meter, final LocalDateTime dateTime);
+  Optional<? extends ThermalEnergyReading> find(final Meter meter, final LocalDateTime localDateTime);
 
 }

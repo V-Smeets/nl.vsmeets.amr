@@ -36,10 +36,11 @@ public interface GasVolumeReadingRepository
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @return The {@link GasVolumeReadingEntity}.
    */
-  Optional<GasVolumeReadingEntity> findByMeterAndDateTime(final MeterEntity meter, final LocalDateTime dateTime);
+  Optional<GasVolumeReadingEntity> findByMeterAndLocalDateTime(final MeterEntity meter,
+      final LocalDateTime localDateTime);
 
 }

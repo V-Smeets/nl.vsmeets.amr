@@ -58,10 +58,10 @@ public class ElectricPowerReadingFactoryBean implements ElectricPowerReadingFact
   }
 
   @Override
-  public ElectricPowerReading create(final Meter meter, final LocalDateTime dateTime,
+  public ElectricPowerReading create(final Meter meter, final LocalDateTime localDateTime,
       final Quantity<Power> consumedPower, final Quantity<Power> producedPower) throws ConstraintViolationException {
     final ElectricPowerReadingEntity electricPowerReading =
-        new ElectricPowerReadingEntity((MeterEntity) meter, dateTime, consumedPower, producedPower);
+        new ElectricPowerReadingEntity((MeterEntity) meter, localDateTime, consumedPower, producedPower);
     try {
       final ElectricPowerReadingEntity entity = repository.save(electricPowerReading);
       repository.refresh(entity);
@@ -72,8 +72,8 @@ public class ElectricPowerReadingFactoryBean implements ElectricPowerReadingFact
   }
 
   @Override
-  public Optional<? extends ElectricPowerReading> find(final Meter meter, final LocalDateTime dateTime) {
-    return repository.findByMeterAndDateTime((MeterEntity) meter, dateTime);
+  public Optional<? extends ElectricPowerReading> find(final Meter meter, final LocalDateTime localDateTime) {
+    return repository.findByMeterAndLocalDateTime((MeterEntity) meter, localDateTime);
   }
 
 }

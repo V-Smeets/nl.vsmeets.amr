@@ -42,9 +42,9 @@ class P1TelegramEntityTest implements RandomByteGenerator, RandomStringGenerator
   @Mock
   private SiteEntity siteEntity2;
   private final String headerInformation1 = randomString();
-  private final String headerInformation2 = randomString();
+  private final String headerInformation2 = randomString(headerInformation1);
   private final Byte versionInformation1 = randomByte();
-  private final Byte versionInformation2 = randomByte();
+  private final Byte versionInformation2 = randomByte(versionInformation1);
 
   @Test
   void testEquals() {

@@ -30,8 +30,8 @@ public interface ElectricPhaseVoltageErrorsFactory {
    *
    * @param meter
    *        The meter of these errors.
-   * @param dateTime
-   *        The date and time of these errors in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of these errors.
    * @param phaseNumber
    *        The phase number.
    * @param nrOfVoltageSags
@@ -42,7 +42,7 @@ public interface ElectricPhaseVoltageErrorsFactory {
    * @throws ConstraintViolationException
    *         A database constraint constraint has been violated.
    */
-  ElectricPhaseVoltageErrors create(final Meter meter, final LocalDateTime dateTime, final Byte phaseNumber,
+  ElectricPhaseVoltageErrors create(final Meter meter, final LocalDateTime localDateTime, final Byte phaseNumber,
       final Integer nrOfVoltageSags, final Integer nrOfVoltageSwells) throws ConstraintViolationException;
 
   /**
@@ -50,13 +50,13 @@ public interface ElectricPhaseVoltageErrorsFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of these errors.
    * @param phaseNumber
    *        The phase number.
    * @return The {@link ElectricPhaseVoltageErrors}.
    */
-  Optional<? extends ElectricPhaseVoltageErrors> find(final Meter meter, final LocalDateTime dateTime,
+  Optional<? extends ElectricPhaseVoltageErrors> find(final Meter meter, final LocalDateTime localDateTime,
       final Byte phaseNumber);
 
 }
