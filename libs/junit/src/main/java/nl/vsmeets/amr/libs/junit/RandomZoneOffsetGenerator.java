@@ -15,33 +15,36 @@
  */
 package nl.vsmeets.amr.libs.junit;
 
+import java.time.ZoneOffset;
+
 /**
- * An interface that can be included in case a random <code>byte</code> is
+ * An interface that can be included in case a random {@link ZoneOffset} is
  * needed.
  *
  * @author vincent
  */
-public interface RandomByteGenerator extends RandomIntGenerator {
+public interface RandomZoneOffsetGenerator extends RandomIntGenerator {
 
   /**
-   * Create a random <code>byte</code> that is guaranteed not equal to an element
+   * Create a random {@link ZoneOffset} that is guaranteed not equal to an element
    * of <code>notEqualTo</code>.
    *
    * @param notEqualTo
    *        The values that are not allowed.
-   * @return A random <code>byte</code>.
+   * @return A random {@link ZoneOffset}.
    */
-  default byte randomByte(final byte... notEqualTo) {
-    final byte randomValue = (byte) randomInt();
+  default ZoneOffset randomZoneOffset(final ZoneOffset... notEqualTo) {
+    final ZoneOffset randomValue = ZoneOffset
+        .ofTotalSeconds(randomIntRange(ZoneOffset.MIN.getTotalSeconds(), ZoneOffset.MAX.getTotalSeconds() + 1));
     boolean alreadyUsed = false;
-    for (final byte b : notEqualTo) {
-      if (randomValue == b) {
+    for (final ZoneOffset zoneOffset : notEqualTo) {
+      if (randomValue.equals(zoneOffset)) {
         alreadyUsed = true;
         break;
       }
     }
     if (alreadyUsed) {
-      return randomByte(notEqualTo);
+      return randomZoneOffset(notEqualTo);
     } else {
       return randomValue;
     }

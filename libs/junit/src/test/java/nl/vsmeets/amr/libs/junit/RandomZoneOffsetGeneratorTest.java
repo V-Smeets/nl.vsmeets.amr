@@ -18,6 +18,7 @@ package nl.vsmeets.amr.libs.junit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.time.ZoneOffset;
 import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -28,21 +29,21 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
- * Unit tests for the class {@link RandomByteGenerator}.
+ * Unit tests for the class {@link RandomZoneOffsetGenerator}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class RandomByteGeneratorTest {
+class RandomZoneOffsetGeneratorTest {
 
   @Mock
   private Random random;
 
-  private RandomByteGenerator randomByteGenerator;
+  private RandomZoneOffsetGenerator randomZoneOffsetGenerator;
 
   @BeforeEach
   void setup() {
-    randomByteGenerator = new RandomByteGenerator() {
+    randomZoneOffsetGenerator = new RandomZoneOffsetGenerator() {
 
       @Override
       public Random getRandom() {
@@ -52,23 +53,23 @@ class RandomByteGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(bytes = { Byte.MIN_VALUE, Byte.MIN_VALUE + 1, -1, 0, 1, Byte.MAX_VALUE - 1, Byte.MAX_VALUE })
-  void testRandomByte(final byte randomValue) {
-    final byte expectedValue = randomValue;
-    when(random.nextInt()).thenReturn((int) randomValue);
+  @ValueSource(ints = { -64800, -1, 0, 1, 64800 })
+  void testRandomZoneOffset(final int randomValue) {
+    final ZoneOffset expectedValue = ZoneOffset.ofTotalSeconds(randomValue);
+    when(random.nextInt()).thenReturn(randomValue);
 
-    assertEquals(expectedValue, randomByteGenerator.randomByte());
+    assertEquals(expectedValue, randomZoneOffsetGenerator.randomZoneOffset());
   }
 
   @ParameterizedTest
-  @ValueSource(bytes = { Byte.MIN_VALUE, Byte.MIN_VALUE + 1, -1, 0, 1, Byte.MAX_VALUE - 1, Byte.MAX_VALUE })
-  void testRandomByteUnique(final byte randomValue) {
-    final byte notEqualTo1 = -123;
-    final byte notEqualTo2 = 123;
-    when(random.nextInt()).thenReturn((int) notEqualTo1, (int) notEqualTo2, (int) randomValue);
-    final byte expectedValue = randomValue;
+  @ValueSource(ints = { -64800, -1, 0, 1, 64800 })
+  void testRandomZoneOffsetUnique(final int randomValue) {
+    final ZoneOffset notEqualTo1 = ZoneOffset.ofTotalSeconds(-123);
+    final ZoneOffset notEqualTo2 = ZoneOffset.ofTotalSeconds(123);
+    final ZoneOffset expectedValue = ZoneOffset.ofTotalSeconds(randomValue);
+    when(random.nextInt()).thenReturn(notEqualTo1.getTotalSeconds(), notEqualTo2.getTotalSeconds(), randomValue);
 
-    assertEquals(expectedValue, randomByteGenerator.randomByte(notEqualTo1, notEqualTo2));
+    assertEquals(expectedValue, randomZoneOffsetGenerator.randomZoneOffset(notEqualTo1, notEqualTo2));
   }
 
 }

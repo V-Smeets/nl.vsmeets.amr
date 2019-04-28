@@ -15,6 +15,7 @@
  */
 package nl.vsmeets.amr.libs.junit.impl;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 import lombok.AccessLevel;
@@ -30,6 +31,6 @@ import lombok.NoArgsConstructor;
 public final class RandomGeneratorHolder {
 
   @Getter
-  private static final Random RANDOM = new Random();
+  private static final Random RANDOM = new SecureRandom();
 
 }

@@ -15,33 +15,38 @@
  */
 package nl.vsmeets.amr.libs.junit;
 
+import java.time.ZoneId;
+
 /**
- * An interface that can be included in case a random <code>byte</code> is
- * needed.
+ * An interface that can be included in case a random {@link ZoneId} is needed.
  *
  * @author vincent
  */
-public interface RandomByteGenerator extends RandomIntGenerator {
+public interface RandomZoneIdGenerator extends RandomIntGenerator {
 
   /**
-   * Create a random <code>byte</code> that is guaranteed not equal to an element
-   * of <code>notEqualTo</code>.
+   * Create a random {@link ZoneId} that is guaranteed not equal to an element of
+   * <code>notEqualTo</code>.
    *
    * @param notEqualTo
    *        The values that are not allowed.
-   * @return A random <code>byte</code>.
+   * @return A random {@link ZoneId}.
    */
-  default byte randomByte(final byte... notEqualTo) {
-    final byte randomValue = (byte) randomInt();
+  default ZoneId randomZoneId(final ZoneId... notEqualTo) {
+    final String[] zoneIdNames = ZoneId.getAvailableZoneIds().toArray(new String[0]);
+    final int length = zoneIdNames.length;
+    final int index = randomIntRange(0, length);
+    final String zoneIdName = zoneIdNames[index];
+    final ZoneId randomValue = ZoneId.of(zoneIdName);
     boolean alreadyUsed = false;
-    for (final byte b : notEqualTo) {
-      if (randomValue == b) {
+    for (final ZoneId zoneId : notEqualTo) {
+      if (randomValue.equals(zoneId)) {
         alreadyUsed = true;
         break;
       }
     }
     if (alreadyUsed) {
-      return randomByte(notEqualTo);
+      return randomZoneId(notEqualTo);
     } else {
       return randomValue;
     }

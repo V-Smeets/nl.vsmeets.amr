@@ -24,43 +24,74 @@ package nl.vsmeets.amr.libs.junit;
 public interface RandomLongGenerator extends RandomGenerator {
 
   /**
-   * Create a random <code>long</code>.
+   * Create a random <code>long</code> that is guaranteed not equal to an element
+   * of <code>notEqualTo</code>.
    *
+   * @param notEqualTo
+   *        The values that are not allowed.
    * @return A random <code>long</code>.
    */
-  default long randomLong() {
-    return getRandom().nextLong();
+  default long randomLong(final long... notEqualTo) {
+    final long randomValue = getRandom().nextLong();
+    boolean alreadyUsed = false;
+    for (final long l : notEqualTo) {
+      if (randomValue == l) {
+        alreadyUsed = true;
+        break;
+      }
+    }
+    if (alreadyUsed) {
+      return randomLong(notEqualTo);
+    } else {
+      return randomValue;
+    }
   }
 
   /**
-   * Create a random <code>long</code> within the specified range.
+   * Create a random <code>long</code> within the specified range that is
+   * guaranteed not equal to an element of <code>notEqualTo</code>.
    *
    * @param startInclusive
    *        The lower value of the range. This value is allowed to be returned.
    * @param endExclusive
    *        The upper value of the range. This value isn't allowed to be returned.
+   * @param notEqualTo
+   *        The values that are not allowed.
    * @return A random <code>long</code>.
    */
-  default long randomLong(final long startInclusive, final long endExclusive) {
+  default long randomLongRange(final long startInclusive, final long endExclusive, final long... notEqualTo) {
     if (endExclusive <= startInclusive) {
       throw new IllegalArgumentException(String.format("Invalid range: %d .. %d", startInclusive, endExclusive));
     }
+    final long randomValue = randomLong(notEqualTo);
+    if (randomValue >= startInclusive && randomValue < endExclusive) {
+      return randomValue;
+    }
     final long size = endExclusive - startInclusive;
+    final long shapedRandomValue;
     if (size > 0) {
       /* Size is less than half of the long range */
-      final long moduloValue = randomLong() % size;
-      final long randomValue = moduloValue + (moduloValue < 0 ? size : 0);
-      return startInclusive + randomValue;
+      final long moduloValue = randomValue % size;
+      final long offsetValue = moduloValue + (moduloValue < 0 ? size : 0);
+      shapedRandomValue = startInclusive + offsetValue;
+      boolean alreadyUsed = false;
+      for (final long l : notEqualTo) {
+        if (shapedRandomValue == l) {
+          alreadyUsed = true;
+          break;
+        }
+      }
+      if (alreadyUsed) {
+        return randomLongRange(startInclusive, endExclusive, notEqualTo);
+      } else {
+        return shapedRandomValue;
+      }
     } else {
       /*
        * Size is more than half of the long range. On average, less than 2 iterations
        * are needed to find a valid value.
        */
-      long value;
-      do {
-        value = randomLong();
-      } while (value < startInclusive || value >= endExclusive);
-      return value;
+      return randomLongRange(startInclusive, endExclusive, notEqualTo);
     }
   }
 

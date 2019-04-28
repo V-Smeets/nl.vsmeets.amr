@@ -23,38 +23,81 @@ package nl.vsmeets.amr.libs.junit;
 public interface RandomStringGenerator extends RandomIntGenerator {
 
   /**
-   * Create a random {@link String}.
+   * Create a random {@link String} that is guaranteed not equal to an element of
+   * <code>notEqualTo</code>.
    *
+   * @param notEqualTo
+   *        The values that are not allowed.
    * @return A random {@link String}.
    */
-  default String randomString() {
-    return randomString(8);
+  default String randomString(final String... notEqualTo) {
+    return randomStringOfCharacters(8, notEqualTo);
   }
 
   /**
-   * Create a random {@link String} of the specified number of characters. It can
-   * contain UTF-16 character pairs.
+   * Create a random {@link String} with a specified number of characters that is
+   * guaranteed not equal to an element of <code>notEqualTo</code>.
    *
-   * @param length
-   *        The length of the random {@link String}. It should be greater or equal
-   *        to zero.
-   * @return The random {@link String}.
+   * @param nrOfCharacters
+   *        The number of characters.
+   * @param notEqualTo
+   *        The values that are not allowed.
+   * @return A random {@link String}.
    */
-  default String randomString(final int length) {
-    if (length < 0) {
-      throw new IllegalArgumentException(String.format("Invalid length: %d", length));
+  default String randomStringOfCharacters(final int nrOfCharacters, final String... notEqualTo) {
+    if (nrOfCharacters < 0) {
+      throw new IllegalArgumentException(String.format("Invalid number of characters: %d", nrOfCharacters));
     }
-    final StringBuilder stringBuilder = new StringBuilder(length);
-    while (stringBuilder.length() < length) {
-      final int codePoint = randomInt(Character.MIN_CODE_POINT, Character.MAX_CODE_POINT + 1);
-      stringBuilder.appendCodePoint(codePoint);
+    final StringBuilder stringBuilder = new StringBuilder(nrOfCharacters);
+    for (int i = 0; i < nrOfCharacters; i++) {
+      stringBuilder.append((char) randomIntRange(Character.MIN_VALUE, Character.MAX_VALUE + 1));
     }
-    if (stringBuilder.length() > length) {
-      // The last code point required 2 characters.
-      // Just drop off the low part.
-      stringBuilder.setLength(length);
+    final String randomValue = stringBuilder.toString();
+    boolean alreadyUsed = false;
+    for (final String string : notEqualTo) {
+      if (randomValue.equals(string)) {
+        alreadyUsed = true;
+        break;
+      }
     }
-    return stringBuilder.toString();
+    if (alreadyUsed) {
+      return randomStringOfCharacters(nrOfCharacters, notEqualTo);
+    } else {
+      return randomValue;
+    }
+  }
+
+  /**
+   * Create a random {@link String} with a specified number of code points that is
+   * guaranteed not equal to an element of <code>notEqualTo</code>.
+   *
+   * @param nrOfCodePoints
+   *        The number of code points.
+   * @param notEqualTo
+   *        The values that are not allowed.
+   * @return A random {@link String}.
+   */
+  default String randomStringOfCodePoints(final int nrOfCodePoints, final String... notEqualTo) {
+    if (nrOfCodePoints < 0) {
+      throw new IllegalArgumentException(String.format("Invalid number of code points: %d", nrOfCodePoints));
+    }
+    final StringBuilder stringBuilder = new StringBuilder(nrOfCodePoints);
+    for (int i = 0; i < nrOfCodePoints; i++) {
+      stringBuilder.append(Character.toChars(randomIntRange(Character.MIN_CODE_POINT, Character.MAX_CODE_POINT + 1)));
+    }
+    final String randomValue = stringBuilder.toString();
+    boolean alreadyUsed = false;
+    for (final String string : notEqualTo) {
+      if (randomValue.equals(string)) {
+        alreadyUsed = true;
+        break;
+      }
+    }
+    if (alreadyUsed) {
+      return randomStringOfCodePoints(nrOfCodePoints, notEqualTo);
+    } else {
+      return randomValue;
+    }
   }
 
 }
