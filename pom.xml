@@ -196,6 +196,7 @@
     <module>libs</module>
     <module>main</module>
     <module>service</module>
+    <module>test</module>
   </modules>
 
 </project>
