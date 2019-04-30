@@ -29,6 +29,7 @@
     <org.springframework.boot.spring-boot-dependencies.version>2.1.3.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
+    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <tech.units.indriya.version>${javax.measure.unit-api.version}</tech.units.indriya.version>
   </properties>
 
