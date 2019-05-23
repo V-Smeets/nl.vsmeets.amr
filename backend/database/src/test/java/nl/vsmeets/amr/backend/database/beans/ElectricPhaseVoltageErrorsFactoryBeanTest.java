@@ -85,7 +85,7 @@ class ElectricPhaseVoltageErrorsFactoryBeanTest implements RandomByteGenerator, 
 
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Byte phaseNumber = randomByte();
     final Integer nrOfVoltageSags = randomInt();
     final Integer nrOfVoltageSwells = randomInt();
@@ -94,18 +94,19 @@ class ElectricPhaseVoltageErrorsFactoryBeanTest implements RandomByteGenerator, 
         .thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class,
-        () -> testObject.create(meter, dateTime, phaseNumber, nrOfVoltageSags, nrOfVoltageSwells));
+        () -> testObject.create(meter, localDateTime, phaseNumber, nrOfVoltageSags, nrOfVoltageSwells));
   }
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ElectricPhaseVoltageErrors electricPhaseVoltageErrors) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Byte phaseNumber = randomByte();
     final Optional<? extends ElectricPhaseVoltageErrors> expectedResult = Optional.of(electricPhaseVoltageErrors);
 
-    when(repository.findByMeterAndDateTimeAndPhaseNumber(meter, dateTime, phaseNumber)).then(i -> expectedResult);
+    when(repository.findByMeterAndLocalDateTimeAndPhaseNumber(meter, localDateTime, phaseNumber))
+        .then(i -> expectedResult);
 
-    assertEquals(expectedResult, testObject.find(meter, dateTime, phaseNumber));
+    assertEquals(expectedResult, testObject.find(meter, localDateTime, phaseNumber));
   }
 
 }

@@ -88,25 +88,25 @@ class ElectricEnergyReadingFactoryBeanTest implements RandomShortGenerator, Rand
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Energy> consumedEnergy, @Mock final Quantity<Energy> producedEnergy) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Short tariffIndicator = randomShort();
 
     when(repository.save(any(ElectricEnergyReadingEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class,
-        () -> testObject.create(meter, dateTime, tariffIndicator, consumedEnergy, producedEnergy));
+        () -> testObject.create(meter, localDateTime, tariffIndicator, consumedEnergy, producedEnergy));
   }
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ElectricEnergyReading electricEnergyReading) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Short tariffIndicator = randomShort();
     final Optional<? extends ElectricEnergyReading> expectedResult = Optional.of(electricEnergyReading);
 
-    when(repository.findByMeterAndDateTimeAndTariffIndicator(meter, dateTime, tariffIndicator))
+    when(repository.findByMeterAndLocalDateTimeAndTariffIndicator(meter, localDateTime, tariffIndicator))
         .then(i -> expectedResult);
 
-    assertEquals(expectedResult, testObject.find(meter, dateTime, tariffIndicator));
+    assertEquals(expectedResult, testObject.find(meter, localDateTime, tariffIndicator));
   }
 
 }

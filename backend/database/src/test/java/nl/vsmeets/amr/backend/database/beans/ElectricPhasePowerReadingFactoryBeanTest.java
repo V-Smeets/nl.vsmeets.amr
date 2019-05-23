@@ -96,25 +96,26 @@ class ElectricPhasePowerReadingFactoryBeanTest implements RandomByteGenerator, R
       @Mock final Quantity<ElectricPotential> instantaneousVoltage,
       @Mock final Quantity<ElectricCurrent> instantaneousCurrent,
       @Mock final Quantity<Power> instantaneousConsumedPower, @Mock final Quantity<Power> instantaneousProducedPower) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Byte phaseNumber = randomByte();
 
     when(repository.save(any(ElectricPhasePowerReadingEntity.class)))
         .thenThrow(new DataIntegrityViolationException(null));
 
-    assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, dateTime, phaseNumber,
+    assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, localDateTime, phaseNumber,
         instantaneousVoltage, instantaneousCurrent, instantaneousConsumedPower, instantaneousProducedPower));
   }
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ElectricPhasePowerReading electricPhasePowerReading) {
-    final LocalDateTime dateTime = randomLocalDateTime();
+    final LocalDateTime localDateTime = randomLocalDateTime();
     final Byte phaseNumber = randomByte();
     final Optional<? extends ElectricPhasePowerReading> expectedResult = Optional.of(electricPhasePowerReading);
 
-    when(repository.findByMeterAndDateTimeAndPhaseNumber(meter, dateTime, phaseNumber)).then(i -> expectedResult);
+    when(repository.findByMeterAndLocalDateTimeAndPhaseNumber(meter, localDateTime, phaseNumber))
+        .then(i -> expectedResult);
 
-    assertEquals(expectedResult, testObject.find(meter, dateTime, phaseNumber));
+    assertEquals(expectedResult, testObject.find(meter, localDateTime, phaseNumber));
   }
 
 }

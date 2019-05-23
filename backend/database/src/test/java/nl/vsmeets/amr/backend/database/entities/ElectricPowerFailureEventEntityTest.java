@@ -44,9 +44,9 @@ class ElectricPowerFailureEventEntityTest implements RandomDurationGenerator, Ra
   @Mock
   private ElectricPowerFailuresEntity electricPowerFailures2;
   private final LocalDateTime endOfFailureTime1 = randomLocalDateTime();
-  private final LocalDateTime endOfFailureTime2 = randomLocalDateTime();
+  private final LocalDateTime endOfFailureTime2 = randomLocalDateTime(endOfFailureTime1);
   private final Duration failureDuration1 = randomDuration();
-  private final Duration failureDuration2 = randomDuration();
+  private final Duration failureDuration2 = randomDuration(failureDuration1);
 
   @Test
   void testEquals() {

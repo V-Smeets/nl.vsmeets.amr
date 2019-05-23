@@ -24,12 +24,55 @@ package nl.vsmeets.amr.libs.junit;
 public interface RandomShortGenerator extends RandomIntGenerator {
 
   /**
-   * Create a random <code>short</code>.
+   * Create a random <code>short</code> that is guaranteed not equal to an element
+   * of <code>notEqualTo</code>.
    *
+   * @param notEqualTo
+   *        The values that are not allowed.
    * @return A random <code>short</code>.
    */
-  default short randomShort() {
-    return (short) randomInt();
+  default short randomShort(final short... notEqualTo) {
+    final short randomValue = (short) randomInt();
+    boolean alreadyUsed = false;
+    for (final short s : notEqualTo) {
+      if (randomValue == s) {
+        alreadyUsed = true;
+        break;
+      }
+    }
+    if (alreadyUsed) {
+      return randomShort(notEqualTo);
+    } else {
+      return randomValue;
+    }
+  }
+
+  /**
+   * Create a random <code>short</code> within the specified range that is
+   * guaranteed not equal to an element of <code>notEqualTo</code>.
+   *
+   * @param startInclusive
+   *        The lower value of the range. This value is allowed to be returned.
+   * @param endExclusive
+   *        The upper value of the range. This value isn't allowed to be returned.
+   * @param notEqualTo
+   *        The values that are not allowed.
+   * @return A random <code>short</code>.
+   */
+  default short randomShortRange(final short startInclusive, final short endExclusive, final short... notEqualTo) {
+    final short randomValue = (short) randomIntRange(startInclusive, endExclusive);
+    boolean alreadyUsed = false;
+    for (final short s : notEqualTo) {
+      if (randomValue == s) {
+        alreadyUsed = true;
+        break;
+      }
+    }
+    if (alreadyUsed) {
+      return randomShortRange(startInclusive, endExclusive, notEqualTo);
+    } else {
+      return randomValue;
+    }
   }
 
 }

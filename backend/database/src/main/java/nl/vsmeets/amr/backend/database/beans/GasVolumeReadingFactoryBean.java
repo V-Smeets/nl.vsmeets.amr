@@ -58,10 +58,10 @@ public class GasVolumeReadingFactoryBean implements GasVolumeReadingFactory {
   }
 
   @Override
-  public GasVolumeReading create(final Meter meter, final LocalDateTime dateTime, final Quantity<Volume> consumedGas)
-      throws ConstraintViolationException {
+  public GasVolumeReading create(final Meter meter, final LocalDateTime localDateTime,
+      final Quantity<Volume> consumedGas) throws ConstraintViolationException {
     final GasVolumeReadingEntity gasVolumeReading =
-        new GasVolumeReadingEntity((MeterEntity) meter, dateTime, consumedGas);
+        new GasVolumeReadingEntity((MeterEntity) meter, localDateTime, consumedGas);
     try {
       final GasVolumeReadingEntity entity = repository.save(gasVolumeReading);
       repository.refresh(entity);
@@ -72,8 +72,8 @@ public class GasVolumeReadingFactoryBean implements GasVolumeReadingFactory {
   }
 
   @Override
-  public Optional<? extends GasVolumeReading> find(final Meter meter, final LocalDateTime dateTime) {
-    return repository.findByMeterAndDateTime((MeterEntity) meter, dateTime);
+  public Optional<? extends GasVolumeReading> find(final Meter meter, final LocalDateTime localDateTime) {
+    return repository.findByMeterAndLocalDateTime((MeterEntity) meter, localDateTime);
   }
 
 }

@@ -1,5 +1,17 @@
 /**
- *
+ * Copyright (C) 2019 Vincent Smeets
+ * <p>
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * <p>
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <https://www.gnu.org/licenses/>.
  */
 package nl.vsmeets.amr.libs.junit;
 
@@ -43,24 +55,83 @@ class RandomLocalDateTimeGeneratorTest {
 
   @ParameterizedTest
   @ValueSource(ints = { 0, 1, 999_999_999 })
-  void testRandomLocalDateTimeNanos(final int nanos) {
-    final long seconds = 0L;
-    when(random.nextLong()).thenReturn(seconds);
-    when(random.nextInt()).thenReturn(nanos);
-    final LocalDateTime expectedValue = LocalDateTime.ofEpochSecond(seconds - 999_999_999L, nanos - 0, ZoneOffset.UTC);
+  void testRandomLocalDateTimeNanos(final int randomValue) {
+    final long randomEpochSecond = 2;
+    final int nanoOfSecond = randomValue;
+    final int offsetSeconds = 3600;
+    final ZoneOffset offset = ZoneOffset.ofTotalSeconds(offsetSeconds);
+    final LocalDateTime expectedValue = LocalDateTime.ofEpochSecond(randomEpochSecond, nanoOfSecond, offset);
+    when(random.nextLong()).thenReturn(randomEpochSecond);
+    when(random.nextInt()).thenReturn(nanoOfSecond, offsetSeconds);
 
     assertEquals(expectedValue, randomLocalDateTimeGenerator.randomLocalDateTime());
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { 0L, 1L, 999_999_999L })
-  void testRandomLocalDateTimeSeconds(final long seconds) {
-    final int nanos = 0;
-    when(random.nextLong()).thenReturn(seconds);
-    when(random.nextInt()).thenReturn(nanos);
-    final LocalDateTime expectedValue = LocalDateTime.ofEpochSecond(seconds - 999_999_999L, nanos - 0, ZoneOffset.UTC);
+  @ValueSource(longs = { -4000L * 365L * 86400L, -1L, 0L, 1L, 4000L * 365L * 86400L })
+  void testRandomLocalDateTimeSeconds(final long randomValue) {
+    final long randomEpochSecond = randomValue;
+    final int nanoOfSecond = 2;
+    final int offsetSeconds = 3600;
+    final ZoneOffset offset = ZoneOffset.ofTotalSeconds(offsetSeconds);
+    final LocalDateTime expectedValue = LocalDateTime.ofEpochSecond(randomEpochSecond, nanoOfSecond, offset);
+    when(random.nextLong()).thenReturn(randomEpochSecond);
+    when(random.nextInt()).thenReturn(nanoOfSecond, offsetSeconds);
 
     assertEquals(expectedValue, randomLocalDateTimeGenerator.randomLocalDateTime());
+  }
+
+  @ParameterizedTest
+  @ValueSource(longs = { -4000L * 365L * 86400L, -1L, 0L, 1L, 4000L * 365L * 86400L })
+  void testRandomLocalDateTimeUnique(final long randomValue) {
+    final LocalDateTime notEqualTo1 = LocalDateTime.now();
+    final LocalDateTime notEqualTo2 = notEqualTo1.plusSeconds(12345L);
+    final LocalDateTime notEqualTo3 = notEqualTo2.plusSeconds(67890L);
+    final long randomEpochSecond = randomValue;
+    final int nanoOfSecond = 2;
+    final int offsetSeconds = 3600;
+    final ZoneOffset offset = ZoneOffset.ofTotalSeconds(offsetSeconds);
+    final LocalDateTime expectedValue = LocalDateTime.ofEpochSecond(randomEpochSecond, nanoOfSecond, offset);
+    when(random.nextLong()).thenReturn(notEqualTo1.toEpochSecond(ZoneOffset.UTC),
+        notEqualTo2.toEpochSecond(ZoneOffset.UTC), notEqualTo3.toEpochSecond(ZoneOffset.UTC), randomEpochSecond);
+    when(random.nextInt()).thenReturn(notEqualTo1.toLocalTime().getNano(), 0, notEqualTo2.toLocalTime().getNano(), 0,
+        notEqualTo3.toLocalTime().getNano(), 0, nanoOfSecond, offsetSeconds);
+
+    assertEquals(expectedValue,
+        randomLocalDateTimeGenerator.randomLocalDateTime(notEqualTo1, notEqualTo2, notEqualTo3));
+  }
+
+  @ParameterizedTest
+  @ValueSource(longs = { -4000L * 365L * 86400L, -1L, 0L, 1L, 4000L * 365L * 86400L })
+  void testRandomLocalDateTimeZeroPrecisionSeconds(final long randomValue) {
+    final long randomEpochSecond = randomValue;
+    final int offsetSeconds = 3600;
+    final ZoneOffset offset = ZoneOffset.ofTotalSeconds(offsetSeconds);
+    final LocalDateTime expectedValue = LocalDateTime.ofEpochSecond(randomEpochSecond, 0, offset);
+    when(random.nextLong()).thenReturn(randomEpochSecond);
+    when(random.nextInt()).thenReturn(offsetSeconds);
+
+    assertEquals(expectedValue, randomLocalDateTimeGenerator.randomLocalDateTimeZeroPrecision());
+  }
+
+  @ParameterizedTest
+  @ValueSource(longs = { -4000L * 365L * 86400L, -1L, 0L, 1L, 4000L * 365L * 86400L })
+  void testRandomLocalDateTimeZeroPrecisionUnique(final long randomValue) {
+    final ZoneOffset zoneOffset = ZoneOffset.UTC;
+    final LocalDateTime notEqualTo1 = LocalDateTime.now(zoneOffset).withNano(0);
+    final LocalDateTime notEqualTo2 = notEqualTo1.plusSeconds(12345L);
+    final LocalDateTime notEqualTo3 = notEqualTo2.plusSeconds(67890L);
+    final long randomEpochSecond = randomValue;
+    final int offsetSeconds = 3600;
+    final ZoneOffset offset = ZoneOffset.ofTotalSeconds(offsetSeconds);
+    final LocalDateTime expectedValue = LocalDateTime.ofEpochSecond(randomEpochSecond, 0, offset);
+    when(random.nextLong()).thenReturn(notEqualTo1.toEpochSecond(zoneOffset), notEqualTo2.toEpochSecond(zoneOffset),
+        notEqualTo3.toEpochSecond(zoneOffset), randomEpochSecond);
+    when(random.nextInt()).thenReturn(zoneOffset.getTotalSeconds(), zoneOffset.getTotalSeconds(),
+        zoneOffset.getTotalSeconds(), offsetSeconds);
+
+    assertEquals(expectedValue,
+        randomLocalDateTimeGenerator.randomLocalDateTimeZeroPrecision(notEqualTo1, notEqualTo2, notEqualTo3));
   }
 
 }

@@ -21,6 +21,7 @@ import static org.mockito.Mockito.when;
 import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -52,21 +53,49 @@ class RandomShortGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(ints = { Integer.MIN_VALUE, Integer.MIN_VALUE + 1, -1, 0, 1, Integer.MAX_VALUE - 1, Integer.MAX_VALUE })
-  void testRandomShort(final int randomValue) {
-    when(random.nextInt()).thenReturn(randomValue);
-    final short expectedValue = (short) randomValue;
+  @ValueSource(shorts = { Short.MIN_VALUE, Short.MIN_VALUE + 1, -1, 0, 1, Short.MAX_VALUE - 1, Short.MAX_VALUE })
+  void testRandomShort(final short randomValue) {
+    final short expectedValue = randomValue;
+    when(random.nextInt()).thenReturn((int) randomValue);
 
     assertEquals(expectedValue, randomShortGenerator.randomShort());
   }
 
-  @ParameterizedTest
-  @ValueSource(ints = { -130949, -65413, 123, 65659, 131195 })
-  void testRandomShortStaticResult(final int randomValue) {
-    when(random.nextInt()).thenReturn(randomValue);
-    final byte expectedValue = 123;
+  @Test
+  void testRandomShortRangeInRange() {
+    final short randomValue = 123;
+    final short startInclusive = Short.MIN_VALUE + 10;
+    final short endExclusive = Short.MAX_VALUE - 10;
+    final short expectedValue = randomValue;
+    when(random.nextInt()).thenReturn((int) randomValue);
 
-    assertEquals(expectedValue, randomShortGenerator.randomShort());
+    assertEquals(expectedValue, randomShortGenerator.randomShortRange(startInclusive, endExclusive));
+  }
+
+  @ParameterizedTest
+  @ValueSource(shorts = { -7, 1, 17 })
+  void testRandomShortRangeSmallOutOfRangeUnique(final short randomValue) {
+    final short startInclusive = 8;
+    final short endExclusive = startInclusive + 8;
+    final short notEqualTo1 = endExclusive - 1;
+    final short notEqualTo2 = endExclusive - 2;
+    final short expectedValue = 9;
+    when(random.nextInt()).thenReturn(notEqualTo1 - (endExclusive - startInclusive),
+        notEqualTo2 + (endExclusive - startInclusive), (int) randomValue);
+
+    assertEquals(expectedValue,
+        randomShortGenerator.randomShortRange(startInclusive, endExclusive, notEqualTo1, notEqualTo2));
+  }
+
+  @ParameterizedTest
+  @ValueSource(shorts = { Short.MIN_VALUE, Short.MIN_VALUE + 1, -1, 0, 1, Short.MAX_VALUE - 1, Short.MAX_VALUE })
+  void testRandomShortUnique(final short randomValue) {
+    final short notEqualTo1 = -1234;
+    final short notEqualTo2 = 1234;
+    when(random.nextInt()).thenReturn((int) notEqualTo1, (int) notEqualTo2, (int) randomValue);
+    final int expectedValue = randomValue;
+
+    assertEquals(expectedValue, randomShortGenerator.randomShort(notEqualTo1, notEqualTo2));
   }
 
 }

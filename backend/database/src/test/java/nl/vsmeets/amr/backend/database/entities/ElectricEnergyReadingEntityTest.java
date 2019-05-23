@@ -46,9 +46,9 @@ class ElectricEnergyReadingEntityTest implements RandomShortGenerator, RandomLoc
   @Mock
   private MeterEntity meter2;
   private final LocalDateTime localDateTime1 = randomLocalDateTime();
-  private final LocalDateTime localDateTime2 = randomLocalDateTime();
+  private final LocalDateTime localDateTime2 = randomLocalDateTime(localDateTime1);
   private final Short tariffIndicator1 = randomShort();
-  private final Short tariffIndicator2 = randomShort();
+  private final Short tariffIndicator2 = randomShort(tariffIndicator1);
   @Mock
   private Quantity<Energy> consumedEnergy1;
   @Mock

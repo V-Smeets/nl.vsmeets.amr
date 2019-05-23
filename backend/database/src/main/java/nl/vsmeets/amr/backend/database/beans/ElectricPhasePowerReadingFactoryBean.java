@@ -60,12 +60,12 @@ public class ElectricPhasePowerReadingFactoryBean implements ElectricPhasePowerR
   }
 
   @Override
-  public ElectricPhasePowerReading create(final Meter meter, final LocalDateTime dateTime, final Byte phaseNumber,
+  public ElectricPhasePowerReading create(final Meter meter, final LocalDateTime localDateTime, final Byte phaseNumber,
       final Quantity<ElectricPotential> instantaneousVoltage, final Quantity<ElectricCurrent> instantaneousCurrent,
       final Quantity<Power> instantaneousConsumedPower, final Quantity<Power> instantaneousProducedPower)
       throws ConstraintViolationException {
     final ElectricPhasePowerReadingEntity electricPhasePowerReading =
-        new ElectricPhasePowerReadingEntity((MeterEntity) meter, dateTime, phaseNumber, instantaneousVoltage,
+        new ElectricPhasePowerReadingEntity((MeterEntity) meter, localDateTime, phaseNumber, instantaneousVoltage,
             instantaneousCurrent, instantaneousConsumedPower, instantaneousProducedPower);
     try {
       final ElectricPhasePowerReadingEntity entity = repository.save(electricPhasePowerReading);
@@ -77,9 +77,9 @@ public class ElectricPhasePowerReadingFactoryBean implements ElectricPhasePowerR
   }
 
   @Override
-  public Optional<? extends ElectricPhasePowerReading> find(final Meter meter, final LocalDateTime dateTime,
+  public Optional<? extends ElectricPhasePowerReading> find(final Meter meter, final LocalDateTime localDateTime,
       final Byte phaseNumber) {
-    return repository.findByMeterAndDateTimeAndPhaseNumber((MeterEntity) meter, dateTime, phaseNumber);
+    return repository.findByMeterAndLocalDateTimeAndPhaseNumber((MeterEntity) meter, localDateTime, phaseNumber);
   }
 
 }

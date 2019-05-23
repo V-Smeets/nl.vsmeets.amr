@@ -43,9 +43,9 @@ class ElectricMessageEntityTest implements RandomStringGenerator, RandomLocalDat
   @Mock
   private MeterEntity meter2;
   private final LocalDateTime localDateTime1 = randomLocalDateTime();
-  private final LocalDateTime localDateTime2 = randomLocalDateTime();
+  private final LocalDateTime localDateTime2 = randomLocalDateTime(localDateTime1);
   private final String textMessage1 = randomString();
-  private final String textMessage2 = randomString();
+  private final String textMessage2 = randomString(textMessage1);
 
   @Test
   void testEquals() {

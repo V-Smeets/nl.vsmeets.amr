@@ -58,10 +58,10 @@ public class ThermalEnergyReadingFactoryBean implements ThermalEnergyReadingFact
   }
 
   @Override
-  public ThermalEnergyReading create(final Meter meter, final LocalDateTime dateTime,
+  public ThermalEnergyReading create(final Meter meter, final LocalDateTime localDateTime,
       final Quantity<Energy> consumedEnergy) throws ConstraintViolationException {
     final ThermalEnergyReadingEntity thermalEnergyReading =
-        new ThermalEnergyReadingEntity((MeterEntity) meter, dateTime, consumedEnergy);
+        new ThermalEnergyReadingEntity((MeterEntity) meter, localDateTime, consumedEnergy);
     try {
       final ThermalEnergyReadingEntity entity = repository.save(thermalEnergyReading);
       repository.refresh(entity);
@@ -72,8 +72,8 @@ public class ThermalEnergyReadingFactoryBean implements ThermalEnergyReadingFact
   }
 
   @Override
-  public Optional<? extends ThermalEnergyReading> find(final Meter meter, final LocalDateTime dateTime) {
-    return repository.findByMeterAndDateTime((MeterEntity) meter, dateTime);
+  public Optional<? extends ThermalEnergyReading> find(final Meter meter, final LocalDateTime localDateTime) {
+    return repository.findByMeterAndLocalDateTime((MeterEntity) meter, localDateTime);
   }
 
 }

@@ -25,18 +25,19 @@ import org.junit.jupiter.api.Test;
 import com.google.common.testing.EqualsTester;
 
 import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
+import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
 
 /**
  * Unit tests for the class {@link SiteEntity}.
  *
  * @author vincent
  */
-class SiteEntityTest implements RandomStringGenerator {
+class SiteEntityTest implements RandomStringGenerator, RandomZoneIdGenerator {
 
   private final String name1 = randomString();
-  private final String name2 = randomString();
-  private final ZoneId timeZone1 = ZoneId.of("Europe/Amsterdam");
-  private final ZoneId timeZone2 = ZoneId.of("Europe/Paris");
+  private final String name2 = randomString(name1);
+  private final ZoneId timeZone1 = randomZoneId();
+  private final ZoneId timeZone2 = randomZoneId(timeZone1);
 
   @Test
   void testEquals() {

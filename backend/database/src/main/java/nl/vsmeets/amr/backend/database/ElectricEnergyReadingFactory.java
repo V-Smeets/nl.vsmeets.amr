@@ -33,8 +33,8 @@ public interface ElectricEnergyReadingFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @param tariffIndicator
    *        The tariff indicator.
    * @param consumedEnergy
@@ -45,7 +45,7 @@ public interface ElectricEnergyReadingFactory {
    * @throws ConstraintViolationException
    *         A database constraint constraint has been violated.
    */
-  ElectricEnergyReading create(final Meter meter, final LocalDateTime dateTime, final Short tariffIndicator,
+  ElectricEnergyReading create(final Meter meter, final LocalDateTime localDateTime, final Short tariffIndicator,
       final Quantity<Energy> consumedEnergy, final Quantity<Energy> producedEnergy) throws ConstraintViolationException;
 
   /**
@@ -53,13 +53,13 @@ public interface ElectricEnergyReadingFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @param tariffIndicator
    *        The tariff indicator.
    * @return The {@link ElectricEnergyReading}.
    */
-  Optional<? extends ElectricEnergyReading> find(final Meter meter, final LocalDateTime dateTime,
+  Optional<? extends ElectricEnergyReading> find(final Meter meter, final LocalDateTime localDateTime,
       final Short tariffIndicator);
 
 }

@@ -42,11 +42,11 @@ class ElectricPowerFailuresEntityTest implements RandomLocalDateTimeGenerator {
   @Mock
   private MeterEntity meter2;
   private final LocalDateTime localDateTime1 = randomLocalDateTime();
-  private final LocalDateTime localDateTime2 = randomLocalDateTime();
+  private final LocalDateTime localDateTime2 = randomLocalDateTime(localDateTime1);
   private final Integer nrOfPowerFailures1 = randomInt();
-  private final Integer nrOfPowerFailures2 = randomInt();
+  private final Integer nrOfPowerFailures2 = randomInt(nrOfPowerFailures1);
   private final Integer nrOfLongPowerFailures1 = randomInt();
-  private final Integer nrOfLongPowerFailures2 = randomInt();
+  private final Integer nrOfLongPowerFailures2 = randomInt(nrOfLongPowerFailures1);
 
   @Test
   void testEquals() {

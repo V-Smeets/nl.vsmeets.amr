@@ -35,8 +35,8 @@ public interface ElectricPhasePowerReadingFactory {
    *
    * @param meter
    *        The meter of these errors.
-   * @param dateTime
-   *        The date and time of these errors in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @param phaseNumber
    *        The phase number.
    * @param instantaneousVoltage
@@ -51,7 +51,7 @@ public interface ElectricPhasePowerReadingFactory {
    * @throws ConstraintViolationException
    *         A database constraint constraint has been violated.
    */
-  ElectricPhasePowerReading create(final Meter meter, final LocalDateTime dateTime, final Byte phaseNumber,
+  ElectricPhasePowerReading create(final Meter meter, final LocalDateTime localDateTime, final Byte phaseNumber,
       final Quantity<ElectricPotential> instantaneousVoltage, final Quantity<ElectricCurrent> instantaneousCurrent,
       final Quantity<Power> instantaneousConsumedPower, final Quantity<Power> instantaneousProducedPower)
       throws ConstraintViolationException;
@@ -61,13 +61,13 @@ public interface ElectricPhasePowerReadingFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @param phaseNumber
    *        The phase number.
    * @return The {@link ElectricPhasePowerReading}.
    */
-  Optional<? extends ElectricPhasePowerReading> find(final Meter meter, final LocalDateTime dateTime,
+  Optional<? extends ElectricPhasePowerReading> find(final Meter meter, final LocalDateTime localDateTime,
       final Byte phaseNumber);
 
 }

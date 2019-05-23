@@ -24,11 +24,13 @@
     <maven.compiler.release>8</maven.compiler.release>
     <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
+    <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-failsafe-plugin.version>
     <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-plugin.version>
     <org.jacoco.jacoco-maven-plugin.version>0.8.3</org.jacoco.jacoco-maven-plugin.version>
     <org.springframework.boot.spring-boot-dependencies.version>2.1.3.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
+    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <tech.units.indriya.version>${javax.measure.unit-api.version}</tech.units.indriya.version>
   </properties>
 
@@ -58,6 +60,11 @@
   <dependencyManagement>
     <dependencies>
       <!-- compile -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>backend-database</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>libs-measure</artifactId>
@@ -92,6 +99,19 @@
         <version>${com.google.guava.guava-testlib.version}</version>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <version>${org.springframework.boot.spring-boot-dependencies.version}</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <!-- Replaced by org.junit.jupiter:junit-jupiter-engine -->
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
 
       <!-- import -->
       <dependency>
@@ -109,6 +129,19 @@
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${org.apache.maven.plugins.maven-failsafe-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
         </plugin>
@@ -120,6 +153,10 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+      </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -159,6 +196,7 @@
     <module>libs</module>
     <module>main</module>
     <module>service</module>
+    <module>test</module>
   </modules>
 
 </project>

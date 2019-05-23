@@ -30,15 +30,15 @@ public interface ElectricMessageFactory {
    *
    * @param meter
    *        The meter of these failures.
-   * @param dateTime
-   *        The date and time of these failures in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this message.
    * @param textMessage
    *        The text message.
    * @return The {@link ElectricMessage}.
    * @throws ConstraintViolationException
    *         A database constraint constraint has been violated.
    */
-  ElectricMessage create(final Meter meter, final LocalDateTime dateTime, final String textMessage)
+  ElectricMessage create(final Meter meter, final LocalDateTime localDateTime, final String textMessage)
       throws ConstraintViolationException;
 
   /**
@@ -46,10 +46,10 @@ public interface ElectricMessageFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this message.
    * @return The {@link ElectricMessage}.
    */
-  Optional<? extends ElectricMessage> find(final Meter meter, final LocalDateTime dateTime);
+  Optional<? extends ElectricMessage> find(final Meter meter, final LocalDateTime localDateTime);
 
 }

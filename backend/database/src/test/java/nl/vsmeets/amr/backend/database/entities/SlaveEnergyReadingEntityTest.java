@@ -45,7 +45,7 @@ class SlaveEnergyReadingEntityTest implements RandomLocalDateTimeGenerator {
   @Mock
   private MeterEntity meter2;
   private final LocalDateTime localDateTime1 = randomLocalDateTime();
-  private final LocalDateTime localDateTime2 = randomLocalDateTime();
+  private final LocalDateTime localDateTime2 = randomLocalDateTime(localDateTime1);
   @Mock
   private Quantity<Energy> consumedEnergy1;
   @Mock

@@ -45,7 +45,7 @@ class MeterEntityTest implements RandomStringGenerator {
   @Mock
   private MeasuredMediumEntity measuredMedium2;
   private final String equipmentIdentifier1 = randomString();
-  private final String equipmentIdentifier2 = randomString();
+  private final String equipmentIdentifier2 = randomString(equipmentIdentifier1);
 
   @Test
   void testEquals() {

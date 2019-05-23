@@ -18,13 +18,12 @@ package nl.vsmeets.amr.libs.junit;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -54,79 +53,93 @@ class RandomStringGeneratorTest {
 
   @Test
   void testRandomString() {
-    when(random.nextInt()).thenReturn(0x0000, 0xD7FF, 0xDC00, 0xE000, 0xFFFF, 0x010000, 0x10FFFF);
-    final char[] expectedValue = { 0x0000, 0xD7FF, 0xDC00, 0xE000, 0xFFFF, 0xD800, 0xDC00, 0xDBFF };
+    final String expectedValue = "12345678";
+    final Integer[] randomInts = expectedValue.chars().boxed().toArray(Integer[]::new);
+
+    when(random.nextInt()).thenReturn(randomInts[0], Arrays.copyOfRange(randomInts, 1, randomInts.length));
 
     final String randomString = randomStringGenerator.randomString();
-
-    assertNotNull(randomString);
-    assertEquals(8, randomString.length());
-    assertArrayEquals(expectedValue, randomString.toCharArray());
+    assertAll( //
+        () -> assertNotNull(randomString), //
+        () -> assertEquals(expectedValue, randomString) //
+    );
   }
 
   @Test
-  void testRandomStringNegativeLength() {
+  void testRandomStringOfCharacters() {
+    final String expectedValue = new String(new char[] { 0x0000, 0x0001, 0x7FFF, 0x8000, 0xFFFF });
+    final Integer[] randomInts = expectedValue.chars().boxed().toArray(Integer[]::new);
+
+    when(random.nextInt()).thenReturn(randomInts[0], Arrays.copyOfRange(randomInts, 1, randomInts.length));
+
+    final String randomString = randomStringGenerator.randomStringOfCharacters(expectedValue.length());
+    assertAll( //
+        () -> assertNotNull(randomString), //
+        () -> assertEquals(expectedValue, randomString) //
+    );
+  }
+
+  @Test
+  void testRandomStringOfCharactersNegativeLength() {
     final int length = -1;
 
-    assertThrows(IllegalArgumentException.class, () -> randomStringGenerator.randomString(length));
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {
-      // 2 bytes
-      0x0000, 0XD7FF, 0xE000, 0xFFFF })
-  void testRandomStringOneCharacter(final int randomValue) {
-    when(random.nextInt()).thenReturn(randomValue);
-    final int length = 1;
-    final char[] expectedValue = Character.toChars(randomValue);
-
-    final String randomString = randomStringGenerator.randomString(length);
-
-    assertNotNull(randomString);
-    assertEquals(length, randomString.length());
-    assertArrayEquals(expectedValue, randomString.toCharArray());
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {
-      // 4 bytes
-      0x010000, 0x10FFFF })
-  void testRandomStringOversized(final int randomValue) {
-    when(random.nextInt()).thenReturn(randomValue);
-    final int length = 1;
-    final char[] expectedValue = Character.toChars(randomValue);
-
-    final String randomString = randomStringGenerator.randomString(length);
-
-    assertNotNull(randomString);
-    assertEquals(length, randomString.length());
-    assertEquals(expectedValue[0], randomString.charAt(0));
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {
-      // 4 bytes
-      0x010000, 0x10FFFF })
-  void testRandomStringTwoCharacters(final int randomValue) {
-    when(random.nextInt()).thenReturn(randomValue);
-    final int length = 2;
-    final char[] expectedValue = Character.toChars(randomValue);
-
-    final String randomString = randomStringGenerator.randomString(length);
-
-    assertNotNull(randomString);
-    assertEquals(length, randomString.length());
-    assertArrayEquals(expectedValue, randomString.toCharArray());
+    assertThrows(IllegalArgumentException.class, () -> randomStringGenerator.randomStringOfCharacters(length));
   }
 
   @Test
-  void testRandomStringZeroLength() {
-    final int length = 0;
+  void testRandomStringOfCharactersUnique() {
+    final String notEqualTo1 = "Ab";
+    final String notEqualTo2 = "XY";
+    final String expectedValue = "Ok";
+    final Integer[] randomInts =
+        notEqualTo1.concat(notEqualTo2).concat(expectedValue).chars().boxed().toArray(Integer[]::new);
 
-    final String randomString = randomStringGenerator.randomString(length);
+    when(random.nextInt()).thenReturn(randomInts[0], Arrays.copyOfRange(randomInts, 1, randomInts.length));
 
-    assertNotNull(randomString);
-    assertEquals(length, randomString.length());
+    final String randomString =
+        randomStringGenerator.randomStringOfCharacters(expectedValue.length(), notEqualTo1, notEqualTo2);
+    assertAll( //
+        () -> assertNotNull(randomString), //
+        () -> assertEquals(expectedValue, randomString) //
+    );
+  }
+
+  @Test
+  void testRandomStringOfCodePoints() {
+    final String expectedValue = "A↹℘✋🎯🏁";
+    final Integer[] randomInts = expectedValue.codePoints().boxed().toArray(Integer[]::new);
+    when(random.nextInt()).thenReturn(randomInts[0], Arrays.copyOfRange(randomInts, 1, randomInts.length));
+
+    final String randomString =
+        randomStringGenerator.randomStringOfCodePoints(expectedValue.codePointCount(0, expectedValue.length()));
+    assertAll( //
+        () -> assertNotNull(randomString), //
+        () -> assertEquals(expectedValue, randomString) //
+    );
+  }
+
+  @Test
+  void testRandomStringOfCodePointsNegativeLength() {
+    final int length = -1;
+
+    assertThrows(IllegalArgumentException.class, () -> randomStringGenerator.randomStringOfCodePoints(length));
+  }
+
+  @Test
+  void testRandomStringOfCodePointsUnique() {
+    final String notEqualTo1 = "123456";
+    final String notEqualTo2 = "ABCDEF";
+    final String expectedValue = "A↹℘✋🎯🏁";
+    final Integer[] randomInts =
+        notEqualTo1.concat(notEqualTo2).concat(expectedValue).codePoints().boxed().toArray(Integer[]::new);
+    when(random.nextInt()).thenReturn(randomInts[0], Arrays.copyOfRange(randomInts, 1, randomInts.length));
+
+    final String randomString = randomStringGenerator
+        .randomStringOfCodePoints(expectedValue.codePointCount(0, expectedValue.length()), notEqualTo1, notEqualTo2);
+    assertAll( //
+        () -> assertNotNull(randomString), //
+        () -> assertEquals(expectedValue, randomString) //
+    );
   }
 
 }

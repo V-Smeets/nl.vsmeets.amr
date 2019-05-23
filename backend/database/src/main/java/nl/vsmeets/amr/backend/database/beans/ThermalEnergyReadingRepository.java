@@ -36,10 +36,11 @@ public interface ThermalEnergyReadingRepository
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of this reading.
    * @return The {@link ThermalEnergyReadingEntity}.
    */
-  Optional<ThermalEnergyReadingEntity> findByMeterAndDateTime(final MeterEntity meter, final LocalDateTime dateTime);
+  Optional<ThermalEnergyReadingEntity> findByMeterAndLocalDateTime(final MeterEntity meter,
+      final LocalDateTime localDateTime);
 
 }

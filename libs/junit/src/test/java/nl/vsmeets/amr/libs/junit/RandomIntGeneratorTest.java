@@ -55,40 +55,77 @@ class RandomIntGeneratorTest {
   @ParameterizedTest
   @ValueSource(ints = { Integer.MIN_VALUE, Integer.MIN_VALUE + 1, -1, 0, 1, Integer.MAX_VALUE - 1, Integer.MAX_VALUE })
   void testRandomInt(final int randomValue) {
-    when(random.nextInt()).thenReturn(randomValue);
     final int expectedValue = randomValue;
+    when(random.nextInt()).thenReturn(randomValue);
 
     assertEquals(expectedValue, randomIntGenerator.randomInt());
   }
 
   @Test
-  void testRandomIntInvalidRange() {
-    final int startInclusive = 123;
-    final int endExclusive = startInclusive;
-
-    assertThrows(IllegalArgumentException.class, () -> randomIntGenerator.randomInt(startInclusive, endExclusive));
-  }
-
-  @Test
-  void testRandomIntLargeRange() {
+  void testRandomIntRangeInRange() {
     final int randomValue = 123;
-    when(random.nextInt()).thenReturn(Integer.MIN_VALUE, Integer.MAX_VALUE, randomValue);
     final int startInclusive = Integer.MIN_VALUE + 10;
     final int endExclusive = Integer.MAX_VALUE - 10;
     final int expectedValue = randomValue;
+    when(random.nextInt()).thenReturn(randomValue);
 
-    assertEquals(expectedValue, randomIntGenerator.randomInt(startInclusive, endExclusive));
+    assertEquals(expectedValue, randomIntGenerator.randomIntRange(startInclusive, endExclusive));
+  }
+
+  @Test
+  void testRandomIntRangeInvalid() {
+    final int startInclusive = 123;
+    final int endExclusive = startInclusive;
+
+    assertThrows(IllegalArgumentException.class, () -> randomIntGenerator.randomIntRange(startInclusive, endExclusive));
+  }
+
+  @Test
+  void testRandomIntRangeLargeOutOfRange() {
+    final int randomValue = 123;
+    final int startInclusive = Integer.MIN_VALUE + 10;
+    final int endExclusive = Integer.MAX_VALUE - 10;
+    final int expectedValue = randomValue;
+    when(random.nextInt()).thenReturn(startInclusive - 1, endExclusive + 1, randomValue);
+
+    assertEquals(expectedValue, randomIntGenerator.randomIntRange(startInclusive, endExclusive));
   }
 
   @ParameterizedTest
-  @ValueSource(ints = { -15, -7, 1, 9, 17, 25 })
-  void testRandomIntSmallRange(final int randomValue) {
-    when(random.nextInt()).thenReturn(randomValue);
+  @ValueSource(ints = { -7, 1, 17 })
+  void testRandomIntRangeSmallOutOfRange(final int randomValue) {
     final int startInclusive = 8;
     final int endExclusive = startInclusive + 8;
     final int expectedValue = 9;
+    when(random.nextInt()).thenReturn(randomValue);
 
-    assertEquals(expectedValue, randomIntGenerator.randomInt(startInclusive, endExclusive));
+    assertEquals(expectedValue, randomIntGenerator.randomIntRange(startInclusive, endExclusive));
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = { -7, 1, 17 })
+  void testRandomIntRangeSmallOutOfRangeUnique(final int randomValue) {
+    final int startInclusive = 8;
+    final int endExclusive = startInclusive + 8;
+    final int notEqualTo1 = endExclusive - 1;
+    final int notEqualTo2 = endExclusive - 2;
+    final int expectedValue = 9;
+    when(random.nextInt()).thenReturn(notEqualTo1 - (endExclusive - startInclusive),
+        notEqualTo2 + endExclusive - startInclusive, randomValue);
+
+    assertEquals(expectedValue,
+        randomIntGenerator.randomIntRange(startInclusive, endExclusive, notEqualTo1, notEqualTo2));
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = { Integer.MIN_VALUE, Integer.MIN_VALUE + 1, -1, 0, 1, Integer.MAX_VALUE - 1, Integer.MAX_VALUE })
+  void testRandomIntUnique(final int randomValue) {
+    final int notEqualTo1 = -1234;
+    final int notEqualTo2 = 1234;
+    when(random.nextInt()).thenReturn(notEqualTo1, notEqualTo2, randomValue);
+    final int expectedValue = randomValue;
+
+    assertEquals(expectedValue, randomIntGenerator.randomInt(notEqualTo1, notEqualTo2));
   }
 
 }

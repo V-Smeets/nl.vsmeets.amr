@@ -24,43 +24,74 @@ package nl.vsmeets.amr.libs.junit;
 public interface RandomIntGenerator extends RandomGenerator {
 
   /**
-   * Create a random <code>int</code>.
+   * Create a random <code>int</code> that is guaranteed not equal to an element
+   * of <code>notEqualTo</code>.
    *
+   * @param notEqualTo
+   *        The values that are not allowed.
    * @return A random <code>int</code>.
    */
-  default int randomInt() {
-    return getRandom().nextInt();
+  default int randomInt(final int... notEqualTo) {
+    final int randomValue = getRandom().nextInt();
+    boolean alreadyUsed = false;
+    for (final int i : notEqualTo) {
+      if (randomValue == i) {
+        alreadyUsed = true;
+        break;
+      }
+    }
+    if (alreadyUsed) {
+      return randomInt(notEqualTo);
+    } else {
+      return randomValue;
+    }
   }
 
   /**
-   * Create a random <code>int</code> within the specified range.
+   * Create a random <code>int</code> within the specified range that is
+   * guaranteed not equal to an element of <code>notEqualTo</code>.
    *
    * @param startInclusive
    *        The lower value of the range. This value is allowed to be returned.
    * @param endExclusive
    *        The upper value of the range. This value isn't allowed to be returned.
+   * @param notEqualTo
+   *        The values that are not allowed.
    * @return A random <code>int</code>.
    */
-  default int randomInt(final int startInclusive, final int endExclusive) {
+  default int randomIntRange(final int startInclusive, final int endExclusive, final int... notEqualTo) {
     if (endExclusive <= startInclusive) {
       throw new IllegalArgumentException(String.format("Invalid range: %d .. %d", startInclusive, endExclusive));
     }
+    final int randomValue = randomInt(notEqualTo);
+    if (randomValue >= startInclusive && randomValue < endExclusive) {
+      return randomValue;
+    }
     final int size = endExclusive - startInclusive;
+    final int shapedRandomValue;
     if (size > 0) {
       /* Size is less than half of the int range */
-      final int moduloValue = randomInt() % size;
-      final int randomValue = moduloValue + (moduloValue < 0 ? size : 0);
-      return startInclusive + randomValue;
+      final int moduloValue = randomValue % size;
+      final int offsetValue = moduloValue + (moduloValue < 0 ? size : 0);
+      shapedRandomValue = startInclusive + offsetValue;
+      boolean alreadyUsed = false;
+      for (final int i : notEqualTo) {
+        if (shapedRandomValue == i) {
+          alreadyUsed = true;
+          break;
+        }
+      }
+      if (alreadyUsed) {
+        return randomIntRange(startInclusive, endExclusive, notEqualTo);
+      } else {
+        return shapedRandomValue;
+      }
     } else {
       /*
        * Size is more than half of the int range. On average, less than 2 iterations
        * are needed to find a valid value.
        */
-      int value;
-      do {
-        value = randomInt();
-      } while (value < startInclusive || value >= endExclusive);
-      return value;
+      return randomIntRange(startInclusive, endExclusive, notEqualTo);
     }
   }
 

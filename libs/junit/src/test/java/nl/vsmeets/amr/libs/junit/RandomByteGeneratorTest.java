@@ -52,21 +52,23 @@ class RandomByteGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(ints = { Integer.MIN_VALUE, Integer.MIN_VALUE + 1, -1, 0, 1, Integer.MAX_VALUE - 1, Integer.MAX_VALUE })
-  void testRandomByte(final int randomValue) {
-    when(random.nextInt()).thenReturn(randomValue);
-    final byte expectedValue = (byte) randomValue;
+  @ValueSource(bytes = { Byte.MIN_VALUE, Byte.MIN_VALUE + 1, -1, 0, 1, Byte.MAX_VALUE - 1, Byte.MAX_VALUE })
+  void testRandomByte(final byte randomValue) {
+    final byte expectedValue = randomValue;
+    when(random.nextInt()).thenReturn((int) randomValue);
 
     assertEquals(expectedValue, randomByteGenerator.randomByte());
   }
 
   @ParameterizedTest
-  @ValueSource(ints = { -389, -133, 123, 379, 635 })
-  void testRandomByteStaticResult(final int randomValue) {
-    when(random.nextInt()).thenReturn(randomValue);
-    final byte expectedValue = 123;
+  @ValueSource(bytes = { Byte.MIN_VALUE, Byte.MIN_VALUE + 1, -1, 0, 1, Byte.MAX_VALUE - 1, Byte.MAX_VALUE })
+  void testRandomByteUnique(final byte randomValue) {
+    final byte notEqualTo1 = -123;
+    final byte notEqualTo2 = 123;
+    when(random.nextInt()).thenReturn((int) notEqualTo1, (int) notEqualTo2, (int) randomValue);
+    final byte expectedValue = randomValue;
 
-    assertEquals(expectedValue, randomByteGenerator.randomByte());
+    assertEquals(expectedValue, randomByteGenerator.randomByte(notEqualTo1, notEqualTo2));
   }
 
 }

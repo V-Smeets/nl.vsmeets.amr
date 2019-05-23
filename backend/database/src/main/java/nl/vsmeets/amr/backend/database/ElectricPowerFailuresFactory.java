@@ -30,8 +30,8 @@ public interface ElectricPowerFailuresFactory {
    *
    * @param meter
    *        The meter of these failures.
-   * @param dateTime
-   *        The date and time of these failures in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of these failures.
    * @param consumedPower
    *        The number of power failures.
    * @param producedPower
@@ -40,7 +40,7 @@ public interface ElectricPowerFailuresFactory {
    * @throws ConstraintViolationException
    *         A database constraint constraint has been violated.
    */
-  ElectricPowerFailures create(final Meter meter, final LocalDateTime dateTime, final Integer nrOfPowerFailures,
+  ElectricPowerFailures create(final Meter meter, final LocalDateTime localDateTime, final Integer nrOfPowerFailures,
       final Integer nrOfLongPowerFailures) throws ConstraintViolationException;
 
   /**
@@ -48,10 +48,10 @@ public interface ElectricPowerFailuresFactory {
    *
    * @param meter
    *        The meter of this reading.
-   * @param dateTime
-   *        The date and time of this reading in the sites time zone.
+   * @param localDateTime
+   *        The local date and time of these failures.
    * @return The {@link ElectricPowerFailures}.
    */
-  Optional<? extends ElectricPowerFailures> find(final Meter meter, final LocalDateTime dateTime);
+  Optional<? extends ElectricPowerFailures> find(final Meter meter, final LocalDateTime localDateTime);
 
 }

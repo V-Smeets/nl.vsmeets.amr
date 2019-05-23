@@ -55,9 +55,10 @@ public class ElectricMessageFactoryBean implements ElectricMessageFactory {
   }
 
   @Override
-  public ElectricMessage create(final Meter meter, final LocalDateTime dateTime, final String textMessage)
+  public ElectricMessage create(final Meter meter, final LocalDateTime localDateTime, final String textMessage)
       throws ConstraintViolationException {
-    final ElectricMessageEntity electricMessage = new ElectricMessageEntity((MeterEntity) meter, dateTime, textMessage);
+    final ElectricMessageEntity electricMessage =
+        new ElectricMessageEntity((MeterEntity) meter, localDateTime, textMessage);
     try {
       final ElectricMessageEntity entity = repository.save(electricMessage);
       repository.refresh(entity);
@@ -68,8 +69,8 @@ public class ElectricMessageFactoryBean implements ElectricMessageFactory {
   }
 
   @Override
-  public Optional<? extends ElectricMessage> find(final Meter meter, final LocalDateTime dateTime) {
-    return repository.findByMeterAndDateTime((MeterEntity) meter, dateTime);
+  public Optional<? extends ElectricMessage> find(final Meter meter, final LocalDateTime localDateTime) {
+    return repository.findByMeterAndLocalDateTime((MeterEntity) meter, localDateTime);
   }
 
 }

@@ -58,10 +58,10 @@ public class SlaveEnergyReadingFactoryBean implements SlaveEnergyReadingFactory 
   }
 
   @Override
-  public SlaveEnergyReading create(final Meter meter, final LocalDateTime dateTime,
+  public SlaveEnergyReading create(final Meter meter, final LocalDateTime localDateTime,
       final Quantity<Energy> consumedEnergy) throws ConstraintViolationException {
     final SlaveEnergyReadingEntity slaveEnergyReading =
-        new SlaveEnergyReadingEntity((MeterEntity) meter, dateTime, consumedEnergy);
+        new SlaveEnergyReadingEntity((MeterEntity) meter, localDateTime, consumedEnergy);
     try {
       final SlaveEnergyReadingEntity entity = repository.save(slaveEnergyReading);
       repository.refresh(entity);
@@ -72,8 +72,8 @@ public class SlaveEnergyReadingFactoryBean implements SlaveEnergyReadingFactory 
   }
 
   @Override
-  public Optional<? extends SlaveEnergyReading> find(final Meter meter, final LocalDateTime dateTime) {
-    return repository.findByMeterAndDateTime((MeterEntity) meter, dateTime);
+  public Optional<? extends SlaveEnergyReading> find(final Meter meter, final LocalDateTime localDateTime) {
+    return repository.findByMeterAndLocalDateTime((MeterEntity) meter, localDateTime);
   }
 
 }

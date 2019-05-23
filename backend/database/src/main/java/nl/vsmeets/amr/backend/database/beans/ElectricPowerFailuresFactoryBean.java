@@ -55,10 +55,10 @@ public class ElectricPowerFailuresFactoryBean implements ElectricPowerFailuresFa
   }
 
   @Override
-  public ElectricPowerFailures create(final Meter meter, final LocalDateTime dateTime, final Integer nrOfPowerFailures,
-      final Integer nrOfLongPowerFailures) throws ConstraintViolationException {
+  public ElectricPowerFailures create(final Meter meter, final LocalDateTime localDateTime,
+      final Integer nrOfPowerFailures, final Integer nrOfLongPowerFailures) throws ConstraintViolationException {
     final ElectricPowerFailuresEntity electricPowerFailures =
-        new ElectricPowerFailuresEntity((MeterEntity) meter, dateTime, nrOfPowerFailures, nrOfLongPowerFailures);
+        new ElectricPowerFailuresEntity((MeterEntity) meter, localDateTime, nrOfPowerFailures, nrOfLongPowerFailures);
     try {
       final ElectricPowerFailuresEntity entity = repository.save(electricPowerFailures);
       repository.refresh(entity);
@@ -69,8 +69,8 @@ public class ElectricPowerFailuresFactoryBean implements ElectricPowerFailuresFa
   }
 
   @Override
-  public Optional<? extends ElectricPowerFailures> find(final Meter meter, final LocalDateTime dateTime) {
-    return repository.findByMeterAndDateTime((MeterEntity) meter, dateTime);
+  public Optional<? extends ElectricPowerFailures> find(final Meter meter, final LocalDateTime localDateTime) {
+    return repository.findByMeterAndLocalDateTime((MeterEntity) meter, localDateTime);
   }
 
 }

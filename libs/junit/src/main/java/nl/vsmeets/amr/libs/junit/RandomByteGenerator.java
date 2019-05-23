@@ -24,12 +24,27 @@ package nl.vsmeets.amr.libs.junit;
 public interface RandomByteGenerator extends RandomIntGenerator {
 
   /**
-   * Create a random <code>byte</code>.
+   * Create a random <code>byte</code> that is guaranteed not equal to an element
+   * of <code>notEqualTo</code>.
    *
+   * @param notEqualTo
+   *        The values that are not allowed.
    * @return A random <code>byte</code>.
    */
-  default byte randomByte() {
-    return (byte) randomInt();
+  default byte randomByte(final byte... notEqualTo) {
+    final byte randomValue = (byte) randomInt();
+    boolean alreadyUsed = false;
+    for (final byte b : notEqualTo) {
+      if (randomValue == b) {
+        alreadyUsed = true;
+        break;
+      }
+    }
+    if (alreadyUsed) {
+      return randomByte(notEqualTo);
+    } else {
+      return randomValue;
+    }
   }
 
 }
