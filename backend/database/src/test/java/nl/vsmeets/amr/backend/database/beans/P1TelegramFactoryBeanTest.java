@@ -68,13 +68,12 @@ class P1TelegramFactoryBeanTest implements RandomByteGenerator, RandomStringGene
 
     final P1Telegram result = assertDoesNotThrow(() -> testObject.create(site, headerInformation, versionInformation));
     verify(repository).refresh(any(P1TelegramEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(site, result.getSite()),
-        () -> assertEquals(headerInformation, result.getHeaderInformation()),
-        () -> assertEquals(versionInformation, result.getVersionInformation()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(site, result.getSite()), //
+        () -> assertEquals(headerInformation, result.getHeaderInformation()), //
+        () -> assertEquals(versionInformation, result.getVersionInformation()) //
+    );
   }
 
   @Test

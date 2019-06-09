@@ -66,14 +66,13 @@ class ElectricPowerFailuresEntityTest implements RandomLocalDateTimeGenerator {
     final ElectricPowerFailuresEntity electricPowerFailuresEntity =
         new ElectricPowerFailuresEntity(meter1, localDateTime1, nrOfPowerFailures1, nrOfLongPowerFailures1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(meter1, electricPowerFailuresEntity.getMeter()),
-        () -> assertEquals(localDateTime1, electricPowerFailuresEntity.getLocalDateTime()),
-        () -> assertEquals(nrOfPowerFailures1, electricPowerFailuresEntity.getNrOfPowerFailures()),
-        () -> assertEquals(nrOfLongPowerFailures1, electricPowerFailuresEntity.getNrOfLongPowerFailures()),
-        () -> assertNull( electricPowerFailuresEntity.getElectricPowerFailureEvents()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(meter1, electricPowerFailuresEntity.getMeter()), //
+        () -> assertEquals(localDateTime1, electricPowerFailuresEntity.getLocalDateTime()), //
+        () -> assertEquals(nrOfPowerFailures1, electricPowerFailuresEntity.getNrOfPowerFailures()), //
+        () -> assertEquals(nrOfLongPowerFailures1, electricPowerFailuresEntity.getNrOfLongPowerFailures()), //
+        () -> assertNull(electricPowerFailuresEntity.getElectricPowerFailureEvents()) //
+    );
   }
 
   @Test
@@ -100,15 +99,14 @@ class ElectricPowerFailuresEntityTest implements RandomLocalDateTimeGenerator {
     final ElectricPowerFailuresEntity electricPowerFailuresEntity =
         new ElectricPowerFailuresEntity(meter1, localDateTime1, nrOfPowerFailures1, nrOfLongPowerFailures1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(electricPowerFailuresEntity.toString()),
-        () -> assertTrue(electricPowerFailuresEntity.toString().contains(electricPowerFailuresEntity.getClass().getSimpleName())),
-        () -> assertTrue(electricPowerFailuresEntity.toString().contains(localDateTime1.toString())),
-        () -> assertTrue(electricPowerFailuresEntity.toString().contains(nrOfPowerFailures1.toString())),
-        () -> assertTrue(electricPowerFailuresEntity.toString().contains(nrOfLongPowerFailures1.toString()))
-        );
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(electricPowerFailuresEntity.toString()), //
+        () -> assertTrue(
+            electricPowerFailuresEntity.toString().contains(electricPowerFailuresEntity.getClass().getSimpleName())), //
+        () -> assertTrue(electricPowerFailuresEntity.toString().contains(localDateTime1.toString())), //
+        () -> assertTrue(electricPowerFailuresEntity.toString().contains(nrOfPowerFailures1.toString())), //
+        () -> assertTrue(electricPowerFailuresEntity.toString().contains(nrOfLongPowerFailures1.toString())) //
+    );
   }
 
 }

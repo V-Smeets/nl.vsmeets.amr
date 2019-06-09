@@ -71,13 +71,12 @@ class ThermalEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerato
     final ThermalEnergyReading result =
         assertDoesNotThrow(() -> testObject.create(meter, localDateTime, consumedEnergy));
     verify(repository).refresh(any(ThermalEnergyReadingEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(meter, result.getMeter()),
-        () -> assertEquals(localDateTime, result.getLocalDateTime()),
-        () -> assertEquals(consumedEnergy, result.getConsumedEnergy()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(meter, result.getMeter()), //
+        () -> assertEquals(localDateTime, result.getLocalDateTime()), //
+        () -> assertEquals(consumedEnergy, result.getConsumedEnergy()) //
+    );
   }
 
   @Test

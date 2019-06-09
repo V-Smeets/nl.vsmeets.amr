@@ -68,12 +68,11 @@ class WaterVolumeReadingEntityTest implements RandomLocalDateTimeGenerator {
     final WaterVolumeReadingEntity waterVolumeReadingEntity =
         new WaterVolumeReadingEntity(meter1, localDateTime1, consumedWater1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(meter1, waterVolumeReadingEntity.getMeter()),
-        () -> assertEquals(localDateTime1, waterVolumeReadingEntity.getLocalDateTime()),
-        () -> assertEquals(consumedWater1, waterVolumeReadingEntity.getConsumedWater()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(meter1, waterVolumeReadingEntity.getMeter()), //
+        () -> assertEquals(localDateTime1, waterVolumeReadingEntity.getLocalDateTime()), //
+        () -> assertEquals(consumedWater1, waterVolumeReadingEntity.getConsumedWater()) //
+    );
   }
 
   @Test
@@ -95,14 +94,13 @@ class WaterVolumeReadingEntityTest implements RandomLocalDateTimeGenerator {
     final WaterVolumeReadingEntity waterVolumeReadingEntity =
         new WaterVolumeReadingEntity(meter1, localDateTime1, consumedWater1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(waterVolumeReadingEntity.toString()),
-        () -> assertTrue(waterVolumeReadingEntity.toString().contains(waterVolumeReadingEntity.getClass().getSimpleName())),
-        () -> assertTrue(waterVolumeReadingEntity.toString().contains(localDateTime1.toString())),
-        () -> assertTrue(waterVolumeReadingEntity.toString().contains(consumedWater1.toString()))
-        );
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(waterVolumeReadingEntity.toString()), //
+        () -> assertTrue(
+            waterVolumeReadingEntity.toString().contains(waterVolumeReadingEntity.getClass().getSimpleName())), //
+        () -> assertTrue(waterVolumeReadingEntity.toString().contains(localDateTime1.toString())), //
+        () -> assertTrue(waterVolumeReadingEntity.toString().contains(consumedWater1.toString())) //
+    );
   }
 
 }

@@ -68,12 +68,11 @@ class GasVolumeReadingEntityTest implements RandomLocalDateTimeGenerator {
     final GasVolumeReadingEntity gasVolumeReadingEntity =
         new GasVolumeReadingEntity(meter1, localDateTime1, consumedGas1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(meter1, gasVolumeReadingEntity.getMeter()),
-        () -> assertEquals(localDateTime1, gasVolumeReadingEntity.getLocalDateTime()),
-        () -> assertEquals(consumedGas1, gasVolumeReadingEntity.getConsumedGas()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(meter1, gasVolumeReadingEntity.getMeter()), //
+        () -> assertEquals(localDateTime1, gasVolumeReadingEntity.getLocalDateTime()), //
+        () -> assertEquals(consumedGas1, gasVolumeReadingEntity.getConsumedGas()) //
+    );
   }
 
   @Test
@@ -95,14 +94,12 @@ class GasVolumeReadingEntityTest implements RandomLocalDateTimeGenerator {
     final GasVolumeReadingEntity gasVolumeReadingEntity =
         new GasVolumeReadingEntity(meter1, localDateTime1, consumedGas1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(gasVolumeReadingEntity.toString()),
-        () -> assertTrue(gasVolumeReadingEntity.toString().contains(gasVolumeReadingEntity.getClass().getSimpleName())),
-        () -> assertTrue(gasVolumeReadingEntity.toString().contains(localDateTime1.toString())),
-        () -> assertTrue(gasVolumeReadingEntity.toString().contains(consumedGas1.toString()))
-        );
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(gasVolumeReadingEntity.toString()), //
+        () -> assertTrue(gasVolumeReadingEntity.toString().contains(gasVolumeReadingEntity.getClass().getSimpleName())), //
+        () -> assertTrue(gasVolumeReadingEntity.toString().contains(localDateTime1.toString())), //
+        () -> assertTrue(gasVolumeReadingEntity.toString().contains(consumedGas1.toString())) //
+    );
   }
 
 }

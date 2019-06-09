@@ -72,15 +72,14 @@ class ElectricPhaseVoltageErrorsFactoryBeanTest implements RandomByteGenerator, 
     final ElectricPhaseVoltageErrors result = assertDoesNotThrow(
         () -> testObject.create(meter, localDateTime, phaseNumber, nrOfVoltageSags, nrOfVoltageSwells));
     verify(repository).refresh(any(ElectricPhaseVoltageErrorsEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(meter, result.getMeter()),
-        () -> assertEquals(localDateTime, result.getLocalDateTime()),
-        () -> assertEquals(phaseNumber, result.getPhaseNumber()),
-        () -> assertEquals(nrOfVoltageSags, result.getNrOfVoltageSags()),
-        () -> assertEquals(nrOfVoltageSwells, result.getNrOfVoltageSwells()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(meter, result.getMeter()), //
+        () -> assertEquals(localDateTime, result.getLocalDateTime()), //
+        () -> assertEquals(phaseNumber, result.getPhaseNumber()), //
+        () -> assertEquals(nrOfVoltageSags, result.getNrOfVoltageSags()), //
+        () -> assertEquals(nrOfVoltageSwells, result.getNrOfVoltageSwells()) //
+    );
   }
 
   @Test

@@ -71,13 +71,12 @@ class ElectricPowerFailureEventFactoryBeanTest implements RandomDurationGenerato
     final ElectricPowerFailureEvent result =
         assertDoesNotThrow(() -> testObject.create(electricPowerFailures, endOfFailureTime, failureDuration));
     verify(repository).refresh(any(ElectricPowerFailureEventEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(electricPowerFailures, result.getElectricPowerFailures()),
-        () -> assertEquals(endOfFailureTime, result.getEndOfFailureTime()),
-        () -> assertEquals(failureDuration, result.getFailureDuration()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(electricPowerFailures, result.getElectricPowerFailures()), //
+        () -> assertEquals(endOfFailureTime, result.getEndOfFailureTime()), //
+        () -> assertEquals(failureDuration, result.getFailureDuration()) //
+    );
   }
 
   @Test

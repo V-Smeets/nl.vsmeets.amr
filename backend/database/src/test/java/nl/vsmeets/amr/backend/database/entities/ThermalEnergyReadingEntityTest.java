@@ -68,12 +68,11 @@ class ThermalEnergyReadingEntityTest implements RandomLocalDateTimeGenerator {
     final ThermalEnergyReadingEntity thermalEnergyReadingEntity =
         new ThermalEnergyReadingEntity(meter1, localDateTime1, consumedEnergy1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(meter1, thermalEnergyReadingEntity.getMeter()),
-        () -> assertEquals(localDateTime1, thermalEnergyReadingEntity.getLocalDateTime()),
-        () -> assertEquals(consumedEnergy1, thermalEnergyReadingEntity.getConsumedEnergy()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(meter1, thermalEnergyReadingEntity.getMeter()), //
+        () -> assertEquals(localDateTime1, thermalEnergyReadingEntity.getLocalDateTime()), //
+        () -> assertEquals(consumedEnergy1, thermalEnergyReadingEntity.getConsumedEnergy()) //
+    );
   }
 
   @Test
@@ -96,14 +95,13 @@ class ThermalEnergyReadingEntityTest implements RandomLocalDateTimeGenerator {
     final ThermalEnergyReadingEntity thermalEnergyReadingEntity =
         new ThermalEnergyReadingEntity(meter1, localDateTime1, consumedEnergy1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(thermalEnergyReadingEntity.toString()),
-        () -> assertTrue(thermalEnergyReadingEntity.toString().contains(thermalEnergyReadingEntity.getClass().getSimpleName())),
-        () -> assertTrue(thermalEnergyReadingEntity.toString().contains(localDateTime1.toString())),
-        () -> assertTrue(thermalEnergyReadingEntity.toString().contains(consumedEnergy1.toString()))
-        );
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(thermalEnergyReadingEntity.toString()), //
+        () -> assertTrue(
+            thermalEnergyReadingEntity.toString().contains(thermalEnergyReadingEntity.getClass().getSimpleName())), //
+        () -> assertTrue(thermalEnergyReadingEntity.toString().contains(localDateTime1.toString())), //
+        () -> assertTrue(thermalEnergyReadingEntity.toString().contains(consumedEnergy1.toString())) //
+    );
   }
 
 }

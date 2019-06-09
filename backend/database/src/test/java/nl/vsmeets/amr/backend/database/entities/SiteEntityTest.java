@@ -54,12 +54,11 @@ class SiteEntityTest implements RandomStringGenerator, RandomZoneIdGenerator {
   void testGetters() {
     final SiteEntity siteEntity = new SiteEntity(name1, timeZone1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(name1, siteEntity.getName()),
-        () -> assertEquals(timeZone1, siteEntity.getTimeZone()),
-        () -> assertNull(siteEntity.getP1Telegrams()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(name1, siteEntity.getName()), //
+        () -> assertEquals(timeZone1, siteEntity.getTimeZone()), //
+        () -> assertNull(siteEntity.getP1Telegrams()) //
+    );
   }
 
   @Test
@@ -79,13 +78,12 @@ class SiteEntityTest implements RandomStringGenerator, RandomZoneIdGenerator {
   void testToStringWithParameters() {
     final SiteEntity siteEntity = new SiteEntity(name1, timeZone1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(siteEntity.toString()),
-        () -> assertTrue(siteEntity.toString().contains(siteEntity.getClass().getSimpleName())),
-        () -> assertTrue(siteEntity.toString().contains(name1)),
-        () -> assertTrue(siteEntity.toString().contains(timeZone1.toString())));
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(siteEntity.toString()), //
+        () -> assertTrue(siteEntity.toString().contains(siteEntity.getClass().getSimpleName())), //
+        () -> assertTrue(siteEntity.toString().contains(name1)), //
+        () -> assertTrue(siteEntity.toString().contains(timeZone1.toString())) //
+    );
   }
 
 }

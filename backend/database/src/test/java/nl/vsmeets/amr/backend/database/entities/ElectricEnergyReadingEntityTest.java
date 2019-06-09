@@ -78,14 +78,13 @@ class ElectricEnergyReadingEntityTest implements RandomShortGenerator, RandomLoc
     final ElectricEnergyReadingEntity electricEnergyReadingEntity =
         new ElectricEnergyReadingEntity(meter1, localDateTime1, tariffIndicator1, consumedEnergy1, producedEnergy1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(meter1, electricEnergyReadingEntity.getMeter()),
-        () -> assertEquals(localDateTime1, electricEnergyReadingEntity.getLocalDateTime()),
-        () -> assertEquals(tariffIndicator1, electricEnergyReadingEntity.getTariffIndicator()),
-        () -> assertEquals(consumedEnergy1, electricEnergyReadingEntity.getConsumedEnergy()),
-        () -> assertEquals(producedEnergy1, electricEnergyReadingEntity.getProducedEnergy()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(meter1, electricEnergyReadingEntity.getMeter()), //
+        () -> assertEquals(localDateTime1, electricEnergyReadingEntity.getLocalDateTime()), //
+        () -> assertEquals(tariffIndicator1, electricEnergyReadingEntity.getTariffIndicator()), //
+        () -> assertEquals(consumedEnergy1, electricEnergyReadingEntity.getConsumedEnergy()), //
+        () -> assertEquals(producedEnergy1, electricEnergyReadingEntity.getProducedEnergy()) //
+    );
   }
 
   @Test
@@ -114,15 +113,15 @@ class ElectricEnergyReadingEntityTest implements RandomShortGenerator, RandomLoc
     final ElectricEnergyReadingEntity electricEnergyReadingEntity =
         new ElectricEnergyReadingEntity(meter1, localDateTime1, tariffIndicator1, consumedEnergy1, producedEnergy1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(electricEnergyReadingEntity.toString()),
-        () -> assertTrue(electricEnergyReadingEntity.toString().contains(electricEnergyReadingEntity.getClass().getSimpleName())),
-        () -> assertTrue(electricEnergyReadingEntity.toString().contains(localDateTime1.toString())),
-        () -> assertTrue(electricEnergyReadingEntity.toString().contains(tariffIndicator1.toString())),
-        () -> assertTrue(electricEnergyReadingEntity.toString().contains(consumedEnergy1.toString())),
-        () -> assertTrue(electricEnergyReadingEntity.toString().contains(producedEnergy1.toString())));
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(electricEnergyReadingEntity.toString()), //
+        () -> assertTrue(
+            electricEnergyReadingEntity.toString().contains(electricEnergyReadingEntity.getClass().getSimpleName())), //
+        () -> assertTrue(electricEnergyReadingEntity.toString().contains(localDateTime1.toString())), //
+        () -> assertTrue(electricEnergyReadingEntity.toString().contains(tariffIndicator1.toString())), //
+        () -> assertTrue(electricEnergyReadingEntity.toString().contains(consumedEnergy1.toString())), //
+        () -> assertTrue(electricEnergyReadingEntity.toString().contains(producedEnergy1.toString())) //
+    );
   }
 
 }

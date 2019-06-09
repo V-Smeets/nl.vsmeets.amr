@@ -63,12 +63,11 @@ class ElectricMessageEntityTest implements RandomStringGenerator, RandomLocalDat
   void testGetters() {
     final ElectricMessageEntity electricMessageEntity = new ElectricMessageEntity(meter1, localDateTime1, textMessage1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(meter1, electricMessageEntity.getMeter()),
-        () -> assertEquals(localDateTime1, electricMessageEntity.getLocalDateTime()),
-        () -> assertEquals(textMessage1, electricMessageEntity.getTextMessage()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(meter1, electricMessageEntity.getMeter()), //
+        () -> assertEquals(localDateTime1, electricMessageEntity.getLocalDateTime()), //
+        () -> assertEquals(textMessage1, electricMessageEntity.getTextMessage()) //
+    );
   }
 
   @Test
@@ -89,14 +88,12 @@ class ElectricMessageEntityTest implements RandomStringGenerator, RandomLocalDat
   void testToStringWithParameters() {
     final ElectricMessageEntity electricMessageEntity = new ElectricMessageEntity(meter1, localDateTime1, textMessage1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(electricMessageEntity.toString()),
-        () -> assertTrue(electricMessageEntity.toString().contains(electricMessageEntity.getClass().getSimpleName())),
-        () -> assertTrue(electricMessageEntity.toString().contains(localDateTime1.toString())),
-        () -> assertTrue(electricMessageEntity.toString().contains(textMessage1))
-        );
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(electricMessageEntity.toString()), //
+        () -> assertTrue(electricMessageEntity.toString().contains(electricMessageEntity.getClass().getSimpleName())), //
+        () -> assertTrue(electricMessageEntity.toString().contains(localDateTime1.toString())), //
+        () -> assertTrue(electricMessageEntity.toString().contains(textMessage1)) //
+    );
   }
 
 }

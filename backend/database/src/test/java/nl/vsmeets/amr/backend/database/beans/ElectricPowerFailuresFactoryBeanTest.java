@@ -70,14 +70,13 @@ class ElectricPowerFailuresFactoryBeanTest implements RandomLocalDateTimeGenerat
     final ElectricPowerFailures result =
         assertDoesNotThrow(() -> testObject.create(meter, localDateTime, nrOfPowerFailures, nrOfLongPowerFailures));
     verify(repository).refresh(any(ElectricPowerFailuresEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(meter, result.getMeter()),
-        () -> assertEquals(localDateTime, result.getLocalDateTime()),
-        () -> assertEquals(nrOfPowerFailures, result.getNrOfPowerFailures()),
-        () -> assertEquals(nrOfLongPowerFailures, result.getNrOfLongPowerFailures()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(meter, result.getMeter()), //
+        () -> assertEquals(localDateTime, result.getLocalDateTime()), //
+        () -> assertEquals(nrOfPowerFailures, result.getNrOfPowerFailures()), //
+        () -> assertEquals(nrOfLongPowerFailures, result.getNrOfLongPowerFailures()) //
+    );
   }
 
   @Test

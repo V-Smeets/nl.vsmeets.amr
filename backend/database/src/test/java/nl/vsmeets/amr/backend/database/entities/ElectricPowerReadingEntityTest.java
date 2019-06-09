@@ -73,13 +73,12 @@ class ElectricPowerReadingEntityTest implements RandomLocalDateTimeGenerator {
     final ElectricPowerReadingEntity electricPowerReadingEntity =
         new ElectricPowerReadingEntity(meter1, localDateTime1, consumedPower1, producedPower1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(meter1, electricPowerReadingEntity.getMeter()),
-        () -> assertEquals(localDateTime1, electricPowerReadingEntity.getLocalDateTime()),
-        () -> assertEquals(consumedPower1, electricPowerReadingEntity.getConsumedPower()),
-        () -> assertEquals(producedPower1, electricPowerReadingEntity.getProducedPower()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(meter1, electricPowerReadingEntity.getMeter()), //
+        () -> assertEquals(localDateTime1, electricPowerReadingEntity.getLocalDateTime()), //
+        () -> assertEquals(consumedPower1, electricPowerReadingEntity.getConsumedPower()), //
+        () -> assertEquals(producedPower1, electricPowerReadingEntity.getProducedPower()) //
+    );
   }
 
   @Test
@@ -106,15 +105,14 @@ class ElectricPowerReadingEntityTest implements RandomLocalDateTimeGenerator {
     final ElectricPowerReadingEntity electricPowerReadingEntity =
         new ElectricPowerReadingEntity(meter1, localDateTime1, consumedPower1, producedPower1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(electricPowerReadingEntity.toString()),
-        () -> assertTrue(electricPowerReadingEntity.toString().contains(electricPowerReadingEntity.getClass().getSimpleName())),
-        () -> assertTrue(electricPowerReadingEntity.toString().contains(localDateTime1.toString())),
-        () -> assertTrue(electricPowerReadingEntity.toString().contains(consumedPower1.toString())),
-        () -> assertTrue(electricPowerReadingEntity.toString().contains(producedPower1.toString()))
-        );
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(electricPowerReadingEntity.toString()), //
+        () -> assertTrue(
+            electricPowerReadingEntity.toString().contains(electricPowerReadingEntity.getClass().getSimpleName())), //
+        () -> assertTrue(electricPowerReadingEntity.toString().contains(localDateTime1.toString())), //
+        () -> assertTrue(electricPowerReadingEntity.toString().contains(consumedPower1.toString())), //
+        () -> assertTrue(electricPowerReadingEntity.toString().contains(producedPower1.toString())) //
+    );
   }
 
 }

@@ -74,15 +74,14 @@ class ElectricEnergyReadingFactoryBeanTest implements RandomShortGenerator, Rand
     final ElectricEnergyReading result = assertDoesNotThrow(
         () -> testObject.create(meter, localDateTime, tariffIndicator, consumedEnergy, producedEnergy));
     verify(repository).refresh(any(ElectricEnergyReadingEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(meter, result.getMeter()),
-        () -> assertEquals(localDateTime, result.getLocalDateTime()),
-        () -> assertEquals(tariffIndicator, result.getTariffIndicator()),
-        () -> assertEquals(consumedEnergy, result.getConsumedEnergy()),
-        () -> assertEquals(producedEnergy, result.getProducedEnergy()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(meter, result.getMeter()), //
+        () -> assertEquals(localDateTime, result.getLocalDateTime()), //
+        () -> assertEquals(tariffIndicator, result.getTariffIndicator()), //
+        () -> assertEquals(consumedEnergy, result.getConsumedEnergy()), //
+        () -> assertEquals(producedEnergy, result.getProducedEnergy()) //
+    );
   }
 
   @Test

@@ -69,12 +69,11 @@ class AbstractTableEntityTest implements RandomIntGenerator {
   void testToStringWithParameters() {
     final AbstractTableEntity abstractTableEntity = new AbstractTableEntity(id1) {};
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(abstractTableEntity.toString()),
-        () -> assertTrue(abstractTableEntity.toString().contains(abstractTableEntity.getClass().getSimpleName())),
-        () -> assertTrue(abstractTableEntity.toString().contains(id1.toString())));
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(abstractTableEntity.toString()), //
+        () -> assertTrue(abstractTableEntity.toString().contains(abstractTableEntity.getClass().getSimpleName())), //
+        () -> assertTrue(abstractTableEntity.toString().contains(id1.toString())) //
+    );
   }
 
 }

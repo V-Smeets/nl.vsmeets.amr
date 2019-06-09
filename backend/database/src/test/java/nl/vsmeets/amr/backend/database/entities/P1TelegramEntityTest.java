@@ -64,13 +64,12 @@ class P1TelegramEntityTest implements RandomByteGenerator, RandomStringGenerator
     final P1TelegramEntity p1TelegramEntity =
         new P1TelegramEntity(siteEntity1, headerInformation1, versionInformation1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(siteEntity1, p1TelegramEntity.getSite()),
-        () -> assertEquals(headerInformation1, p1TelegramEntity.getHeaderInformation()),
-        () -> assertEquals(versionInformation1, p1TelegramEntity.getVersionInformation()),
-        () -> assertNull(p1TelegramEntity.getMeters()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(siteEntity1, p1TelegramEntity.getSite()), //
+        () -> assertEquals(headerInformation1, p1TelegramEntity.getHeaderInformation()), //
+        () -> assertEquals(versionInformation1, p1TelegramEntity.getVersionInformation()), //
+        () -> assertNull(p1TelegramEntity.getMeters()) //
+    );
   }
 
   @Test
@@ -92,13 +91,12 @@ class P1TelegramEntityTest implements RandomByteGenerator, RandomStringGenerator
     final P1TelegramEntity p1TelegramEntity =
         new P1TelegramEntity(siteEntity1, headerInformation1, versionInformation1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(p1TelegramEntity.toString()),
-        () -> assertTrue(p1TelegramEntity.toString().contains(p1TelegramEntity.getClass().getSimpleName())),
-        () -> assertTrue(p1TelegramEntity.toString().contains(headerInformation1)),
-        () -> assertTrue(p1TelegramEntity.toString().contains(versionInformation1.toString())));
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(p1TelegramEntity.toString()), //
+        () -> assertTrue(p1TelegramEntity.toString().contains(p1TelegramEntity.getClass().getSimpleName())), //
+        () -> assertTrue(p1TelegramEntity.toString().contains(headerInformation1)), //
+        () -> assertTrue(p1TelegramEntity.toString().contains(versionInformation1.toString())) //
+    );
   }
 
 }

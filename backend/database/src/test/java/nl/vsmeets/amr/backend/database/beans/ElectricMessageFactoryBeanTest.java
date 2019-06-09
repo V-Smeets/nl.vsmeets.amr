@@ -73,13 +73,12 @@ class ElectricMessageFactoryBeanTest implements RandomStringGenerator, RandomLoc
 
     final ElectricMessage result = assertDoesNotThrow(() -> testObject.create(meter, localDateTime, textMessage));
     verify(repository).refresh(any(ElectricMessageEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(meter, result.getMeter()),
-        () -> assertEquals(localDateTime, result.getLocalDateTime()),
-        () -> assertEquals(textMessage, result.getTextMessage()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(meter, result.getMeter()), //
+        () -> assertEquals(localDateTime, result.getLocalDateTime()), //
+        () -> assertEquals(textMessage, result.getTextMessage()) //
+    );
   }
 
   @Test

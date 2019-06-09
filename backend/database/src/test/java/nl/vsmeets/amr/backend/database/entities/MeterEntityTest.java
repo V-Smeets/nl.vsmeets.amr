@@ -64,22 +64,21 @@ class MeterEntityTest implements RandomStringGenerator {
   void testGetters() {
     final MeterEntity meterEntity = new MeterEntity(p1Telegram1, measuredMedium1, equipmentIdentifier1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(p1Telegram1, meterEntity.getP1Telegram()),
-        () -> assertEquals(measuredMedium1, meterEntity.getMeasuredMedium()),
-        () -> assertEquals(equipmentIdentifier1, meterEntity.getEquipmentIdentifier()),
-        () -> assertNull(meterEntity.getElectricEnergyReadings()),
-        () -> assertNull(meterEntity.getElectricPowerReadings()),
-        () -> assertNull(meterEntity.getElectricPowerFailures()),
-        () -> assertNull(meterEntity.getElectricPhaseVoltageErrors()),
-        () -> assertNull(meterEntity.getElectricMessages()),
-        () -> assertNull(meterEntity.getElectricPhasePowerReadings()),
-        () -> assertNull(meterEntity.getGasVolumeReadings()),
-        () -> assertNull(meterEntity.getThermalEnergyReadings()),
-        () -> assertNull(meterEntity.getWaterVolumeReadings()),
-        () -> assertNull(meterEntity.getSlaveEnergyReadings()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(p1Telegram1, meterEntity.getP1Telegram()), //
+        () -> assertEquals(measuredMedium1, meterEntity.getMeasuredMedium()), //
+        () -> assertEquals(equipmentIdentifier1, meterEntity.getEquipmentIdentifier()), //
+        () -> assertNull(meterEntity.getElectricEnergyReadings()), //
+        () -> assertNull(meterEntity.getElectricPowerReadings()), //
+        () -> assertNull(meterEntity.getElectricPowerFailures()), //
+        () -> assertNull(meterEntity.getElectricPhaseVoltageErrors()), //
+        () -> assertNull(meterEntity.getElectricMessages()), //
+        () -> assertNull(meterEntity.getElectricPhasePowerReadings()), //
+        () -> assertNull(meterEntity.getGasVolumeReadings()), //
+        () -> assertNull(meterEntity.getThermalEnergyReadings()), //
+        () -> assertNull(meterEntity.getWaterVolumeReadings()), //
+        () -> assertNull(meterEntity.getSlaveEnergyReadings()) //
+    );
   }
 
   @Test
@@ -100,12 +99,11 @@ class MeterEntityTest implements RandomStringGenerator {
   void testToStringWithParameters() {
     final MeterEntity meterEntity = new MeterEntity(p1Telegram1, measuredMedium1, equipmentIdentifier1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(meterEntity.toString()),
-        () -> assertTrue(meterEntity.toString().contains(meterEntity.getClass().getSimpleName())),
-        () -> assertTrue(meterEntity.toString().contains(equipmentIdentifier1)));
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(meterEntity.toString()), //
+        () -> assertTrue(meterEntity.toString().contains(meterEntity.getClass().getSimpleName())), //
+        () -> assertTrue(meterEntity.toString().contains(equipmentIdentifier1)) //
+    );
   }
 
 }

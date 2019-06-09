@@ -91,16 +91,16 @@ class ElectricPhasePowerReadingEntityTest implements RandomByteGenerator, Random
         new ElectricPhasePowerReadingEntity(meter1, localDateTime1, phaseNumber1, instantaneousVoltage1,
             instantaneousCurrent1, instantaneousConsumedPower1, instantaneousProducedPower1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(meter1, electricPhasePowerReadingEntity.getMeter()),
-        () -> assertEquals(localDateTime1, electricPhasePowerReadingEntity.getLocalDateTime()),
-        () -> assertEquals(phaseNumber1, electricPhasePowerReadingEntity.getPhaseNumber()),
-        () -> assertEquals(instantaneousVoltage1, electricPhasePowerReadingEntity.getInstantaneousVoltage()),
-        () -> assertEquals(instantaneousCurrent1, electricPhasePowerReadingEntity.getInstantaneousCurrent()),
-        () -> assertEquals(instantaneousConsumedPower1, electricPhasePowerReadingEntity.getInstantaneousConsumedPower()),
-        () -> assertEquals(instantaneousProducedPower1, electricPhasePowerReadingEntity.getInstantaneousProducedPower()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(meter1, electricPhasePowerReadingEntity.getMeter()), //
+        () -> assertEquals(localDateTime1, electricPhasePowerReadingEntity.getLocalDateTime()), //
+        () -> assertEquals(phaseNumber1, electricPhasePowerReadingEntity.getPhaseNumber()), //
+        () -> assertEquals(instantaneousVoltage1, electricPhasePowerReadingEntity.getInstantaneousVoltage()), //
+        () -> assertEquals(instantaneousCurrent1, electricPhasePowerReadingEntity.getInstantaneousCurrent()), //
+        () -> assertEquals(instantaneousConsumedPower1,
+            electricPhasePowerReadingEntity.getInstantaneousConsumedPower()), //
+        () -> assertEquals(instantaneousProducedPower1, electricPhasePowerReadingEntity.getInstantaneousProducedPower()) //
+    );
   }
 
   @Test
@@ -135,18 +135,17 @@ class ElectricPhasePowerReadingEntityTest implements RandomByteGenerator, Random
         new ElectricPhasePowerReadingEntity(meter1, localDateTime1, phaseNumber1, instantaneousVoltage1,
             instantaneousCurrent1, instantaneousConsumedPower1, instantaneousProducedPower1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(electricPhasePowerReadingEntity.toString()),
-        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(electricPhasePowerReadingEntity.getClass().getSimpleName())),
-        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(localDateTime1.toString())),
-        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(phaseNumber1.toString())),
-        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(instantaneousVoltage1.toString())),
-        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(instantaneousCurrent1.toString())),
-        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(instantaneousConsumedPower1.toString())),
-        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(instantaneousProducedPower1.toString()))
-        );
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(electricPhasePowerReadingEntity.toString()), //
+        () -> assertTrue(electricPhasePowerReadingEntity.toString()
+            .contains(electricPhasePowerReadingEntity.getClass().getSimpleName())), //
+        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(localDateTime1.toString())), //
+        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(phaseNumber1.toString())), //
+        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(instantaneousVoltage1.toString())), //
+        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(instantaneousCurrent1.toString())), //
+        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(instantaneousConsumedPower1.toString())), //
+        () -> assertTrue(electricPhasePowerReadingEntity.toString().contains(instantaneousProducedPower1.toString())) //
+    );
   }
 
 }

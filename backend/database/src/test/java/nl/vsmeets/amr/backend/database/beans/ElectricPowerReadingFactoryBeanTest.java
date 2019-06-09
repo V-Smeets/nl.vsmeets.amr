@@ -72,14 +72,13 @@ class ElectricPowerReadingFactoryBeanTest implements RandomLocalDateTimeGenerato
     final ElectricPowerReading result =
         assertDoesNotThrow(() -> testObject.create(meter, localDateTime, consumedPower, producedPower));
     verify(repository).refresh(any(ElectricPowerReadingEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(meter, result.getMeter()),
-        () -> assertEquals(localDateTime, result.getLocalDateTime()),
-        () -> assertEquals(consumedPower, result.getConsumedPower()),
-        () -> assertEquals(producedPower, result.getProducedPower()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(meter, result.getMeter()), //
+        () -> assertEquals(localDateTime, result.getLocalDateTime()), //
+        () -> assertEquals(consumedPower, result.getConsumedPower()), //
+        () -> assertEquals(producedPower, result.getProducedPower()) //
+    );
   }
 
   @Test

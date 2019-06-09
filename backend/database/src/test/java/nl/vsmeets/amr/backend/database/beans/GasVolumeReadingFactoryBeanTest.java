@@ -70,13 +70,12 @@ class GasVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
 
     final GasVolumeReading result = assertDoesNotThrow(() -> testObject.create(meter, localDateTime, consumedGas));
     verify(repository).refresh(any(GasVolumeReadingEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(meter, result.getMeter()),
-        () -> assertEquals(localDateTime, result.getLocalDateTime()),
-        () -> assertEquals(consumedGas, result.getConsumedGas()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(meter, result.getMeter()), //
+        () -> assertEquals(localDateTime, result.getLocalDateTime()), //
+        () -> assertEquals(consumedGas, result.getConsumedGas()) //
+    );
   }
 
   @Test

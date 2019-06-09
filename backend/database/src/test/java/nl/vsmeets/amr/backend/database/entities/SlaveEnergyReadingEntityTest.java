@@ -68,12 +68,11 @@ class SlaveEnergyReadingEntityTest implements RandomLocalDateTimeGenerator {
     final SlaveEnergyReadingEntity slaveEnergyReadingEntity =
         new SlaveEnergyReadingEntity(meter1, localDateTime1, consumedEnergy1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(meter1, slaveEnergyReadingEntity.getMeter()),
-        () -> assertEquals(localDateTime1, slaveEnergyReadingEntity.getLocalDateTime()),
-        () -> assertEquals(consumedEnergy1, slaveEnergyReadingEntity.getConsumedEnergy()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(meter1, slaveEnergyReadingEntity.getMeter()), //
+        () -> assertEquals(localDateTime1, slaveEnergyReadingEntity.getLocalDateTime()), //
+        () -> assertEquals(consumedEnergy1, slaveEnergyReadingEntity.getConsumedEnergy()) //
+    );
   }
 
   @Test
@@ -95,14 +94,13 @@ class SlaveEnergyReadingEntityTest implements RandomLocalDateTimeGenerator {
     final SlaveEnergyReadingEntity slaveEnergyReadingEntity =
         new SlaveEnergyReadingEntity(meter1, localDateTime1, consumedEnergy1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(slaveEnergyReadingEntity.toString()),
-        () -> assertTrue(slaveEnergyReadingEntity.toString().contains(slaveEnergyReadingEntity.getClass().getSimpleName())),
-        () -> assertTrue(slaveEnergyReadingEntity.toString().contains(localDateTime1.toString())),
-        () -> assertTrue(slaveEnergyReadingEntity.toString().contains(consumedEnergy1.toString()))
-        );
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(slaveEnergyReadingEntity.toString()), //
+        () -> assertTrue(
+            slaveEnergyReadingEntity.toString().contains(slaveEnergyReadingEntity.getClass().getSimpleName())), //
+        () -> assertTrue(slaveEnergyReadingEntity.toString().contains(localDateTime1.toString())), //
+        () -> assertTrue(slaveEnergyReadingEntity.toString().contains(consumedEnergy1.toString())) //
+    );
   }
 
 }

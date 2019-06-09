@@ -71,14 +71,13 @@ class ElectricPhaseVoltageErrorsEntityTest implements RandomByteGenerator, Rando
     final ElectricPhaseVoltageErrorsEntity electricPhaseVoltageErrorsEntity = new ElectricPhaseVoltageErrorsEntity(
         meter1, localDateTime1, phaseNumber1, nrOfVoltageSags1, nrOfVoltageSwells1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(meter1, electricPhaseVoltageErrorsEntity.getMeter()),
-        () -> assertEquals(localDateTime1, electricPhaseVoltageErrorsEntity.getLocalDateTime()),
-        () -> assertEquals(phaseNumber1, electricPhaseVoltageErrorsEntity.getPhaseNumber()),
-        () -> assertEquals(nrOfVoltageSags1, electricPhaseVoltageErrorsEntity.getNrOfVoltageSags()),
-        () -> assertEquals(nrOfVoltageSwells1, electricPhaseVoltageErrorsEntity.getNrOfVoltageSwells()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(meter1, electricPhaseVoltageErrorsEntity.getMeter()), //
+        () -> assertEquals(localDateTime1, electricPhaseVoltageErrorsEntity.getLocalDateTime()), //
+        () -> assertEquals(phaseNumber1, electricPhaseVoltageErrorsEntity.getPhaseNumber()), //
+        () -> assertEquals(nrOfVoltageSags1, electricPhaseVoltageErrorsEntity.getNrOfVoltageSags()), //
+        () -> assertEquals(nrOfVoltageSwells1, electricPhaseVoltageErrorsEntity.getNrOfVoltageSwells()) //
+    );
   }
 
   @Test
@@ -107,16 +106,15 @@ class ElectricPhaseVoltageErrorsEntityTest implements RandomByteGenerator, Rando
     final ElectricPhaseVoltageErrorsEntity electricPhaseVoltageErrorsEntity = new ElectricPhaseVoltageErrorsEntity(
         meter1, localDateTime1, phaseNumber1, nrOfVoltageSags1, nrOfVoltageSwells1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(electricPhaseVoltageErrorsEntity.toString()),
-        () -> assertTrue(electricPhaseVoltageErrorsEntity.toString().contains(electricPhaseVoltageErrorsEntity.getClass().getSimpleName())),
-        () -> assertTrue(electricPhaseVoltageErrorsEntity.toString().contains(localDateTime1.toString())),
-        () -> assertTrue(electricPhaseVoltageErrorsEntity.toString().contains(phaseNumber1.toString())),
-        () -> assertTrue(electricPhaseVoltageErrorsEntity.toString().contains(nrOfVoltageSags1.toString())),
-        () -> assertTrue(electricPhaseVoltageErrorsEntity.toString().contains(nrOfVoltageSwells1.toString()))
-        );
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(electricPhaseVoltageErrorsEntity.toString()), //
+        () -> assertTrue(electricPhaseVoltageErrorsEntity.toString()
+            .contains(electricPhaseVoltageErrorsEntity.getClass().getSimpleName())), //
+        () -> assertTrue(electricPhaseVoltageErrorsEntity.toString().contains(localDateTime1.toString())), //
+        () -> assertTrue(electricPhaseVoltageErrorsEntity.toString().contains(phaseNumber1.toString())), //
+        () -> assertTrue(electricPhaseVoltageErrorsEntity.toString().contains(nrOfVoltageSags1.toString())), //
+        () -> assertTrue(electricPhaseVoltageErrorsEntity.toString().contains(nrOfVoltageSwells1.toString())) //
+    );
   }
 
 }

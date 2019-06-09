@@ -78,17 +78,16 @@ class ElectricPhasePowerReadingFactoryBeanTest implements RandomByteGenerator, R
         assertDoesNotThrow(() -> testObject.create(meter, localDateTime, phaseNumber, instantaneousVoltage,
             instantaneousCurrent, instantaneousConsumedPower, instantaneousProducedPower));
     verify(repository).refresh(any(ElectricPhasePowerReadingEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(meter, result.getMeter()),
-        () -> assertEquals(localDateTime, result.getLocalDateTime()),
-        () -> assertEquals(phaseNumber, result.getPhaseNumber()),
-        () -> assertEquals(instantaneousVoltage, result.getInstantaneousVoltage()),
-        () -> assertEquals(instantaneousCurrent, result.getInstantaneousCurrent()),
-        () -> assertEquals(instantaneousConsumedPower, result.getInstantaneousConsumedPower()),
-        () -> assertEquals(instantaneousProducedPower, result.getInstantaneousProducedPower()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(meter, result.getMeter()), //
+        () -> assertEquals(localDateTime, result.getLocalDateTime()), //
+        () -> assertEquals(phaseNumber, result.getPhaseNumber()), //
+        () -> assertEquals(instantaneousVoltage, result.getInstantaneousVoltage()), //
+        () -> assertEquals(instantaneousCurrent, result.getInstantaneousCurrent()), //
+        () -> assertEquals(instantaneousConsumedPower, result.getInstantaneousConsumedPower()), //
+        () -> assertEquals(instantaneousProducedPower, result.getInstantaneousProducedPower()) //
+    );
   }
 
   @Test

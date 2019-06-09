@@ -67,12 +67,11 @@ class SiteFactoryBeanTest implements RandomStringGenerator {
 
     final Site result = assertDoesNotThrow(() -> testObject.create(name, timeZone));
     verify(repository).refresh(any(SiteEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(name, result.getName()),
-        () -> assertEquals(timeZone, result.getTimeZone()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(name, result.getName()), //
+        () -> assertEquals(timeZone, result.getTimeZone()) //
+    );
   }
 
   @Test

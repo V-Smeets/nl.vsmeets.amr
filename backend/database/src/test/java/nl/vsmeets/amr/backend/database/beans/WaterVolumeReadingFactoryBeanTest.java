@@ -70,13 +70,12 @@ class WaterVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator 
 
     final WaterVolumeReading result = assertDoesNotThrow(() -> testObject.create(meter, localDateTime, consumedWater));
     verify(repository).refresh(any(WaterVolumeReadingEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(meter, result.getMeter()),
-        () -> assertEquals(localDateTime, result.getLocalDateTime()),
-        () -> assertEquals(consumedWater, result.getConsumedWater()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(meter, result.getMeter()), //
+        () -> assertEquals(localDateTime, result.getLocalDateTime()), //
+        () -> assertEquals(consumedWater, result.getConsumedWater()) //
+    );
   }
 
   @Test

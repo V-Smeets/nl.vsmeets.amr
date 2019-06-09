@@ -67,13 +67,12 @@ class MeterFactoryBeanTest implements RandomStringGenerator {
 
     final Meter result = assertDoesNotThrow(() -> testObject.create(p1Telegram, measuredMedium, equipmentIdentifier));
     verify(repository).refresh(any(MeterEntity.class));
-    // @formatter:off
-    assertAll(
-        () -> assertNull(result.getId()),
-        () -> assertEquals(p1Telegram, result.getP1Telegram()),
-        () -> assertEquals(measuredMedium, result.getMeasuredMedium()),
-        () -> assertEquals(equipmentIdentifier, result.getEquipmentIdentifier()));
-    // @formatter:on
+    assertAll( //
+        () -> assertNull(result.getId()), //
+        () -> assertEquals(p1Telegram, result.getP1Telegram()), //
+        () -> assertEquals(measuredMedium, result.getMeasuredMedium()), //
+        () -> assertEquals(equipmentIdentifier, result.getEquipmentIdentifier()) //
+    );
   }
 
   @Test

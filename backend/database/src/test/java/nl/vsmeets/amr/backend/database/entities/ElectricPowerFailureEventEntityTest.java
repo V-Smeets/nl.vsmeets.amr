@@ -65,12 +65,11 @@ class ElectricPowerFailureEventEntityTest implements RandomDurationGenerator, Ra
     final ElectricPowerFailureEventEntity electricPowerFailureEventEntity =
         new ElectricPowerFailureEventEntity(electricPowerFailures1, endOfFailureTime1, failureDuration1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(electricPowerFailures1, electricPowerFailureEventEntity.getElectricPowerFailures()),
-        () -> assertEquals(endOfFailureTime1, electricPowerFailureEventEntity.getEndOfFailureTime()),
-        () -> assertEquals(failureDuration1, electricPowerFailureEventEntity.getFailureDuration()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(electricPowerFailures1, electricPowerFailureEventEntity.getElectricPowerFailures()), //
+        () -> assertEquals(endOfFailureTime1, electricPowerFailureEventEntity.getEndOfFailureTime()), //
+        () -> assertEquals(failureDuration1, electricPowerFailureEventEntity.getFailureDuration()) //
+    );
   }
 
   @Test
@@ -95,14 +94,13 @@ class ElectricPowerFailureEventEntityTest implements RandomDurationGenerator, Ra
     final ElectricPowerFailureEventEntity electricPowerFailureEventEntity =
         new ElectricPowerFailureEventEntity(electricPowerFailures1, endOfFailureTime1, failureDuration1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(electricPowerFailureEventEntity.toString()),
-        () -> assertTrue(electricPowerFailureEventEntity.toString().contains(electricPowerFailureEventEntity.getClass().getSimpleName())),
-        () -> assertTrue(electricPowerFailureEventEntity.toString().contains(endOfFailureTime1.toString())),
-        () -> assertTrue(electricPowerFailureEventEntity.toString().contains(failureDuration1.toString()))
-        );
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(electricPowerFailureEventEntity.toString()), //
+        () -> assertTrue(electricPowerFailureEventEntity.toString()
+            .contains(electricPowerFailureEventEntity.getClass().getSimpleName())), //
+        () -> assertTrue(electricPowerFailureEventEntity.toString().contains(endOfFailureTime1.toString())), //
+        () -> assertTrue(electricPowerFailureEventEntity.toString().contains(failureDuration1.toString())) //
+    );
   }
 
 }

@@ -53,12 +53,11 @@ class MeasuredMediumEntityTest implements RandomByteGenerator, RandomStringGener
   void testGetters() {
     final MeasuredMediumEntity measuredMediumEntity = new MeasuredMediumEntity(mediumId1, name1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertEquals(mediumId1, measuredMediumEntity.getMediumId()),
-        () -> assertEquals(name1, measuredMediumEntity.getName()),
-        () -> assertNull(measuredMediumEntity.getMeters()));
-    // @formatter:on
+    assertAll( //
+        () -> assertEquals(mediumId1, measuredMediumEntity.getMediumId()), //
+        () -> assertEquals(name1, measuredMediumEntity.getName()), //
+        () -> assertNull(measuredMediumEntity.getMeters()) //
+    );
   }
 
   @Test
@@ -78,13 +77,12 @@ class MeasuredMediumEntityTest implements RandomByteGenerator, RandomStringGener
   void testToStringWithParameters() {
     final MeasuredMediumEntity measuredMediumEntity = new MeasuredMediumEntity(mediumId1, name1);
 
-    // @formatter:off
-    assertAll(
-        () -> assertNotNull(measuredMediumEntity.toString()),
-        () -> assertTrue(measuredMediumEntity.toString().contains(measuredMediumEntity.getClass().getSimpleName())),
-        () -> assertTrue(measuredMediumEntity.toString().contains(mediumId1.toString())),
-        () -> assertTrue(measuredMediumEntity.toString().contains(name1)));
-    // @formatter:on
+    assertAll( //
+        () -> assertNotNull(measuredMediumEntity.toString()), //
+        () -> assertTrue(measuredMediumEntity.toString().contains(measuredMediumEntity.getClass().getSimpleName())), //
+        () -> assertTrue(measuredMediumEntity.toString().contains(mediumId1.toString())), //
+        () -> assertTrue(measuredMediumEntity.toString().contains(name1)) //
+    );
   }
 
 }
