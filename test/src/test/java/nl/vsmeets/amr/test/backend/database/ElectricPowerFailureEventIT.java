@@ -31,6 +31,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import nl.vsmeets.amr.backend.database.BackendDatabaseConfig;
+import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricPowerFailureEvent;
 import nl.vsmeets.amr.backend.database.ElectricPowerFailureEventFactory;
 import nl.vsmeets.amr.backend.database.ElectricPowerFailures;
@@ -219,6 +220,20 @@ class ElectricPowerFailureEventIT implements RandomByteGenerator, RandomDuration
     assertNotNull(id2);
 
     assertNotEquals(id1, id2);
+  }
+
+  @Test
+  void testUnique() {
+    assertAll( //
+        () -> assertThrows(ConstraintViolationException.class,
+            () -> electricPowerFailureEventFactory.create(electricPowerFailures1, endOfFailureTime1, failureDuration1)), //
+        () -> assertThrows(ConstraintViolationException.class,
+            () -> electricPowerFailureEventFactory.create(electricPowerFailures1, endOfFailureTime1, failureDuration2)), //
+        () -> assertDoesNotThrow(
+            () -> electricPowerFailureEventFactory.create(electricPowerFailures2, endOfFailureTime1, failureDuration1)), //
+        () -> assertDoesNotThrow(
+            () -> electricPowerFailureEventFactory.create(electricPowerFailures1, endOfFailureTime2, failureDuration1)) //
+    );
   }
 
 }
