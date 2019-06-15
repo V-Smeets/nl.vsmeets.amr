@@ -37,12 +37,12 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
 
   /**
    * The minimum number of seconds (relative to the epoch) that can be used for a
-   * random date/time. It is about 4000 years before the epoch.
+   * random date/time.
    *
    * @return The minimum number of seconds.
    */
   default long minSeconds() {
-    return -4000L * 365L * 24L * 60L * 60L;
+    return -1970L * 365L * 24L * 60L * 60L;
   }
 
   /**
