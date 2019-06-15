@@ -314,8 +314,8 @@ class ElectricPhasePowerReadingIT implements RandomByteGenerator, RandomLocalDat
   }
 
   @ParameterizedTest
-  @ValueSource(ints = { 0, 1, 9_999 })
-  void testInstantaneousVoltage(final int value) {
+  @ValueSource(shorts = { 0, 1, 9_999 })
+  void testInstantaneousVoltage(final short value) {
     final Quantity<ElectricPotential> instantaneousVoltage = electricPotentialQuantityFactory.create(value, deciVolt);
     final ElectricPhasePowerReading electricPhasePowerReading2 =
         assertDoesNotThrow(() -> electricPhasePowerReadingFactory.create(meter2, localDateTime2, phaseNumber2,
