@@ -18,6 +18,7 @@
   <description>An Automatic Meter Reading (AMR) system for electricity, thermal (heat and cold), gas, water and hot water meters.</description>
 
   <properties>
+    <com.github.snksoft.crc.version>1.0.2</com.github.snksoft.crc.version>
     <com.google.guava.guava-testlib.version>28.1-jre</com.google.guava.guava-testlib.version>
     <javax.measure.unit-api.version>2.0-PRD</javax.measure.unit-api.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
@@ -90,6 +91,16 @@
         <version>${com.google.guava.guava-testlib.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>service-p1telegram-reader</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.snksoft</groupId>
+        <artifactId>crc</artifactId>
+        <version>${com.github.snksoft.crc.version}</version>
+      </dependency>
       <dependency>
         <groupId>javax.measure</groupId>
         <artifactId>unit-api</artifactId>
