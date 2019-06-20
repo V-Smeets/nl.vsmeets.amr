@@ -93,6 +93,11 @@
 
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>service-fileimporter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>service-p1telegram-reader</artifactId>
         <version>${project.version}</version>
       </dependency>

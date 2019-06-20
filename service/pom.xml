@@ -16,6 +16,7 @@
   <description>The modules that provide the services of the application.</description>
 
   <modules>
+    <module>fileimporter</module>
     <module>p1telegram-reader</module>
   </modules>
 
