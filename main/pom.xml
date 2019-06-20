@@ -15,6 +15,10 @@
   <name>${project.groupId}:${project.artifactId}</name>
   <description>The modules that provide the main class of the application.</description>
 
+  <modules>
+    <module>fileimporter</module>
+  </modules>
+
   <build>
     <plugins>
       <plugin>
