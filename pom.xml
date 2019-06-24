@@ -196,6 +196,11 @@
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>${org.jacoco.jacoco-maven-plugin.version}</version>
         </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${org.springframework.boot.spring-boot-dependencies.version}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
