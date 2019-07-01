@@ -30,13 +30,13 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>backend-jms</artifactId>
+      <artifactId>libs-junit</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>libs-junit</artifactId>
+      <artifactId>service-p1telegram-reader</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
