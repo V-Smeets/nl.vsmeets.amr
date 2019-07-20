@@ -21,7 +21,7 @@
     <com.google.guava.guava-testlib.version>28.0-jre</com.google.guava.guava-testlib.version>
     <javax.measure.unit-api.version>2.0-PRD</javax.measure.unit-api.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
-    <maven.compiler.release>8</maven.compiler.release>
+    <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
     <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-failsafe-plugin.version>
