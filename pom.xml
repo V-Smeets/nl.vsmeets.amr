@@ -24,7 +24,10 @@
     <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
+    <org.apache.maven.plugins.maven-compiler-plugin.version>3.8.1</org.apache.maven.plugins.maven-compiler-plugin.version>
     <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-failsafe-plugin.version>
+    <org.apache.maven.plugins.maven-jar-plugin.version>3.1.2</org.apache.maven.plugins.maven-jar-plugin.version>
+    <org.apache.maven.plugins.maven-resources-plugin.version>3.1.0</org.apache.maven.plugins.maven-resources-plugin.version>
     <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-plugin.version>
     <org.jacoco.jacoco-maven-plugin.version>0.8.4</org.jacoco.jacoco-maven-plugin.version>
     <org.springframework.boot.spring-boot-dependencies.version>2.1.5.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
@@ -134,6 +137,11 @@
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>${org.apache.maven.plugins.maven-failsafe-plugin.version}</version>
           <executions>
@@ -144,6 +152,16 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${org.apache.maven.plugins.maven-jar-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${org.apache.maven.plugins.maven-resources-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
