@@ -30,6 +30,8 @@
     <org.apache.maven.plugins.maven-resources-plugin.version>3.1.0</org.apache.maven.plugins.maven-resources-plugin.version>
     <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-plugin.version>
     <org.jacoco.jacoco-maven-plugin.version>0.8.4</org.jacoco.jacoco-maven-plugin.version>
+    <org.mapstruct.mapstruct.version>1.3.0.Final</org.mapstruct.mapstruct.version>
+    <org.projectlombok.lombok.version>1.18.8</org.projectlombok.lombok.version> <!-- In sync with Spring BOM! -->
     <org.springframework.boot.spring-boot-dependencies.version>2.1.5.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
@@ -62,7 +64,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <!-- compile -->
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>backend-database</artifactId>
@@ -75,43 +76,43 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>libs-junit</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>libs-measure</artifactId>
         <version>${project.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava-testlib</artifactId>
+        <version>${com.google.guava.guava-testlib.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>javax.measure</groupId>
         <artifactId>unit-api</artifactId>
         <version>${javax.measure.unit-api.version}</version>
       </dependency>
 
-      <!-- provided -->
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-processor</artifactId>
+        <version>${org.mapstruct.mapstruct.version}</version>
+      </dependency>
 
-      <!-- runtime -->
       <dependency>
         <groupId>tech.units</groupId>
         <artifactId>indriya</artifactId>
         <version>${tech.units.indriya.version}</version>
-        <scope>runtime</scope>
       </dependency>
 
-      <!-- test -->
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>libs-junit</artifactId>
-        <version>${project.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava-testlib</artifactId>
-        <version>${com.google.guava.guava-testlib.version}</version>
-        <scope>test</scope>
-      </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-test</artifactId>
         <version>${org.springframework.boot.spring-boot-dependencies.version}</version>
-        <scope>test</scope>
         <exclusions>
           <exclusion>
             <!-- Replaced by org.junit.jupiter:junit-jupiter-engine -->
@@ -120,8 +121,6 @@
           </exclusion>
         </exclusions>
       </dependency>
-
-      <!-- import -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -139,6 +138,15 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
+          <configuration>
+            <annotationProcessorPaths>
+              <path>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${org.projectlombok.lombok.version}</version>
+              </path>
+            </annotationProcessorPaths>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
