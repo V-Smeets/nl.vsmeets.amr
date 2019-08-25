@@ -39,7 +39,7 @@ public class BackendJmsProperties {
   /**
    * The name of the message header to hold the name of the site.
    */
-  private String headerFieldSite = "X-Site";
+  private String headerFieldSite;
 
   /**
    * The name of the destination to which the received telegrams are sent.
