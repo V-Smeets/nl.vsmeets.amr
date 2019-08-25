@@ -18,6 +18,7 @@ package nl.vsmeets.amr.main.fileimporter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 
 import nl.vsmeets.amr.service.fileimporter.ServiceFileimporterConfig;
 
@@ -32,7 +33,8 @@ import nl.vsmeets.amr.service.fileimporter.ServiceFileimporterConfig;
     // Other modules.
     ServiceFileimporterConfig.class //
 })
-public class FileImporter {
+@PropertySource({ "classpath:amr.main.fileimporter.properties" })
+public class FileImporterConfig {
 
   /**
    * The main entry point.
@@ -41,7 +43,7 @@ public class FileImporter {
    *        The command line arguments.
    */
   public static void main(final String[] args) {
-    SpringApplication.run(FileImporter.class, args);
+    SpringApplication.run(FileImporterConfig.class, args);
   }
 
 }
