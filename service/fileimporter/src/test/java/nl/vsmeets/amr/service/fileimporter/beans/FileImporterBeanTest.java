@@ -15,19 +15,18 @@
  */
 package nl.vsmeets.amr.service.fileimporter.beans;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.internal.matchers.Any;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.DefaultApplicationArguments;
@@ -53,9 +52,22 @@ class FileImporterBeanTest {
   }
 
   @Test
+  void testRunErrorFile() throws Exception {
+    final File tempFile = File.createTempFile("temp", "txt");
+    tempFile.deleteOnExit();
+    final String[] args = new String[] { tempFile.getPath() };
+    final ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+    doThrow(IOException.class).when(p1TelegramReader).save(any(BufferedReader.class));
+
+    fileImporterBean.run(applicationArguments);
+
+    assertEquals(1, fileImporterBean.getExitCode());
+  }
+
+  @Test
   void testRunNoArgument() throws Exception {
-    String[] args = new String[] {};
-    ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+    final String[] args = new String[] {};
+    final ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
 
     fileImporterBean.run(applicationArguments);
 
@@ -64,8 +76,8 @@ class FileImporterBeanTest {
 
   @Test
   void testRunNotAFile() throws Exception {
-    String[] args = new String[] { "NotAFile.txt" };
-    ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+    final String[] args = new String[] { "NotAFile.txt" };
+    final ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
 
     fileImporterBean.run(applicationArguments);
 
@@ -74,28 +86,15 @@ class FileImporterBeanTest {
 
   @Test
   void testRunOneFile() throws Exception {
-    File tempFile = File.createTempFile("temp", "txt");
+    final File tempFile = File.createTempFile("temp", "txt");
     tempFile.deleteOnExit();
-    String[] args = new String[] { tempFile.getPath() };
-    ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+    final String[] args = new String[] { tempFile.getPath() };
+    final ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
 
     fileImporterBean.run(applicationArguments);
 
     verify(p1TelegramReader).save(any(BufferedReader.class));
     assertEquals(0, fileImporterBean.getExitCode());
-  }
-
-  @Test
-  void testRunErrorFile() throws Exception {
-    File tempFile = File.createTempFile("temp", "txt");
-    tempFile.deleteOnExit();
-    String[] args = new String[] { tempFile.getPath() };
-    ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
-    doThrow(IOException.class).when(p1TelegramReader).save(any(BufferedReader.class));
-
-    fileImporterBean.run(applicationArguments);
-
-    assertEquals(1, fileImporterBean.getExitCode());
   }
 
 }

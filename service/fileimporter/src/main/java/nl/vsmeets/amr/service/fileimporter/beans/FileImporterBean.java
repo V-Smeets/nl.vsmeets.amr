@@ -18,6 +18,7 @@ package nl.vsmeets.amr.service.fileimporter.beans;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -51,12 +52,12 @@ public class FileImporterBean implements ApplicationRunner, ExitCodeGenerator {
   private final P1TelegramReader p1TelegramReader;
 
   @Override
-  public void run(ApplicationArguments args) throws Exception {
-    for (String fileName : args.getNonOptionArgs()) {
+  public void run(final ApplicationArguments args) throws Exception {
+    for (final String fileName : args.getNonOptionArgs()) {
       log.debug("Importing file {}", fileName);
       try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
         p1TelegramReader.save(reader);
-      } catch (IOException e) {
+      } catch (final IOException e) {
         log.error("Can't import the file", e);
         usage(1);
         return;
