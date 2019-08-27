@@ -17,6 +17,7 @@ package nl.vsmeets.amr.main.fileimporter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 
@@ -43,7 +44,8 @@ public class FileImporterConfig {
    *        The command line arguments.
    */
   public static void main(final String[] args) {
-    SpringApplication.run(FileImporterConfig.class, args);
+    final ConfigurableApplicationContext context = SpringApplication.run(FileImporterConfig.class, args);
+    context.close();
   }
 
 }
