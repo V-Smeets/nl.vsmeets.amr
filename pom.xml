@@ -18,16 +18,20 @@
   <description>An Automatic Meter Reading (AMR) system for electricity, thermal (heat and cold), gas, water and hot water meters.</description>
 
   <properties>
-    <com.google.guava.guava-testlib.version>28.0-jre</com.google.guava.guava-testlib.version>
+    <com.google.guava.guava-testlib.version>28.1-jre</com.google.guava.guava-testlib.version>
     <javax.measure.unit-api.version>2.0-PRD</javax.measure.unit-api.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
-    <maven.compiler.release>8</maven.compiler.release>
+    <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
+    <org.apache.maven.plugins.maven-compiler-plugin.version>3.8.1</org.apache.maven.plugins.maven-compiler-plugin.version>
     <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-failsafe-plugin.version>
+    <org.apache.maven.plugins.maven-jar-plugin.version>3.1.2</org.apache.maven.plugins.maven-jar-plugin.version>
+    <org.apache.maven.plugins.maven-resources-plugin.version>3.1.0</org.apache.maven.plugins.maven-resources-plugin.version>
     <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-plugin.version>
     <org.jacoco.jacoco-maven-plugin.version>0.8.4</org.jacoco.jacoco-maven-plugin.version>
-    <org.springframework.boot.spring-boot-dependencies.version>2.1.5.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
+    <org.projectlombok.lombok.version>1.18.8</org.projectlombok.lombok.version> <!-- In synch with spring -->
+    <org.springframework.boot.spring-boot-dependencies.version>2.1.7.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -59,7 +63,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <!-- compile -->
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>backend-database</artifactId>
@@ -72,43 +75,43 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>libs-junit</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>libs-measure</artifactId>
         <version>${project.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava-testlib</artifactId>
+        <version>${com.google.guava.guava-testlib.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>javax.measure</groupId>
         <artifactId>unit-api</artifactId>
         <version>${javax.measure.unit-api.version}</version>
       </dependency>
 
-      <!-- provided -->
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${org.projectlombok.lombok.version}</version>
+      </dependency>
 
-      <!-- runtime -->
       <dependency>
         <groupId>tech.units</groupId>
         <artifactId>indriya</artifactId>
         <version>${tech.units.indriya.version}</version>
-        <scope>runtime</scope>
       </dependency>
 
-      <!-- test -->
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>libs-junit</artifactId>
-        <version>${project.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava-testlib</artifactId>
-        <version>${com.google.guava.guava-testlib.version}</version>
-        <scope>test</scope>
-      </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-test</artifactId>
         <version>${org.springframework.boot.spring-boot-dependencies.version}</version>
-        <scope>test</scope>
         <exclusions>
           <exclusion>
             <!-- Replaced by org.junit.jupiter:junit-jupiter-engine -->
@@ -117,8 +120,6 @@
           </exclusion>
         </exclusions>
       </dependency>
-
-      <!-- import -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -134,6 +135,20 @@
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
+          <configuration>
+            <annotationProcessorPaths>
+              <path>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${org.projectlombok.lombok.version}</version>
+              </path>
+            </annotationProcessorPaths>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>${org.apache.maven.plugins.maven-failsafe-plugin.version}</version>
           <executions>
@@ -144,6 +159,16 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${org.apache.maven.plugins.maven-jar-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${org.apache.maven.plugins.maven-resources-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

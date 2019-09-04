@@ -26,7 +26,6 @@ import org.springframework.messaging.MessageHeaders;
 
 import nl.vsmeets.amr.backend.jms.BackendJmsConfig;
 import nl.vsmeets.amr.backend.jms.P1TelegramSender;
-import nl.vsmeets.amr.backend.jms.beans.BackendJmsProperties;
 import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
@@ -43,9 +42,6 @@ import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 class P1TelegramSenderIT implements RandomStringGenerator {
 
   @Autowired
-  private BackendJmsProperties properties;
-
-  @Autowired
   private JmsMessagingTemplate jmsMessagingTemplate;
 
   @Autowired
@@ -55,8 +51,8 @@ class P1TelegramSenderIT implements RandomStringGenerator {
   void testSend() {
     final String site = randomString();
     final String p1Telegram = randomString();
-    final String headerFieldSite = properties.getHeaderFieldSite();
-    final String destinationName = properties.getDestinationName();
+    final String headerFieldSite = "Site";
+    final String destinationName = "client-queue";
 
     p1TelegramSender.send(site, p1Telegram);
 
