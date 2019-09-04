@@ -18,7 +18,7 @@
   <description>An Automatic Meter Reading (AMR) system for electricity, thermal (heat and cold), gas, water and hot water meters.</description>
 
   <properties>
-    <com.google.guava.guava-testlib.version>28.0-jre</com.google.guava.guava-testlib.version>
+    <com.google.guava.guava-testlib.version>28.1-jre</com.google.guava.guava-testlib.version>
     <javax.measure.unit-api.version>2.0-PRD</javax.measure.unit-api.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
     <maven.compiler.release>11</maven.compiler.release>
@@ -30,9 +30,8 @@
     <org.apache.maven.plugins.maven-resources-plugin.version>3.1.0</org.apache.maven.plugins.maven-resources-plugin.version>
     <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-plugin.version>
     <org.jacoco.jacoco-maven-plugin.version>0.8.4</org.jacoco.jacoco-maven-plugin.version>
-    <org.mapstruct.mapstruct.version>1.3.0.Final</org.mapstruct.mapstruct.version>
-    <org.projectlombok.lombok.version>1.18.8</org.projectlombok.lombok.version> <!-- In sync with Spring BOM! -->
-    <org.springframework.boot.spring-boot-dependencies.version>2.1.5.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
+    <org.projectlombok.lombok.version>1.18.8</org.projectlombok.lombok.version> <!-- In synch with spring -->
+    <org.springframework.boot.spring-boot-dependencies.version>2.1.7.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -98,9 +97,9 @@
       </dependency>
 
       <dependency>
-        <groupId>org.mapstruct</groupId>
-        <artifactId>mapstruct-processor</artifactId>
-        <version>${org.mapstruct.mapstruct.version}</version>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${org.projectlombok.lombok.version}</version>
       </dependency>
 
       <dependency>
