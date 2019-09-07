@@ -20,6 +20,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.jms.annotation.EnableJms;
 
+import nl.vsmeets.amr.backend.jms.beans.BackendArtemisConfigurationBean;
 import nl.vsmeets.amr.backend.jms.beans.BackendJmsProperties;
 import nl.vsmeets.amr.backend.jms.beans.P1TelegramSenderBean;
 
@@ -33,6 +34,7 @@ import nl.vsmeets.amr.backend.jms.beans.P1TelegramSenderBean;
 @EnableJms
 @Import({
     // Components in this module.
+    BackendArtemisConfigurationBean.class, //
     BackendJmsProperties.class, //
     P1TelegramSenderBean.class
     // Other modules.

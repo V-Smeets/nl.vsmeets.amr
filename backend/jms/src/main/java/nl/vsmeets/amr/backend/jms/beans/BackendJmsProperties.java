@@ -15,6 +15,11 @@
  */
 package nl.vsmeets.amr.backend.jms.beans;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -37,13 +42,77 @@ import lombok.ToString;
 public class BackendJmsProperties {
 
   /**
-   * The name of the message header to hold the name of the site.
+   * The properties to configure a bridge.
+   *
+   * @author vincent
    */
-  private String headerFieldSite;
+  @NoArgsConstructor
+  @Getter
+  @Setter
+  @ToString
+  static class BridgeProperties {
+
+    /**
+     * The name.
+     */
+    private String name;
+
+    /**
+     * The queue from where the messages are read.
+     */
+    private String queueName;
+
+    /**
+     * The name connection where the messages are forwarded to.
+     */
+    private String staticConnector;
+
+    /**
+     * The user to use at the connector.
+     */
+    private String user;
+
+    /**
+     * The password to use at the connector.
+     */
+    private String password;
+
+    /**
+     * The address to where the messages are forwarded.
+     */
+    private String forwardingAddress;
+
+  }
+
+  /**
+   * The name of the Artemis broker.
+   */
+  private String name;
+
+  /**
+   * The URIs of the static connectors.
+   * <dl>
+   * <dt>key</dt>
+   * <dd>The name of the connector</dd>
+   * <dt>value</dt>
+   * <dd>The URI of the connector</dd>
+   * </dl>
+   */
+  private Map<String, String> connectorUris = new HashMap<>();
+
+  /**
+   * A list of bridge properties.
+   */
+  private List<BridgeProperties> bridges = new ArrayList<>();
 
   /**
    * The name of the destination to which the received telegrams are sent.
    */
   private String destinationName;
+
+  /**
+   * The name of the message header to hold the name of the site.
+   */
+  private String headerFieldSite;
 
 }
