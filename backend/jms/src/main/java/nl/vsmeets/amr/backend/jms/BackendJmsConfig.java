@@ -18,7 +18,6 @@ package nl.vsmeets.amr.backend.jms;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.jms.annotation.EnableJms;
 
 import nl.vsmeets.amr.backend.jms.beans.BackendJmsProperties;
@@ -38,7 +37,6 @@ import nl.vsmeets.amr.backend.jms.beans.P1TelegramSenderBean;
     P1TelegramSenderBean.class
     // Other modules.
 })
-@PropertySource({ "classpath:amr.backend.jms.properties" })
 public class BackendJmsConfig {
 
 }

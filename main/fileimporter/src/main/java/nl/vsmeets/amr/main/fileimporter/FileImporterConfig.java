@@ -19,7 +19,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
 
 import nl.vsmeets.amr.service.fileimporter.ServiceFileimporterConfig;
 
@@ -34,7 +33,6 @@ import nl.vsmeets.amr.service.fileimporter.ServiceFileimporterConfig;
     // Other modules.
     ServiceFileimporterConfig.class //
 })
-@PropertySource({ "classpath:amr.main.fileimporter.properties" })
 public class FileImporterConfig {
 
   /**

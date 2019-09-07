@@ -19,7 +19,6 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
 
 import com.github.snksoft.crc.CRC;
 import com.github.snksoft.crc.CRC.Parameters;
@@ -41,7 +40,6 @@ import nl.vsmeets.amr.service.p1telegram.reader.beans.ServiceP1TelegramReaderPro
     ServiceP1TelegramReaderProperties.class, //
     // Other modules.
     BackendJmsConfig.class })
-@PropertySource({ "classpath:amr.service.p1telegram.reader.properties" })
 public class ServiceP1TelegramReaderConfig {
 
   /**
