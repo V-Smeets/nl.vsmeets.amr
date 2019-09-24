@@ -17,9 +17,15 @@ package nl.vsmeets.amr.backend.jms.beans;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import nl.vsmeets.amr.backend.jms.beans.BackendJmsProperties.BridgeProperties;
 import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
@@ -27,19 +33,47 @@ import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
  *
  * @author vincent
  */
-class BackendJmsPropertiesTest implements RandomStringGenerator {
+class BackendJmsPropertiesTest implements RandomStringGenerator, RandomBridgePropertiesGenerator {
 
   private BackendJmsProperties backendJmsProperties;
+  private String name;
+  private Map<String, String> connectorUris;
+  private List<BridgeProperties> bridges;
   private String destinationName;
   private String headerFieldSite;
 
   @BeforeEach
   void setUp() throws Exception {
     backendJmsProperties = new BackendJmsProperties();
+    name = randomString();
+    backendJmsProperties.setName(name);
+    connectorUris = new HashMap<>();
+    connectorUris.put(randomString(), randomString());
+    backendJmsProperties.setConnectorUris(connectorUris);
+    bridges = new ArrayList<>();
+    bridges.add(RandomBridgeProperties());
+    backendJmsProperties.setBridges(bridges);
     destinationName = randomString();
     backendJmsProperties.setDestinationName(destinationName);
     headerFieldSite = randomString();
     backendJmsProperties.setHeaderFieldSite(headerFieldSite);
+  }
+
+  @Test
+  void testGetBridges() {
+    assertAll( //
+        () -> assertEquals(bridges, backendJmsProperties.getBridges()), //
+        () -> assertEquals(bridges.size(), backendJmsProperties.getBridges().size()) //
+    );
+  }
+
+  @Test
+  void testGetConnectorUris() {
+    assertAll( //
+        () -> assertEquals(connectorUris, backendJmsProperties.getConnectorUris()), //
+        () -> assertEquals(connectorUris.keySet(), backendJmsProperties.getConnectorUris().keySet()), //
+        () -> assertEquals(connectorUris.values(), backendJmsProperties.getConnectorUris().values()) //
+    );
   }
 
   @Test
@@ -50,6 +84,11 @@ class BackendJmsPropertiesTest implements RandomStringGenerator {
   @Test
   void testGetHeaderFieldSite() {
     assertEquals(headerFieldSite, backendJmsProperties.getHeaderFieldSite());
+  }
+
+  @Test
+  void testGetName() {
+    assertEquals(name, backendJmsProperties.getName());
   }
 
   @Test

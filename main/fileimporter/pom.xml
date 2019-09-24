@@ -6,23 +6,23 @@
 
   <parent>
     <groupId>nl.vsmeets.amr</groupId>
-    <artifactId>backend</artifactId>
+    <artifactId>main</artifactId>
     <version>0.0.1</version>
   </parent>
 
-  <artifactId>backend-jms</artifactId>
+  <artifactId>main-fileimporter</artifactId>
   <packaging>jar</packaging>
   <name>${project.groupId}:${project.artifactId}</name>
 
   <dependencies>
     <!-- compile -->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-artemis</artifactId>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>service-fileimporter</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>artemis-jms-server</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
     </dependency>
 
     <!-- provided -->

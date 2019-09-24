@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.backend.jms;
+package nl.vsmeets.amr.service.fileimporter;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -21,22 +21,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for the class {@link BackendJmsConfig}.
+ * Unit tests for the class {@link ServiceFileimporterConfig}.
  *
  * @author vincent
  */
-class BackendJmsConfigTest {
+class ServiceFileimporterConfigTest {
 
-  private BackendJmsConfig backendJmsConfig;
+  private ServiceFileimporterConfig serviceFileimporterConfig;
 
   @BeforeEach
   void setUp() throws Exception {
-    backendJmsConfig = new BackendJmsConfig();
+    serviceFileimporterConfig = new ServiceFileimporterConfig();
   }
 
   @Test
   void test() {
-    assertNotNull(backendJmsConfig);
+    assertNotNull(serviceFileimporterConfig);
   }
 
 }

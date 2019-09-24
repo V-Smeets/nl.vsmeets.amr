@@ -13,30 +13,32 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.backend.jms;
+package nl.vsmeets.amr.service.p1telegram.reader.beans;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
- * Unit tests for the class {@link BackendJmsConfig}.
+ * Properties for this module.
  *
  * @author vincent
  */
-class BackendJmsConfigTest {
+@Component
+@ConfigurationProperties("amr.service.p1telegram.reader")
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+public class ServiceP1TelegramReaderProperties {
 
-  private BackendJmsConfig backendJmsConfig;
-
-  @BeforeEach
-  void setUp() throws Exception {
-    backendJmsConfig = new BackendJmsConfig();
-  }
-
-  @Test
-  void test() {
-    assertNotNull(backendJmsConfig);
-  }
+  /**
+   * The name of this site.
+   */
+  private String site;
 
 }

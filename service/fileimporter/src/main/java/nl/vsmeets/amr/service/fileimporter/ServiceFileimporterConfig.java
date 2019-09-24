@@ -13,32 +13,28 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.backend.jms;
+package nl.vsmeets.amr.service.fileimporter;
 
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Import;
-import org.springframework.jms.annotation.EnableJms;
 
-import nl.vsmeets.amr.backend.jms.beans.BackendArtemisConfigurationBean;
-import nl.vsmeets.amr.backend.jms.beans.BackendJmsProperties;
-import nl.vsmeets.amr.backend.jms.beans.P1TelegramSenderBean;
+import nl.vsmeets.amr.service.fileimporter.beans.FileImporterBean;
+import nl.vsmeets.amr.service.p1telegram.reader.ServiceP1TelegramReaderConfig;
 
 /**
- * The configuration class for JMS backend.
+ * The configuration class for file importer service.
  *
  * @author vincent
  */
 @SpringBootConfiguration
 @EnableAutoConfiguration(exclude = {})
-@EnableJms
 @Import({
     // Components in this module.
-    BackendArtemisConfigurationBean.class, //
-    BackendJmsProperties.class, //
-    P1TelegramSenderBean.class
+    FileImporterBean.class, //
     // Other modules.
+    ServiceP1TelegramReaderConfig.class //
 })
-public class BackendJmsConfig {
+public class ServiceFileimporterConfig {
 
 }

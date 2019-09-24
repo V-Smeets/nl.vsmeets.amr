@@ -13,30 +13,29 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.backend.jms;
+package nl.vsmeets.amr.service.p1telegram.reader;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 /**
- * Unit tests for the class {@link BackendJmsConfig}.
+ * A bean to split a stream of characters into separate P1-Telegrams and forward
+ * them to the server for storage.
  *
  * @author vincent
  */
-class BackendJmsConfigTest {
+public interface P1TelegramReader {
 
-  private BackendJmsConfig backendJmsConfig;
-
-  @BeforeEach
-  void setUp() throws Exception {
-    backendJmsConfig = new BackendJmsConfig();
-  }
-
-  @Test
-  void test() {
-    assertNotNull(backendJmsConfig);
-  }
+  /**
+   * Read P1-Telegrams from the stream and forward them to the server. This method
+   * will return after all data has been read.
+   *
+   * @param bufferedReader
+   *        The stream. All the data will be read. The stream will not be closed
+   *        at the end.
+   * @throws IOException
+   *         There was a problem reading from the stream.
+   */
+  void save(final BufferedReader bufferedReader) throws IOException;
 
 }

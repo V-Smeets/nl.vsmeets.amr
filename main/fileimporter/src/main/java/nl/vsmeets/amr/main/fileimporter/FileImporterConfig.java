@@ -13,32 +13,37 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.backend.jms;
+package nl.vsmeets.amr.main.fileimporter;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
-import org.springframework.jms.annotation.EnableJms;
 
-import nl.vsmeets.amr.backend.jms.beans.BackendArtemisConfigurationBean;
-import nl.vsmeets.amr.backend.jms.beans.BackendJmsProperties;
-import nl.vsmeets.amr.backend.jms.beans.P1TelegramSenderBean;
+import nl.vsmeets.amr.service.fileimporter.ServiceFileimporterConfig;
 
 /**
- * The configuration class for JMS backend.
+ * The main entry point to import P1-Telegrams from a file.
  *
  * @author vincent
  */
 @SpringBootConfiguration
-@EnableAutoConfiguration(exclude = {})
-@EnableJms
 @Import({
     // Components in this module.
-    BackendArtemisConfigurationBean.class, //
-    BackendJmsProperties.class, //
-    P1TelegramSenderBean.class
     // Other modules.
+    ServiceFileimporterConfig.class //
 })
-public class BackendJmsConfig {
+public class FileImporterConfig {
+
+  /**
+   * The main entry point.
+   *
+   * @param args
+   *        The command line arguments.
+   */
+  public static void main(final String[] args) {
+    final ConfigurableApplicationContext context = SpringApplication.run(FileImporterConfig.class, args);
+    context.close();
+  }
 
 }

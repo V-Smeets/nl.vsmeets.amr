@@ -18,6 +18,7 @@
   <description>An Automatic Meter Reading (AMR) system for electricity, thermal (heat and cold), gas, water and hot water meters.</description>
 
   <properties>
+    <com.github.snksoft.crc.version>1.0.2</com.github.snksoft.crc.version>
     <com.google.guava.guava-testlib.version>28.1-jre</com.google.guava.guava-testlib.version>
     <javax.measure.unit-api.version>2.0-PRD</javax.measure.unit-api.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
@@ -91,6 +92,21 @@
       </dependency>
 
       <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>service-fileimporter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>service-p1telegram-reader</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.snksoft</groupId>
+        <artifactId>crc</artifactId>
+        <version>${com.github.snksoft.crc.version}</version>
+      </dependency>
+      <dependency>
         <groupId>javax.measure</groupId>
         <artifactId>unit-api</artifactId>
         <version>${javax.measure.unit-api.version}</version>
@@ -119,6 +135,13 @@
             <artifactId>junit</artifactId>
           </exclusion>
         </exclusions>
+      </dependency>
+      <dependency>
+        <!-- elcipse or junit error. Without this, no junit in eclipse. -->
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-commons</artifactId>
+        <version>1.5.2</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -179,6 +202,11 @@
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>${org.jacoco.jacoco-maven-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${org.springframework.boot.spring-boot-dependencies.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>

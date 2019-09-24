@@ -1,5 +1,0 @@
-amr:
-   backend:
-      jms:
-         header-field-site: X-Site
-         destination-name: client-queue
