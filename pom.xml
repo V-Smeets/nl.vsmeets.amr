@@ -36,7 +36,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-    <tech.units.indriya.version>${javax.measure.unit-api.version}</tech.units.indriya.version>
+    <tech.units.indriya.version>2.0.1</tech.units.indriya.version>
   </properties>
 
   <repositories>
