@@ -20,7 +20,7 @@
   <properties>
     <com.github.snksoft.crc.version>1.0.2</com.github.snksoft.crc.version>
     <com.google.guava.guava-testlib.version>28.1-jre</com.google.guava.guava-testlib.version>
-    <javax.measure.unit-api.version>2.0-PRD</javax.measure.unit-api.version>
+    <javax.measure.unit-api.version>2.0</javax.measure.unit-api.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
     <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
@@ -31,12 +31,13 @@
     <org.apache.maven.plugins.maven-resources-plugin.version>3.1.0</org.apache.maven.plugins.maven-resources-plugin.version>
     <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-plugin.version>
     <org.jacoco.jacoco-maven-plugin.version>0.8.4</org.jacoco.jacoco-maven-plugin.version>
-    <org.projectlombok.lombok.version>1.18.8</org.projectlombok.lombok.version> <!-- In synch with spring -->
     <org.springframework.boot.spring-boot-dependencies.version>2.1.8.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-    <tech.units.indriya.version>${javax.measure.unit-api.version}</tech.units.indriya.version>
+    <tech.units.indriya.version>2.0.1</tech.units.indriya.version>
+    <!-- Keep the following versions in synch with spring. https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-dependency-versions.html -->
+    <org.projectlombok.lombok.version>1.18.8</org.projectlombok.lombok.version>
   </properties>
 
   <repositories>
