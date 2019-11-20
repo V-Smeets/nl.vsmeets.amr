@@ -138,13 +138,6 @@
         </exclusions>
       </dependency>
       <dependency>
-        <!-- elcipse or junit error. Without this, no junit in eclipse. -->
-        <groupId>org.junit.platform</groupId>
-        <artifactId>junit-platform-commons</artifactId>
-        <version>1.5.2</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
         <version>${org.springframework.boot.spring-boot-dependencies.version}</version>
