@@ -131,9 +131,8 @@
         <version>${org.springframework.boot.spring-boot-dependencies.version}</version>
         <exclusions>
           <exclusion>
-            <!-- Replaced by org.junit.jupiter:junit-jupiter-engine -->
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
