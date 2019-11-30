@@ -7,7 +7,7 @@
   <parent>
     <groupId>nl.vsmeets.amr</groupId>
     <artifactId>parent</artifactId>
-    <version>0.0.1</version>
+    <version>jgitver</version>
   </parent>
 
   <artifactId>libs</artifactId>
