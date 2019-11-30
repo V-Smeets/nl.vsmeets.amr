@@ -37,7 +37,7 @@
     <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <tech.units.indriya.version>2.0.1</tech.units.indriya.version>
     <!-- Keep the following versions in synch with spring. https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-dependency-versions.html -->
-    <org.projectlombok.lombok.version>1.18.8</org.projectlombok.lombok.version>
+    <org.projectlombok.lombok.version>1.18.10</org.projectlombok.lombok.version>
   </properties>
 
   <repositories>
