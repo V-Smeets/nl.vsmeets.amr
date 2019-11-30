@@ -26,18 +26,18 @@
     <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
     <org.apache.maven.plugins.maven-compiler-plugin.version>3.8.1</org.apache.maven.plugins.maven-compiler-plugin.version>
-    <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-failsafe-plugin.version>
-    <org.apache.maven.plugins.maven-jar-plugin.version>3.1.2</org.apache.maven.plugins.maven-jar-plugin.version>
+    <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M4</org.apache.maven.plugins.maven-failsafe-plugin.version>
+    <org.apache.maven.plugins.maven-jar-plugin.version>3.2.0</org.apache.maven.plugins.maven-jar-plugin.version>
     <org.apache.maven.plugins.maven-resources-plugin.version>3.1.0</org.apache.maven.plugins.maven-resources-plugin.version>
-    <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-plugin.version>
-    <org.jacoco.jacoco-maven-plugin.version>0.8.4</org.jacoco.jacoco-maven-plugin.version>
-    <org.springframework.boot.spring-boot-dependencies.version>2.1.8.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
+    <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M4</org.apache.maven.plugins.maven-surefire-plugin.version>
+    <org.jacoco.jacoco-maven-plugin.version>0.8.5</org.jacoco.jacoco-maven-plugin.version>
+    <org.springframework.boot.spring-boot-dependencies.version>2.2.1.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <tech.units.indriya.version>2.0.1</tech.units.indriya.version>
     <!-- Keep the following versions in synch with spring. https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-dependency-versions.html -->
-    <org.projectlombok.lombok.version>1.18.8</org.projectlombok.lombok.version>
+    <org.projectlombok.lombok.version>1.18.10</org.projectlombok.lombok.version>
   </properties>
 
   <repositories>
@@ -131,9 +131,8 @@
         <version>${org.springframework.boot.spring-boot-dependencies.version}</version>
         <exclusions>
           <exclusion>
-            <!-- Replaced by org.junit.jupiter:junit-jupiter-engine -->
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
