@@ -68,7 +68,7 @@ class RandomLocalDateTimeGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -1970L * 365L * 86400L, -1L, 0L, 1L, 4000L * 365L * 86400L })
+  @ValueSource(longs = { -62167219200L, -1L, 0L, 1L, 64092211199L })
   void testRandomLocalDateTimeSeconds(final long randomValue) {
     final long randomEpochSecond = randomValue;
     final int nanoOfSecond = 2;
@@ -82,7 +82,7 @@ class RandomLocalDateTimeGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -1970L * 365L * 86400L, -1L, 0L, 1L, 4000L * 365L * 86400L })
+  @ValueSource(longs = { -62167219200L, -1L, 0L, 1L, 64092211199L })
   void testRandomLocalDateTimeUnique(final long randomValue) {
     final LocalDateTime notEqualTo1 = LocalDateTime.now();
     final LocalDateTime notEqualTo2 = notEqualTo1.plusSeconds(12345L);
@@ -102,7 +102,7 @@ class RandomLocalDateTimeGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -1970L * 365L * 86400L, -1L, 0L, 1L, 4000L * 365L * 86400L })
+  @ValueSource(longs = { -62167219200L, -1L, 0L, 1L, 64092211199L })
   void testRandomLocalDateTimeZeroPrecisionSeconds(final long randomValue) {
     final long randomEpochSecond = randomValue;
     final int offsetSeconds = 3600;
@@ -115,7 +115,7 @@ class RandomLocalDateTimeGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -1970L * 365L * 86400L, -1L, 0L, 1L, 4000L * 365L * 86400L })
+  @ValueSource(longs = { -62167219200L, -1L, 0L, 1L, 64092211199L })
   void testRandomLocalDateTimeZeroPrecisionUnique(final long randomValue) {
     final ZoneOffset zoneOffset = ZoneOffset.UTC;
     final LocalDateTime notEqualTo1 = LocalDateTime.now(zoneOffset).withNano(0);

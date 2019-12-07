@@ -31,7 +31,7 @@ public interface RandomStringGenerator extends RandomIntGenerator {
    * @return A random {@link String}.
    */
   default String randomString(final String... notEqualTo) {
-    return randomStringOfCharacters(8, notEqualTo);
+    return randomStringOfCharacters(StringGeneratorConstants.DEFAULT_STRING_LENGTH, notEqualTo);
   }
 
   /**

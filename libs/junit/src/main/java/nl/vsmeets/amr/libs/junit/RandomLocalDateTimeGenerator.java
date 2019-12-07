@@ -16,6 +16,7 @@
 package nl.vsmeets.amr.libs.junit;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /**
  * An interface that can be included in case a random {@link LocalDateTime} is
@@ -27,12 +28,12 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
 
   /**
    * The maximum number of seconds (relative to the epoch) that can be used for a
-   * random date/time. It is about 4000 years after the epoch.
+   * random date/time.
    *
    * @return The maximum number of seconds.
    */
   default long maxSeconds() {
-    return 4000L * 365L * 24L * 60L * 60L;
+    return LocalDateTimeGeneratorConstants.RANGE_MAXIMUM_DATE_TIME.toEpochSecond(ZoneOffset.UTC);
   }
 
   /**
@@ -42,7 +43,7 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
    * @return The minimum number of seconds.
    */
   default long minSeconds() {
-    return -1970L * 365L * 24L * 60L * 60L;
+    return LocalDateTimeGeneratorConstants.RANGE_MINIMUM_DATE_TIME.toEpochSecond(ZoneOffset.UTC);
   }
 
   /**
