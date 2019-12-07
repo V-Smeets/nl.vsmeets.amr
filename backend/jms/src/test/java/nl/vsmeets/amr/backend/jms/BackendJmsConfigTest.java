@@ -35,7 +35,7 @@ class BackendJmsConfigTest {
   }
 
   @Test
-  void test() {
+  void testConfigExists() {
     assertNotNull(backendJmsConfig);
   }
 
