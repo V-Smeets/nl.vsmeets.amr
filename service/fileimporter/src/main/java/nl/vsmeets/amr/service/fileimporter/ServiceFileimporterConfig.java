@@ -15,11 +15,10 @@
  */
 package nl.vsmeets.amr.service.fileimporter;
 
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import nl.vsmeets.amr.service.fileimporter.beans.FileImporterBean;
 import nl.vsmeets.amr.service.p1telegram.reader.ServiceP1TelegramReaderConfig;
 
 /**
@@ -27,14 +26,9 @@ import nl.vsmeets.amr.service.p1telegram.reader.ServiceP1TelegramReaderConfig;
  *
  * @author vincent
  */
-@SpringBootConfiguration
-@EnableAutoConfiguration(exclude = {})
-@Import({
-    // Components in this module.
-    FileImporterBean.class, //
-    // Other modules.
-    ServiceP1TelegramReaderConfig.class //
-})
+@Configuration
+@ComponentScan
+@Import({ ServiceP1TelegramReaderConfig.class })
 public class ServiceFileimporterConfig {
 
 }

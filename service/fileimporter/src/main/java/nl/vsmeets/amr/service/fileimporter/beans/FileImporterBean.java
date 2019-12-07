@@ -18,6 +18,7 @@ package nl.vsmeets.amr.service.fileimporter.beans;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -55,7 +56,7 @@ public class FileImporterBean implements ApplicationRunner, ExitCodeGenerator {
   public void run(final ApplicationArguments args) throws Exception {
     for (final String fileName : args.getNonOptionArgs()) {
       log.debug("Importing file {}", fileName);
-      try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+      try (BufferedReader reader = new BufferedReader(new FileReader(fileName, StandardCharsets.UTF_8))) {
         p1TelegramReader.save(reader);
       } catch (final IOException e) {
         log.error("Can't import the file", e);
