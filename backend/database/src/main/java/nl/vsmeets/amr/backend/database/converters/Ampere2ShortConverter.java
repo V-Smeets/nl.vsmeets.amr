@@ -61,7 +61,6 @@ public class Ampere2ShortConverter implements AttributeConverter<Quantity<Electr
     return electricCurrentQuantityFactory.create(value, ampere);
   }
 
-  @SuppressWarnings("unchecked")
   private synchronized void autoWire() {
     if (electricCurrentQuantityFactory == null) {
       final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();

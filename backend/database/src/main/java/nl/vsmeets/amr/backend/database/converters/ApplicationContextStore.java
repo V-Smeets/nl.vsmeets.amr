@@ -41,8 +41,18 @@ public class ApplicationContextStore implements ApplicationContextAware {
     return applicationContext;
   }
 
+  /**
+   * Save the applicationContext in a static variable.
+   *
+   * @param applicationContext
+   *        The application context.
+   */
+  private static void setStaticApplicationContext(final ApplicationContext applicationContext) {
+    ApplicationContextStore.applicationContext = applicationContext;
+  }
+
   @Override
   public void setApplicationContext(final ApplicationContext applicationContext) {
-    ApplicationContextStore.applicationContext = applicationContext;
+    setStaticApplicationContext(applicationContext);
   }
 }

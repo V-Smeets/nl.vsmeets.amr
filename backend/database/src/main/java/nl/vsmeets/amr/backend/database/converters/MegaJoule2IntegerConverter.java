@@ -61,7 +61,6 @@ public class MegaJoule2IntegerConverter implements AttributeConverter<Quantity<E
     return energyQuantityFactory.create(value, megaJoule);
   }
 
-  @SuppressWarnings("unchecked")
   private synchronized void autoWire() {
     if (energyQuantityFactory == null) {
       final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();

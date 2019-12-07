@@ -15,27 +15,13 @@
  */
 package nl.vsmeets.amr.backend.database;
 
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import nl.vsmeets.amr.backend.database.beans.ElectricEnergyReadingFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.ElectricMessageFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.ElectricPhasePowerReadingFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.ElectricPhaseVoltageErrorsFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.ElectricPowerFailureEventFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.ElectricPowerFailuresFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.ElectricPowerReadingFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.GasVolumeReadingFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.MeasuredMediumFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.MeterFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.P1TelegramFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.SiteFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.SlaveEnergyReadingFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.ThermalEnergyReadingFactoryBean;
-import nl.vsmeets.amr.backend.database.beans.WaterVolumeReadingFactoryBean;
-import nl.vsmeets.amr.backend.database.converters.ApplicationContextStore;
 import nl.vsmeets.amr.libs.measure.LibsMeasureConfig;
 
 /**
@@ -43,21 +29,12 @@ import nl.vsmeets.amr.libs.measure.LibsMeasureConfig;
  *
  * @author vincent
  */
-@SpringBootConfiguration
-@EnableAutoConfiguration(exclude = {})
+@Configuration
+@ComponentScan
+@EnableJpaRepositories
+@EntityScan
 @EnableTransactionManagement
-@Import({
-    // Components in this module.
-    ElectricEnergyReadingFactoryBean.class, ElectricMessageFactoryBean.class,
-    ElectricPhasePowerReadingFactoryBean.class, ElectricPhaseVoltageErrorsFactoryBean.class,
-    ElectricPowerFailureEventFactoryBean.class, ElectricPowerFailuresFactoryBean.class,
-    ElectricPowerReadingFactoryBean.class, GasVolumeReadingFactoryBean.class, MeasuredMediumFactoryBean.class,
-    MeterFactoryBean.class, P1TelegramFactoryBean.class, SiteFactoryBean.class, SlaveEnergyReadingFactoryBean.class,
-    ThermalEnergyReadingFactoryBean.class, WaterVolumeReadingFactoryBean.class,
-    //
-    ApplicationContextStore.class,
-    // Other modules.
-    LibsMeasureConfig.class })
+@Import({ LibsMeasureConfig.class })
 public class BackendDatabaseConfig {
 
 }

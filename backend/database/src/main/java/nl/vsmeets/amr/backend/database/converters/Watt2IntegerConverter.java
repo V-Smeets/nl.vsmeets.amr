@@ -61,7 +61,6 @@ public class Watt2IntegerConverter implements AttributeConverter<Quantity<Power>
     return powerQuantityFactory.create(value, watt);
   }
 
-  @SuppressWarnings("unchecked")
   private synchronized void autoWire() {
     if (powerQuantityFactory == null) {
       final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();

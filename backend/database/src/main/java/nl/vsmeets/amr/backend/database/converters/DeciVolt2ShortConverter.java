@@ -61,7 +61,6 @@ public class DeciVolt2ShortConverter implements AttributeConverter<Quantity<Elec
     return electricPotentialQuantityFactory.create(value, deciVolt);
   }
 
-  @SuppressWarnings("unchecked")
   private synchronized void autoWire() {
     if (electricPotentialQuantityFactory == null) {
       final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
