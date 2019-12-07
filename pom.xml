@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -15,7 +16,19 @@
   <version>jgitver</version>
   <packaging>pom</packaging>
   <name>${project.groupId}:${project.artifactId}</name>
-  <description>An Automatic Meter Reading (AMR) system for electricity, thermal (heat and cold), gas, water and hot water meters.</description>
+  <description>
+    An Automatic Meter Reading (AMR) system for electricity,
+    thermal (heat and cold), gas, water and hot water meters.
+  </description>
+
+  <modules>
+    <module>backend</module>
+    <module>frontend</module>
+    <module>libs</module>
+    <module>main</module>
+    <module>service</module>
+    <module>test</module>
+  </modules>
 
   <properties>
     <com.github.snksoft.crc.version>1.0.2</com.github.snksoft.crc.version>
@@ -36,32 +49,12 @@
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <tech.units.indriya.version>2.0.1</tech.units.indriya.version>
-    <!-- Keep the following versions in synch with spring. https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-dependency-versions.html -->
+    <!--
+      Keep the following versions in synch with spring.
+      https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-dependency-versions.html
+    -->
     <org.projectlombok.lombok.version>1.18.10</org.projectlombok.lombok.version>
   </properties>
-
-  <repositories>
-    <repository>
-      <id>vsmeets.nl-release</id>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <url>https://vsmeets.nl/mvn/release</url>
-    </repository>
-    <repository>
-      <id>vsmeets.nl-snapshot</id>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <url>https://vsmeets.nl/mvn/snapshot</url>
-    </repository>
-  </repositories>
 
   <dependencyManagement>
     <dependencies>
@@ -85,13 +78,6 @@
         <artifactId>libs-measure</artifactId>
         <version>${project.version}</version>
       </dependency>
-
-      <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava-testlib</artifactId>
-        <version>${com.google.guava.guava-testlib.version}</version>
-      </dependency>
-
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>service-fileimporter</artifactId>
@@ -102,23 +88,27 @@
         <artifactId>service-p1telegram-reader</artifactId>
         <version>${project.version}</version>
       </dependency>
+
       <dependency>
         <groupId>com.github.snksoft</groupId>
         <artifactId>crc</artifactId>
         <version>${com.github.snksoft.crc.version}</version>
       </dependency>
       <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava-testlib</artifactId>
+        <version>${com.google.guava.guava-testlib.version}</version>
+      </dependency>
+      <dependency>
         <groupId>javax.measure</groupId>
         <artifactId>unit-api</artifactId>
         <version>${javax.measure.unit-api.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
         <version>${org.projectlombok.lombok.version}</version>
       </dependency>
-
       <dependency>
         <groupId>tech.units</groupId>
         <artifactId>indriya</artifactId>
@@ -145,6 +135,29 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <repositories>
+    <repository>
+      <id>vsmeets.nl-release</id>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>https://vsmeets.nl/mvn/release</url>
+    </repository>
+    <repository>
+      <id>vsmeets.nl-snapshot</id>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <url>https://vsmeets.nl/mvn/snapshot</url>
+    </repository>
+  </repositories>
 
   <build>
     <pluginManagement>
@@ -240,14 +253,5 @@
       </plugin>
     </plugins>
   </build>
-
-  <modules>
-    <module>backend</module>
-    <module>frontend</module>
-    <module>libs</module>
-    <module>main</module>
-    <module>service</module>
-    <module>test</module>
-  </modules>
 
 </project>
