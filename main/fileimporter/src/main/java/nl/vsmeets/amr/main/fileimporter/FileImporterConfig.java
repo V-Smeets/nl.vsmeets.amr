@@ -16,7 +16,7 @@
 package nl.vsmeets.amr.main.fileimporter;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 
@@ -27,12 +27,8 @@ import nl.vsmeets.amr.service.fileimporter.ServiceFileimporterConfig;
  *
  * @author vincent
  */
-@SpringBootConfiguration
-@Import({
-    // Components in this module.
-    // Other modules.
-    ServiceFileimporterConfig.class //
-})
+@SpringBootApplication
+@Import({ ServiceFileimporterConfig.class })
 public class FileImporterConfig {
 
   /**
