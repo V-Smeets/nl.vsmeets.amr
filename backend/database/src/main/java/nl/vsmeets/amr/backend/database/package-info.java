@@ -13,6 +13,11 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
+/**
+ * This package defines the API to access the database.
+ *
+ * @author vincent
+ */
 package nl.vsmeets.amr.backend.database;
 
 /*
