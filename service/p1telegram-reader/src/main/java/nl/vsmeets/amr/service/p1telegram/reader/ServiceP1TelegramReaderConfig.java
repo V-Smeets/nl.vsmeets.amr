@@ -15,31 +15,24 @@
  */
 package nl.vsmeets.amr.service.p1telegram.reader;
 
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import com.github.snksoft.crc.CRC;
 import com.github.snksoft.crc.CRC.Parameters;
 
 import nl.vsmeets.amr.backend.jms.BackendJmsConfig;
-import nl.vsmeets.amr.service.p1telegram.reader.beans.P1TelegramReaderBean;
-import nl.vsmeets.amr.service.p1telegram.reader.beans.ServiceP1TelegramReaderProperties;
 
 /**
  * The configuration class for service P1 telegram reader.
  *
  * @author vincent
  */
-@SpringBootConfiguration
-@EnableAutoConfiguration(exclude = {})
-@Import({
-    // Components in this module.
-    P1TelegramReaderBean.class, //
-    ServiceP1TelegramReaderProperties.class, //
-    // Other modules.
-    BackendJmsConfig.class })
+@Configuration
+@ComponentScan
+@Import({ BackendJmsConfig.class })
 public class ServiceP1TelegramReaderConfig {
 
   /**

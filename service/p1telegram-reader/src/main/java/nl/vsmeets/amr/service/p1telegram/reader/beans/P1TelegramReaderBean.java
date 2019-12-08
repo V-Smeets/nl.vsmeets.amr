@@ -68,44 +68,45 @@ public class P1TelegramReaderBean implements P1TelegramReader {
       char c = (char) i;
       if (startOfLine) {
         switch (c) {
-        // Start of the Header line.
-        case '/':
-          if (p1TelegramBuffer != null) {
-            log.warn("No CRC line found in the P1 telegram: {}", p1TelegramBuffer);
-          }
-          p1TelegramBuffer = new StringBuilder(P1_TELEGRAM_SIZE);
-          break;
-
-        // Start of the CRC line.
-        case '!':
-          if (p1TelegramBuffer == null) {
-            log.warn("CRC line found without a header line");
+          // Start of the Header line.
+          case '/':
+            if (p1TelegramBuffer != null) {
+              log.warn("No CRC line found in the P1 telegram: {}", p1TelegramBuffer);
+            }
+            p1TelegramBuffer = new StringBuilder(P1_TELEGRAM_SIZE);
             break;
-          }
-          p1TelegramBuffer.append(c);
-          final String p1TelegramWithoutCrc = p1TelegramBuffer.toString();
-          final long calculatedCrc = crc.calculateCRC(p1TelegramWithoutCrc.getBytes(StandardCharsets.US_ASCII));
-          final String crcCharacters = bufferedReader.readLine(); // CRC16 in hex without \r\n
-          if (crcCharacters == null || crcCharacters.length() != 4) {
-            log.warn("Incomplete CRC found. {}", p1TelegramBuffer);
+
+          // Start of the CRC line.
+          case '!':
+            if (p1TelegramBuffer == null) {
+              log.warn("CRC line found without a header line");
+              break;
+            }
+            p1TelegramBuffer.append(c);
+            final String p1TelegramWithoutCrc = p1TelegramBuffer.toString();
+            final long calculatedCrc = crc.calculateCRC(p1TelegramWithoutCrc.getBytes(StandardCharsets.US_ASCII));
+            // Read the CRC16 in hex without \r\n
+            final String crcCharacters = bufferedReader.readLine();
+            if (crcCharacters == null || crcCharacters.length() != 4) {
+              log.warn("Incomplete CRC found. {}", p1TelegramBuffer);
+              p1TelegramBuffer = null;
+              c = '\n';
+              break;
+            }
+            p1TelegramBuffer.append(crcCharacters).append("\r\n");
+            final long expectedCrc = Long.parseLong(crcCharacters, 16);
+            if (calculatedCrc != expectedCrc) {
+              log.warn("Incorrect CRC. Expected: {}, Calculated: {}", expectedCrc, calculatedCrc);
+              c = '\n';
+              break;
+            }
+            p1TelegramSender.send(site, p1TelegramBuffer.toString());
             p1TelegramBuffer = null;
-            c = '\n';
-            break;
-          }
-          p1TelegramBuffer.append(crcCharacters).append("\r\n");
-          final long expectedCrc = Long.parseLong(crcCharacters, 16);
-          if (calculatedCrc != expectedCrc) {
-            log.warn("Incorrect CRC. Expected: {}, Calculated: {}", expectedCrc, calculatedCrc);
-            c = '\n';
-            break;
-          }
-          p1TelegramSender.send(site, p1TelegramBuffer.toString());
-          p1TelegramBuffer = null;
-          startOfLine = true;
-          continue;
+            startOfLine = true;
+            continue;
 
-        default:
-          break;
+          default:
+            break;
         }
       }
       if (p1TelegramBuffer != null) {
