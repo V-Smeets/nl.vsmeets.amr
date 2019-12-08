@@ -33,6 +33,7 @@
   <properties>
     <com.github.snksoft.crc.version>1.0.2</com.github.snksoft.crc.version>
     <com.google.guava.guava-testlib.version>28.1-jre</com.google.guava.guava-testlib.version>
+    <com.mockrunner.mockrunner.version>2.0.1</com.mockrunner.mockrunner.version>
     <javax.measure.unit-api.version>2.0</javax.measure.unit-api.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
     <maven.compiler.release>11</maven.compiler.release>
@@ -98,6 +99,11 @@
         <groupId>com.google.guava</groupId>
         <artifactId>guava-testlib</artifactId>
         <version>${com.google.guava.guava-testlib.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.mockrunner</groupId>
+        <artifactId>mockrunner-jms</artifactId>
+        <version>${com.mockrunner.mockrunner.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.measure</groupId>
