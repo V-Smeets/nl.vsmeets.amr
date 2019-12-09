@@ -32,9 +32,9 @@ public interface ElectricPowerFailuresFactory {
    *        The meter of these failures.
    * @param localDateTime
    *        The local date and time of these failures.
-   * @param consumedPower
+   * @param nrOfPowerFailures
    *        The number of power failures.
-   * @param producedPower
+   * @param nrOfLongPowerFailures
    *        The number of long power failures.
    * @return The {@link ElectricPowerFailures}.
    * @throws ConstraintViolationException
