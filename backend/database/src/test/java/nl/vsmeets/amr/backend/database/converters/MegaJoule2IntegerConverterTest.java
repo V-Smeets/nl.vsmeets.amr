@@ -66,6 +66,7 @@ class MegaJoule2IntegerConverterTest {
     when(energy.getValue()).then(i -> convertToDatabaseColumn);
 
     assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(energy));
+    assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(energy));
   }
 
   @Test

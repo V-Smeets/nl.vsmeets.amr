@@ -53,6 +53,7 @@ class Duration2LongConverterTest implements RandomLongGenerator {
     final Duration attribute = Duration.ofSeconds(dbData);
 
     assertEquals(dbData, testObject.convertToDatabaseColumn(attribute));
+    assertEquals(dbData, testObject.convertToDatabaseColumn(attribute));
   }
 
   @Test

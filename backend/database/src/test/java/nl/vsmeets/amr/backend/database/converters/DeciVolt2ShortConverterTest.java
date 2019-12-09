@@ -66,6 +66,7 @@ class DeciVolt2ShortConverterTest {
     when(electricPotential.getValue()).then(i -> convertToDatabaseColumn);
 
     assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(electricPotential));
+    assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(electricPotential));
   }
 
   @Test

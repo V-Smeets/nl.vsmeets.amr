@@ -36,7 +36,7 @@ import org.springframework.context.ApplicationContext;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class Watt2IntegerConverter2Test {
+class WattHour2IntegerConverterTest {
 
   /**
    * The object under test.
@@ -65,6 +65,7 @@ class Watt2IntegerConverter2Test {
     when(energy.to(wattHour)).then(i -> energy);
     when(energy.getValue()).then(i -> convertToDatabaseColumn);
 
+    assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(energy));
     assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(energy));
   }
 
