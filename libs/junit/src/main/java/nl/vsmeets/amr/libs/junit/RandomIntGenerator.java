@@ -63,7 +63,7 @@ public interface RandomIntGenerator extends RandomGenerator {
     if (endExclusive <= startInclusive) {
       throw new IllegalArgumentException(String.format("Invalid range: %d .. %d", startInclusive, endExclusive));
     }
-    final int randomValue = randomInt(notEqualTo);
+    int randomValue = randomInt(notEqualTo);
     if (randomValue >= startInclusive && randomValue < endExclusive) {
       return randomValue;
     }
@@ -82,17 +82,18 @@ public interface RandomIntGenerator extends RandomGenerator {
         }
       }
       if (alreadyUsed) {
-        return randomIntRange(startInclusive, endExclusive, notEqualTo);
+        randomValue = randomIntRange(startInclusive, endExclusive, notEqualTo);
       } else {
-        return shapedRandomValue;
+        randomValue = shapedRandomValue;
       }
     } else {
       /*
        * Size is more than half of the int range. On average, less than 2 iterations
        * are needed to find a valid value.
        */
-      return randomIntRange(startInclusive, endExclusive, notEqualTo);
+      randomValue = randomIntRange(startInclusive, endExclusive, notEqualTo);
     }
+    return randomValue;
   }
 
 }

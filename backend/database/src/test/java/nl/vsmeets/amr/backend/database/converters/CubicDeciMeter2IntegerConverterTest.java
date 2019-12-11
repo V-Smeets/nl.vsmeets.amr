@@ -66,6 +66,7 @@ class CubicDeciMeter2IntegerConverterTest {
     when(volume.getValue()).then(i -> convertToDatabaseColumn);
 
     assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(volume));
+    assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(volume));
   }
 
   @Test

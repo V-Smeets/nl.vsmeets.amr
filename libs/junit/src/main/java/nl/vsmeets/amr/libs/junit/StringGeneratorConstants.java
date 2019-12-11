@@ -13,36 +13,24 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.service.p1telegram.reader;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-
-import com.github.snksoft.crc.CRC;
-import com.github.snksoft.crc.CRC.Parameters;
-
-import nl.vsmeets.amr.backend.jms.BackendJmsConfig;
+package nl.vsmeets.amr.libs.junit;
 
 /**
- * The configuration class for service P1 telegram reader.
+ * Constant values used by the {@link RandomStringGenerator}.
  *
  * @author vincent
  */
-@Configuration
-@ComponentScan
-@Import({ BackendJmsConfig.class })
-public class ServiceP1TelegramReaderConfig {
+final class StringGeneratorConstants {
 
   /**
-   * A bean that calculates the CRC.
-   *
-   * @return The CRC bean.
+   * The number of characters in a string, in case no length has been defined.
    */
-  @Bean
-  public CRC crc() {
-    return new CRC(Parameters.CRC16);
+  public static final int DEFAULT_STRING_LENGTH = 8;
+
+  /**
+   * No instance can be created.
+   */
+  private StringGeneratorConstants() {
   }
 
 }

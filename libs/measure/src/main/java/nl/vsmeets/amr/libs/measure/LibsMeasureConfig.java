@@ -30,17 +30,15 @@ import javax.measure.spi.ServiceProvider;
 import javax.measure.spi.SystemOfUnits;
 import javax.measure.spi.SystemOfUnitsService;
 
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Spring configuration for the measure library.
  *
  * @author vincent
  */
-@SpringBootConfiguration
-@EnableAutoConfiguration(exclude = {})
+@Configuration
 public class LibsMeasureConfig {
 
   /**

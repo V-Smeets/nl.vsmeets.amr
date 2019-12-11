@@ -13,36 +13,31 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.service.p1telegram.reader;
+package nl.vsmeets.amr.libs.junit;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-
-import com.github.snksoft.crc.CRC;
-import com.github.snksoft.crc.CRC.Parameters;
-
-import nl.vsmeets.amr.backend.jms.BackendJmsConfig;
+import java.time.LocalDateTime;
 
 /**
- * The configuration class for service P1 telegram reader.
+ * Constant values used by the {@link RandomLocalDateTimeGenerator}.
  *
  * @author vincent
  */
-@Configuration
-@ComponentScan
-@Import({ BackendJmsConfig.class })
-public class ServiceP1TelegramReaderConfig {
+final class LocalDateTimeGeneratorConstants {
 
   /**
-   * A bean that calculates the CRC.
-   *
-   * @return The CRC bean.
+   * The minimum value of the allowed date/time range.
    */
-  @Bean
-  public CRC crc() {
-    return new CRC(Parameters.CRC16);
+  public static final LocalDateTime RANGE_MINIMUM_DATE_TIME = LocalDateTime.of(0, 1, 1, 0, 0, 0);
+
+  /**
+   * The maximum value of the allowed date/time range.
+   */
+  public static final LocalDateTime RANGE_MAXIMUM_DATE_TIME = LocalDateTime.of(4000, 12, 31, 23, 59, 59);
+
+  /**
+   * No instance can be created.
+   */
+  private LocalDateTimeGeneratorConstants() {
   }
 
 }

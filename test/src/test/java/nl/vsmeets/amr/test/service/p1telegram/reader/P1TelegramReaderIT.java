@@ -23,6 +23,7 @@ import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.messaging.Message;
@@ -36,22 +37,24 @@ import nl.vsmeets.amr.service.p1telegram.reader.ServiceP1TelegramReaderConfig;
  *
  * @author vincent
  */
-@SpringBootTest( //
-    classes = { ServiceP1TelegramReaderConfig.class }, //
-    properties = { //
-        "amr.backend.jms.name=amr-test", //
-        "amr.backend.jms.connectorUris.self=vm://localhost", //
-        "amr.backend.jms.connectorUris.illegal=Not-Valid", //
-        "amr.backend.jms.bridges[0].name=client-to-server", //
-        "amr.backend.jms.bridges[0].queueName=client-queue", //
-        "amr.backend.jms.bridges[0].staticConnector=self", //
-        "amr.backend.jms.bridges[0].user=user", //
-        "amr.backend.jms.bridges[0].password=password", //
-        "amr.backend.jms.bridges[0].forwardingAddress=server-queue", //
-        "amr.backend.jms.destination-name=client-queue", //
-        "amr.backend.jms.header-field-site=Site", //
-        "amr.service.p1telegram.reader.site=Here" //
+@SpringBootTest(classes = { P1TelegramReaderConfig.class, ServiceP1TelegramReaderConfig.class },
+// @formatter:off
+    properties = {
+        "amr.backend.jms.name=amr-test",
+        "amr.backend.jms.connectorUris.self=vm://localhost",
+        "amr.backend.jms.connectorUris.illegal=Not-Valid",
+        "amr.backend.jms.bridges[0].name=client-to-server",
+        "amr.backend.jms.bridges[0].queueName=client-queue",
+        "amr.backend.jms.bridges[0].staticConnector=self",
+        "amr.backend.jms.bridges[0].user=user",
+        "amr.backend.jms.bridges[0].password=password",
+        "amr.backend.jms.bridges[0].forwardingAddress=server-queue",
+        "amr.backend.jms.destination-name=client-queue",
+        "amr.backend.jms.header-field-site=Site",
+        "amr.service.p1telegram.reader.site=Here"
+    // @formatter:on
     })
+@EnableConfigurationProperties
 class P1TelegramReaderIT {
 
   private static final String CR_NL = "\r\n";

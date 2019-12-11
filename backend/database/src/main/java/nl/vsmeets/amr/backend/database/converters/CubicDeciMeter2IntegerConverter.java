@@ -61,7 +61,6 @@ public class CubicDeciMeter2IntegerConverter implements AttributeConverter<Quant
     return volumeQuantityFactory.create(value, cubicDeciMeter);
   }
 
-  @SuppressWarnings("unchecked")
   private synchronized void autoWire() {
     if (volumeQuantityFactory == null) {
       final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();

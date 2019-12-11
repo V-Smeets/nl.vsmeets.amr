@@ -61,7 +61,6 @@ public class WattHour2IntegerConverter implements AttributeConverter<Quantity<En
     return energyQuantityFactory.create(value, wattHour);
   }
 
-  @SuppressWarnings("unchecked")
   private synchronized void autoWire() {
     if (energyQuantityFactory == null) {
       final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();

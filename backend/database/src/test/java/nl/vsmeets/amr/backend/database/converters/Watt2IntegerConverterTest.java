@@ -66,6 +66,7 @@ class Watt2IntegerConverterTest {
     when(power.getValue()).then(i -> convertToDatabaseColumn);
 
     assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(power));
+    assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(power));
   }
 
   @Test

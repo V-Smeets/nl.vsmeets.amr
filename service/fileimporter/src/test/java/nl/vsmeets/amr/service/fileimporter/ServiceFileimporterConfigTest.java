@@ -35,7 +35,7 @@ class ServiceFileimporterConfigTest {
   }
 
   @Test
-  void test() {
+  void testConfigExists() {
     assertNotNull(serviceFileimporterConfig);
   }
 

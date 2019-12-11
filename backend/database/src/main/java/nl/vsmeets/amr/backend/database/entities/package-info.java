@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2019 Vincent Smeets
+ * Copyright (C) 2018 Vincent Smeets
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -13,22 +13,9 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.service.fileimporter;
-
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-
-import nl.vsmeets.amr.service.p1telegram.reader.ServiceP1TelegramReaderConfig;
-
 /**
- * The configuration class for file importer service.
+ * This package defines the JPA entities to access the database.
  *
  * @author vincent
  */
-@Configuration
-@ComponentScan
-@Import({ ServiceP1TelegramReaderConfig.class })
-public class ServiceFileimporterConfig {
-
-}
+package nl.vsmeets.amr.backend.database.entities;

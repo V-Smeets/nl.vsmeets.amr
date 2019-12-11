@@ -66,6 +66,7 @@ class Ampere2ShortConverterTest {
     when(current.getValue()).then(i -> convertToDatabaseColumn);
 
     assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(current));
+    assertEquals(convertToDatabaseColumn, testObject.convertToDatabaseColumn(current));
   }
 
   @Test

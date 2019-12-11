@@ -15,34 +15,33 @@
  */
 package nl.vsmeets.amr.service.p1telegram.reader;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.github.snksoft.crc.CRC;
-import com.github.snksoft.crc.CRC.Parameters;
-
-import nl.vsmeets.amr.backend.jms.BackendJmsConfig;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
- * The configuration class for service P1 telegram reader.
+ * Unit tests for the class {@link ServiceP1TelegramReaderConfig}.
  *
  * @author vincent
  */
-@Configuration
-@ComponentScan
-@Import({ BackendJmsConfig.class })
-public class ServiceP1TelegramReaderConfig {
+class ServiceP1TelegramReaderConfigTest {
 
-  /**
-   * A bean that calculates the CRC.
-   *
-   * @return The CRC bean.
-   */
-  @Bean
-  public CRC crc() {
-    return new CRC(Parameters.CRC16);
+  private ServiceP1TelegramReaderConfig serviceP1TelegramReaderConfig;
+
+  @BeforeEach
+  void setUp() throws Exception {
+    serviceP1TelegramReaderConfig = new ServiceP1TelegramReaderConfig();
+  }
+
+  @Test
+  void testConfigExists() {
+    assertNotNull(serviceP1TelegramReaderConfig);
+  }
+
+  @Test
+  void testCrc() {
+    assertNotNull(serviceP1TelegramReaderConfig.crc());
   }
 
 }
