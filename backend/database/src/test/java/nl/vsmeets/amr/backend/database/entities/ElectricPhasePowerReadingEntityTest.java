@@ -72,16 +72,20 @@ class ElectricPhasePowerReadingEntityTest implements RandomByteGenerator, Random
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new ElectricPhasePowerReadingEntity());
-    Stream.of(meter1, meter2).forEach(meter -> //
-    Stream.of(localDateTime1, localDateTime2).forEach(localDateTime -> //
-    Stream.of(phaseNumber1, phaseNumber2).forEach(phaseNumber -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(instantaneousVoltage1, instantaneousVoltage2).flatMap(instantaneousVoltage -> //
-        Stream.of(instantaneousCurrent1, instantaneousCurrent2).flatMap(instantaneousCurrent -> //
-        Stream.of(instantaneousConsumedPower1, instantaneousConsumedPower2).flatMap(instantaneousConsumedPower -> //
-        Stream.of(instantaneousProducedPower1, instantaneousProducedPower1).map(instantaneousProducedPower -> //
-        new ElectricPhasePowerReadingEntity(meter, localDateTime, phaseNumber, instantaneousVoltage,
-            instantaneousCurrent, instantaneousConsumedPower, instantaneousProducedPower))))).toArray()))));
+    Stream.of(meter1, meter2).forEach( //
+        meter -> Stream.of(localDateTime1, localDateTime2).forEach( //
+            localDateTime -> Stream.of(phaseNumber1, phaseNumber2).forEach( //
+                phaseNumber -> equalsTester.addEqualityGroup(Stream
+                    .of(instantaneousVoltage1, instantaneousVoltage2).flatMap( //
+                        instantaneousVoltage -> Stream.of(instantaneousCurrent1, instantaneousCurrent2).flatMap( //
+                            instantaneousCurrent -> Stream.of(instantaneousConsumedPower1, instantaneousConsumedPower2)
+                                .flatMap( //
+                                    instantaneousConsumedPower -> Stream
+                                        .of(instantaneousProducedPower1, instantaneousProducedPower1).map( //
+                                            instantaneousProducedPower -> new ElectricPhasePowerReadingEntity(meter,
+                                                localDateTime, phaseNumber, instantaneousVoltage, instantaneousCurrent,
+                                                instantaneousConsumedPower, instantaneousProducedPower)))))
+                    .toArray()))));
     equalsTester.testEquals();
   }
 

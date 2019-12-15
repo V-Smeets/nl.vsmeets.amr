@@ -51,11 +51,10 @@ class ElectricMessageEntityTest implements RandomStringGenerator, RandomLocalDat
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new ElectricMessageEntity());
-    Stream.of(meter1, meter2).forEach(meter -> //
-    Stream.of(localDateTime1, localDateTime2).forEach(localDateTime -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(textMessage1, textMessage2).map(textMessage -> //
-        new ElectricMessageEntity(meter, localDateTime, textMessage)).toArray())));
+    Stream.of(meter1, meter2).forEach( //
+        meter -> Stream.of(localDateTime1, localDateTime2).forEach( //
+            localDateTime -> equalsTester.addEqualityGroup(Stream.of(textMessage1, textMessage2).map( //
+                textMessage -> new ElectricMessageEntity(meter, localDateTime, textMessage)).toArray())));
     equalsTester.testEquals();
   }
 

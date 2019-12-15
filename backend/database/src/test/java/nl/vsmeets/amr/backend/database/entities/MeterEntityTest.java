@@ -51,12 +51,11 @@ class MeterEntityTest implements RandomStringGenerator {
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new MeterEntity());
-    Stream.of(p1Telegram1, p1Telegram2).forEach(p1Telegram -> //
-    Stream.of(measuredMedium1, measuredMedium2).forEach(measuredMedium -> //
-    Stream.of(equipmentIdentifier1, equipmentIdentifier2).forEach(equipmentIdentifier -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(1, 2).map(number -> //
-        new MeterEntity(p1Telegram, measuredMedium, equipmentIdentifier)).toArray()))));
+    Stream.of(p1Telegram1, p1Telegram2).forEach( //
+        p1Telegram -> Stream.of(measuredMedium1, measuredMedium2).forEach( //
+            measuredMedium -> Stream.of(equipmentIdentifier1, equipmentIdentifier2).forEach( //
+                equipmentIdentifier -> equalsTester.addEqualityGroup(Stream.of(1, 2).map( //
+                    number -> new MeterEntity(p1Telegram, measuredMedium, equipmentIdentifier)).toArray()))));
     equalsTester.testEquals();
   }
 

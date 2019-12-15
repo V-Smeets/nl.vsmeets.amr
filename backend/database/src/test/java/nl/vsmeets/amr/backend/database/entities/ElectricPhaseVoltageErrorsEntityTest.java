@@ -55,14 +55,14 @@ class ElectricPhaseVoltageErrorsEntityTest implements RandomByteGenerator, Rando
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new ElectricPhaseVoltageErrorsEntity());
-    Stream.of(meter1, meter2).forEach(meter -> //
-    Stream.of(localDateTime1, localDateTime2).forEach(localDateTime -> //
-    Stream.of(phaseNumber1, phaseNumber2).forEach(phaseNumber -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(nrOfVoltageSags1, nrOfVoltageSags2).flatMap(nrOfVoltageSags -> //
-        Stream.of(nrOfVoltageSwells1, nrOfVoltageSwells2).map(nrOfVoltageSwells -> //
-        new ElectricPhaseVoltageErrorsEntity(meter, localDateTime, phaseNumber, nrOfVoltageSags, nrOfVoltageSwells)))
-            .toArray()))));
+    Stream.of(meter1, meter2).forEach( //
+        meter -> Stream.of(localDateTime1, localDateTime2).forEach( //
+            localDateTime -> Stream.of(phaseNumber1, phaseNumber2).forEach( //
+                phaseNumber -> equalsTester.addEqualityGroup(Stream.of(nrOfVoltageSags1, nrOfVoltageSags2).flatMap( //
+                    nrOfVoltageSags -> Stream.of(nrOfVoltageSwells1, nrOfVoltageSwells2).map( //
+                        nrOfVoltageSwells -> new ElectricPhaseVoltageErrorsEntity(meter, localDateTime, phaseNumber,
+                            nrOfVoltageSags, nrOfVoltageSwells)))
+                    .toArray()))));
     equalsTester.testEquals();
   }
 

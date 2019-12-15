@@ -50,12 +50,11 @@ class P1TelegramEntityTest implements RandomByteGenerator, RandomStringGenerator
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new P1TelegramEntity());
-    Stream.of(siteEntity1, siteEntity2).forEach(siteEntity -> //
-    Stream.of(headerInformation1, headerInformation2).forEach(headerInformation -> //
-    Stream.of(versionInformation1, versionInformation2).forEach(versionInformation -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(1, 2).map(number -> //
-        new P1TelegramEntity(siteEntity, headerInformation, versionInformation)).toArray()))));
+    Stream.of(siteEntity1, siteEntity2).forEach( //
+        siteEntity -> Stream.of(headerInformation1, headerInformation2).forEach( //
+            headerInformation -> Stream.of(versionInformation1, versionInformation2).forEach( //
+                versionInformation -> equalsTester.addEqualityGroup(Stream.of(1, 2).map( //
+                    number -> new P1TelegramEntity(siteEntity, headerInformation, versionInformation)).toArray()))));
     equalsTester.testEquals();
   }
 
