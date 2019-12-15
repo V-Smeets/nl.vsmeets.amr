@@ -34,8 +34,7 @@ public interface RandomDurationGenerator extends RandomIntGenerator, RandomLongG
    * @return A random {@link Duration}.
    */
   default Duration randomDuration(final Duration... notEqualTo) {
-    final Duration randomValue =
-        Duration.ofSeconds(randomLongRange(-999_999_999L, 999_999_999L + 1L), randomIntRange(0, 1_000_000_000));
+    final Duration randomValue = Duration.ofSeconds(randomLong(), randomIntRange(0, 1_000_000_000));
     boolean alreadyUsed = false;
     for (final Duration duration : notEqualTo) {
       if (randomValue.equals(duration)) {
@@ -59,7 +58,7 @@ public interface RandomDurationGenerator extends RandomIntGenerator, RandomLongG
    * @return A random {@link Duration}.
    */
   default Duration randomDurationSeconds(final Duration... notEqualTo) {
-    final Duration randomValue = Duration.ofSeconds(randomLongRange(-999_999_999L, 999_999_999L + 1L));
+    final Duration randomValue = Duration.ofSeconds(randomLong());
     boolean alreadyUsed = false;
     for (final Duration duration : notEqualTo) {
       if (randomValue.equals(duration)) {

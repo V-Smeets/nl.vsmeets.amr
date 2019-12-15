@@ -15,6 +15,8 @@
  */
 package nl.vsmeets.amr.libs.junit;
 
+import nl.vsmeets.amr.libs.junit.impl.StringGeneratorConstants;
+
 /**
  * An interface that can be included in case a random {@link String} is needed.
  *

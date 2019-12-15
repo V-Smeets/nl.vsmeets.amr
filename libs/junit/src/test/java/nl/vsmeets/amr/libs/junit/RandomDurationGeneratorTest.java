@@ -53,7 +53,7 @@ class RandomDurationGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -999_999_999L, -1L, 0L, 1L, 999_999_999L })
+  @ValueSource(longs = { Long.MIN_VALUE, Long.MIN_VALUE + 1L, -1L, 0L, 1L, Long.MAX_VALUE - 1L, Long.MAX_VALUE })
   void testRandomDurationSeconds(final long seconds) {
     final int nanos = 0;
     when(random.nextLong()).thenReturn(seconds);
@@ -63,7 +63,7 @@ class RandomDurationGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -999_999_999L, -1L, 0L, 1L, 999_999_999L })
+  @ValueSource(longs = { Long.MIN_VALUE, Long.MIN_VALUE + 1L, -1L, 0L, 1L, Long.MAX_VALUE - 1L, Long.MAX_VALUE })
   void testRandomDurationSecondsUnique(final long seconds) {
     final Duration notEqualTo1 = Duration.ofSeconds(2L);
     final Duration notEqualTo2 = Duration.ofSeconds(3L);
@@ -74,7 +74,7 @@ class RandomDurationGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(ints = { 0, 1, 999_999_999 })
+  @ValueSource(ints = { 0, 1, 999_999_999 - 1, 999_999_999 })
   void testRandomDurationWithNanos(final int nanos) {
     final long seconds = 0L;
     when(random.nextLong()).thenReturn(seconds);
@@ -85,7 +85,7 @@ class RandomDurationGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -999_999_999L, -1L, 0L, 1L, 999_999_999L })
+  @ValueSource(longs = { Long.MIN_VALUE, Long.MIN_VALUE + 1L, -1L, 0L, 1L, Long.MAX_VALUE - 1L, Long.MAX_VALUE })
   void testRandomDurationWithSeconds(final long seconds) {
     final int nanos = 0;
     when(random.nextLong()).thenReturn(seconds);
@@ -96,7 +96,7 @@ class RandomDurationGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -999_999_999L, -1L, 0L, 1L, 999_999_999L })
+  @ValueSource(longs = { Long.MIN_VALUE, Long.MIN_VALUE + 1L, -1L, 0L, 1L, Long.MAX_VALUE - 1L, Long.MAX_VALUE })
   void testRandomDurationWithSecondsUnique(final long seconds) {
     final Duration notEqualTo1 = Duration.ofSeconds(1L, 2);
     final Duration notEqualTo2 = Duration.ofSeconds(2L, 3);

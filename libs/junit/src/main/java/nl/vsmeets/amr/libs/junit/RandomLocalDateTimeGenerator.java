@@ -16,7 +16,8 @@
 package nl.vsmeets.amr.libs.junit;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+
+import nl.vsmeets.amr.libs.junit.impl.LocalDateTimeGeneratorConstants;
 
 /**
  * An interface that can be included in case a random {@link LocalDateTime} is
@@ -27,26 +28,6 @@ import java.time.ZoneOffset;
 public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, RandomZoneOffsetGenerator {
 
   /**
-   * The maximum number of seconds (relative to the epoch) that can be used for a
-   * random date/time.
-   *
-   * @return The maximum number of seconds.
-   */
-  default long maxSeconds() {
-    return LocalDateTimeGeneratorConstants.RANGE_MAXIMUM_DATE_TIME.toEpochSecond(ZoneOffset.UTC);
-  }
-
-  /**
-   * The minimum number of seconds (relative to the epoch) that can be used for a
-   * random date/time.
-   *
-   * @return The minimum number of seconds.
-   */
-  default long minSeconds() {
-    return LocalDateTimeGeneratorConstants.RANGE_MINIMUM_DATE_TIME.toEpochSecond(ZoneOffset.UTC);
-  }
-
-  /**
    * Create a random {@link LocalDateTime} that is guaranteed not equal to an
    * element of <code>notEqualTo</code>.
    *
@@ -55,7 +36,8 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
    * @return A random {@link LocalDateTime}.
    */
   default LocalDateTime randomLocalDateTime(final LocalDateTime... notEqualTo) {
-    final LocalDateTime randomValue = LocalDateTime.ofEpochSecond(randomLongRange(minSeconds(), maxSeconds() + 1L),
+    final LocalDateTime randomValue = LocalDateTime.ofEpochSecond(
+        randomLongRange(LocalDateTimeGeneratorConstants.MIN_SECONDS, LocalDateTimeGeneratorConstants.MAX_SECONDS + 1L),
         randomIntRange(0, 1_000_000_000), randomZoneOffset());
     boolean alreadyUsed = false;
     for (final LocalDateTime localDateTime : notEqualTo) {
@@ -80,8 +62,9 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
    * @return A random {@link LocalDateTime}.
    */
   default LocalDateTime randomLocalDateTimeZeroPrecision(final LocalDateTime... notEqualTo) {
-    final LocalDateTime randomValue =
-        LocalDateTime.ofEpochSecond(randomLongRange(minSeconds(), maxSeconds() + 1L), 0, randomZoneOffset());
+    final LocalDateTime randomValue = LocalDateTime.ofEpochSecond(
+        randomLongRange(LocalDateTimeGeneratorConstants.MIN_SECONDS, LocalDateTimeGeneratorConstants.MAX_SECONDS + 1L),
+        0, randomZoneOffset());
     boolean alreadyUsed = false;
     for (final LocalDateTime localDateTime : notEqualTo) {
       if (randomValue.equals(localDateTime)) {

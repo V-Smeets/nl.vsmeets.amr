@@ -29,6 +29,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import nl.vsmeets.amr.libs.junit.impl.LocalDateTimeGeneratorConstants;
+
 /**
  * Unit tests for the class {@link RandomLocalDateTimeGenerator}.
  *
@@ -54,7 +56,7 @@ class RandomLocalDateTimeGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(ints = { 0, 1, 999_999_999 })
+  @ValueSource(ints = { 0, 1, 999_999_999 - 1, 999_999_999 })
   void testRandomLocalDateTimeNanos(final int randomValue) {
     final long randomEpochSecond = 2;
     final int nanoOfSecond = randomValue;
@@ -68,11 +70,12 @@ class RandomLocalDateTimeGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -62167219200L, -1L, 0L, 1L, 64092211199L })
+  @ValueSource(longs = { LocalDateTimeGeneratorConstants.MIN_SECONDS, LocalDateTimeGeneratorConstants.MIN_SECONDS + 1,
+      -1L, 0L, 1L, LocalDateTimeGeneratorConstants.MAX_SECONDS - 1, LocalDateTimeGeneratorConstants.MAX_SECONDS })
   void testRandomLocalDateTimeSeconds(final long randomValue) {
     final long randomEpochSecond = randomValue;
-    final int nanoOfSecond = 2;
-    final int offsetSeconds = 3600;
+    final int nanoOfSecond = 0;
+    final int offsetSeconds = 0;
     final ZoneOffset offset = ZoneOffset.ofTotalSeconds(offsetSeconds);
     final LocalDateTime expectedValue = LocalDateTime.ofEpochSecond(randomEpochSecond, nanoOfSecond, offset);
     when(random.nextLong()).thenReturn(randomEpochSecond);
@@ -82,7 +85,8 @@ class RandomLocalDateTimeGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -62167219200L, -1L, 0L, 1L, 64092211199L })
+  @ValueSource(longs = { LocalDateTimeGeneratorConstants.MIN_SECONDS, LocalDateTimeGeneratorConstants.MIN_SECONDS + 1,
+      -1L, 0L, 1L, LocalDateTimeGeneratorConstants.MAX_SECONDS - 1, LocalDateTimeGeneratorConstants.MAX_SECONDS })
   void testRandomLocalDateTimeUnique(final long randomValue) {
     final LocalDateTime notEqualTo1 = LocalDateTime.now();
     final LocalDateTime notEqualTo2 = notEqualTo1.plusSeconds(12345L);
@@ -102,7 +106,8 @@ class RandomLocalDateTimeGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -62167219200L, -1L, 0L, 1L, 64092211199L })
+  @ValueSource(longs = { LocalDateTimeGeneratorConstants.MIN_SECONDS, LocalDateTimeGeneratorConstants.MIN_SECONDS + 1,
+      -1L, 0L, 1L, LocalDateTimeGeneratorConstants.MAX_SECONDS - 1, LocalDateTimeGeneratorConstants.MAX_SECONDS })
   void testRandomLocalDateTimeZeroPrecisionSeconds(final long randomValue) {
     final long randomEpochSecond = randomValue;
     final int offsetSeconds = 3600;
@@ -115,7 +120,8 @@ class RandomLocalDateTimeGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -62167219200L, -1L, 0L, 1L, 64092211199L })
+  @ValueSource(longs = { LocalDateTimeGeneratorConstants.MIN_SECONDS, LocalDateTimeGeneratorConstants.MIN_SECONDS + 1,
+      -1L, 0L, 1L, LocalDateTimeGeneratorConstants.MAX_SECONDS - 1, LocalDateTimeGeneratorConstants.MAX_SECONDS })
   void testRandomLocalDateTimeZeroPrecisionUnique(final long randomValue) {
     final ZoneOffset zoneOffset = ZoneOffset.UTC;
     final LocalDateTime notEqualTo1 = LocalDateTime.now(zoneOffset).withNano(0);

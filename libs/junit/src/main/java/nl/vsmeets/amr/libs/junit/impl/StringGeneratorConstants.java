@@ -13,14 +13,16 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.libs.junit;
+package nl.vsmeets.amr.libs.junit.impl;
+
+import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Constant values used by the {@link RandomStringGenerator}.
  *
  * @author vincent
  */
-final class StringGeneratorConstants {
+public final class StringGeneratorConstants {
 
   /**
    * The number of characters in a string, in case no length has been defined.
