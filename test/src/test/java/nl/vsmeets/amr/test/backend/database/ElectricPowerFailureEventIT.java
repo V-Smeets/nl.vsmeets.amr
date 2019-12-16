@@ -19,12 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -87,8 +87,10 @@ class ElectricPowerFailureEventIT implements RandomByteGenerator, RandomDuration
 
   private final Duration failureDuration1 = randomDurationSeconds();
   private final Duration failureDuration2 = randomDurationSeconds(failureDuration1);
-  private final LocalDateTime endOfFailureTime1 = randomLocalDateTimeZeroPrecision();
-  private final LocalDateTime endOfFailureTime2 = randomLocalDateTimeZeroPrecision(endOfFailureTime1);
+  private final LocalDateTime endOfFailureTime1 = randomLocalDateTimeZeroPrecisionRange(
+      DatabaseConstants.MIN_LOCAL_DATE_TIME, DatabaseConstants.MAX_LOCAL_DATE_TIME);
+  private final LocalDateTime endOfFailureTime2 = randomLocalDateTimeZeroPrecisionRange(
+      DatabaseConstants.MIN_LOCAL_DATE_TIME, DatabaseConstants.MAX_LOCAL_DATE_TIME, endOfFailureTime1);
 
   @Autowired
   private ElectricPowerFailureEventFactory electricPowerFailureEventFactory;
@@ -162,9 +164,8 @@ class ElectricPowerFailureEventIT implements RandomByteGenerator, RandomDuration
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -999_999_999L, -1L, 0L, 1L, 999_999_999L })
-  void testEndOfFailureTime(final long seconds) {
-    final LocalDateTime endOfFailureTime = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.ofTotalSeconds(0));
+  @MethodSource("nl.vsmeets.amr.test.backend.database.DatabaseConstants#validLocalDateTimeValues")
+  void testEndOfFailureTime(final LocalDateTime endOfFailureTime) {
     final ElectricPowerFailureEvent electricPowerFailureEvent2 = assertDoesNotThrow(
         () -> electricPowerFailureEventFactory.create(electricPowerFailures2, endOfFailureTime, failureDuration2));
     assertEquals(endOfFailureTime, electricPowerFailureEvent2.getEndOfFailureTime());
