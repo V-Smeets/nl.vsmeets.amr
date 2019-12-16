@@ -16,8 +16,7 @@
 package nl.vsmeets.amr.libs.junit;
 
 import java.time.LocalDateTime;
-
-import nl.vsmeets.amr.libs.junit.impl.LocalDateTimeGeneratorConstants;
+import java.time.ZoneOffset;
 
 /**
  * An interface that can be included in case a random {@link LocalDateTime} is
@@ -36,9 +35,11 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
    * @return A random {@link LocalDateTime}.
    */
   default LocalDateTime randomLocalDateTime(final LocalDateTime... notEqualTo) {
+    final ZoneOffset offset = ZoneOffset.UTC;
+    final long startInclusiveSeconds = LocalDateTime.MIN.toEpochSecond(offset);
+    final long endExclusiveSeconds = LocalDateTime.MAX.toEpochSecond(offset) + 1L;
     final LocalDateTime randomValue = LocalDateTime.ofEpochSecond(
-        randomLongRange(LocalDateTimeGeneratorConstants.MIN_SECONDS, LocalDateTimeGeneratorConstants.MAX_SECONDS + 1L),
-        randomIntRange(0, 1_000_000_000), randomZoneOffset());
+        randomLongRange(startInclusiveSeconds, endExclusiveSeconds), randomIntRange(0, 1_000_000_000), offset);
     boolean alreadyUsed = false;
     for (final LocalDateTime localDateTime : notEqualTo) {
       if (randomValue.equals(localDateTime)) {
@@ -62,9 +63,11 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
    * @return A random {@link LocalDateTime}.
    */
   default LocalDateTime randomLocalDateTimeZeroPrecision(final LocalDateTime... notEqualTo) {
-    final LocalDateTime randomValue = LocalDateTime.ofEpochSecond(
-        randomLongRange(LocalDateTimeGeneratorConstants.MIN_SECONDS, LocalDateTimeGeneratorConstants.MAX_SECONDS + 1L),
-        0, randomZoneOffset());
+    final ZoneOffset offset = ZoneOffset.UTC;
+    final long startInclusiveSeconds = LocalDateTime.MIN.toEpochSecond(offset);
+    final long endExclusiveSeconds = LocalDateTime.MAX.toEpochSecond(offset) + 1L;
+    final LocalDateTime randomValue =
+        LocalDateTime.ofEpochSecond(randomLongRange(startInclusiveSeconds, endExclusiveSeconds), 0, offset);
     boolean alreadyUsed = false;
     for (final LocalDateTime localDateTime : notEqualTo) {
       if (randomValue.equals(localDateTime)) {
@@ -74,6 +77,42 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
     }
     if (alreadyUsed) {
       return randomLocalDateTimeZeroPrecision(notEqualTo);
+    } else {
+      return randomValue;
+    }
+  }
+
+  /**
+   * Create a random {@link LocalDateTime} within the specified range that is
+   * guaranteed not equal to an element of <code>notEqualTo</code>.
+   *
+   * @param startInclusive
+   *        The lower value of the range. This value is allowed to be returned.
+   * @param endExclusive
+   *        The upper value of the range. This value isn't allowed to be returned.
+   * @param notEqualTo
+   *        The values that are not allowed.
+   * @return A random {@link LocalDateTime}.
+   */
+  default LocalDateTime randomLocalDateTimeZeroPrecisionRange(final LocalDateTime startInclusive,
+      final LocalDateTime endExclusive, final LocalDateTime... notEqualTo) {
+    if (!endExclusive.isAfter(startInclusive)) {
+      throw new IllegalArgumentException(String.format("Invalid range: %s .. %s", startInclusive, endExclusive));
+    }
+    final ZoneOffset offset = ZoneOffset.UTC;
+    final long startInclusiveSeconds = startInclusive.toEpochSecond(offset);
+    final long endExclusiveSeconds = endExclusive.toEpochSecond(offset);
+    final LocalDateTime randomValue =
+        LocalDateTime.ofEpochSecond(randomLongRange(startInclusiveSeconds, endExclusiveSeconds), 0, offset);
+    boolean alreadyUsed = false;
+    for (final LocalDateTime localDateTime : notEqualTo) {
+      if (randomValue.equals(localDateTime)) {
+        alreadyUsed = true;
+        break;
+      }
+    }
+    if (alreadyUsed) {
+      return randomLocalDateTimeZeroPrecisionRange(startInclusive, endExclusive, notEqualTo);
     } else {
       return randomValue;
     }
