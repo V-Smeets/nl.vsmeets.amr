@@ -55,11 +55,10 @@ class SlaveEnergyReadingEntityTest implements RandomLocalDateTimeGenerator {
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new SlaveEnergyReadingEntity());
-    Stream.of(meter1, meter2).forEach(meter -> //
-    Stream.of(localDateTime1, localDateTime2).forEach(localDateTime -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(consumedEnergy1, consumedEnergy2).map(consumedEnergy -> //
-        new SlaveEnergyReadingEntity(meter, localDateTime, consumedEnergy)).toArray())));
+    Stream.of(meter1, meter2).forEach( //
+        meter -> Stream.of(localDateTime1, localDateTime2).forEach( //
+            localDateTime -> equalsTester.addEqualityGroup(Stream.of(consumedEnergy1, consumedEnergy2).map( //
+                consumedEnergy -> new SlaveEnergyReadingEntity(meter, localDateTime, consumedEnergy)).toArray())));
     equalsTester.testEquals();
   }
 

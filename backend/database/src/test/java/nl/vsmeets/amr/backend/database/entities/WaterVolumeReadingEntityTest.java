@@ -55,11 +55,10 @@ class WaterVolumeReadingEntityTest implements RandomLocalDateTimeGenerator {
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new WaterVolumeReadingEntity());
-    Stream.of(meter1, meter2).forEach(meter -> //
-    Stream.of(localDateTime1, localDateTime2).forEach(localDateTime -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(consumedWater1, consumedWater2).map(consumedWater -> //
-        new WaterVolumeReadingEntity(meter, localDateTime, consumedWater)).toArray())));
+    Stream.of(meter1, meter2).forEach( //
+        meter -> Stream.of(localDateTime1, localDateTime2).forEach( //
+            localDateTime -> equalsTester.addEqualityGroup(Stream.of(consumedWater1, consumedWater2).map( //
+                consumedWater -> new WaterVolumeReadingEntity(meter, localDateTime, consumedWater)).toArray())));
     equalsTester.testEquals();
   }
 

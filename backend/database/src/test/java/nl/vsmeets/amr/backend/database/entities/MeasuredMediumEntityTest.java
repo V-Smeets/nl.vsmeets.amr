@@ -42,10 +42,9 @@ class MeasuredMediumEntityTest implements RandomByteGenerator, RandomStringGener
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new MeasuredMediumEntity());
-    Stream.of(mediumId1, mediumId2).forEach(mediumId -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(name1, name2).map(name -> //
-        new MeasuredMediumEntity(mediumId, name)).toArray()));
+    Stream.of(mediumId1, mediumId2).forEach( //
+        mediumId -> equalsTester.addEqualityGroup(Stream.of(name1, name2).map( //
+            name -> new MeasuredMediumEntity(mediumId, name)).toArray()));
     equalsTester.testEquals();
   }
 

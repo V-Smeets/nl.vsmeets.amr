@@ -39,10 +39,9 @@ class AbstractTableEntityTest implements RandomIntGenerator {
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new AbstractTableEntity() {});
-    Stream.of(id1, id2).forEach(id -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(1, 2).map(number -> //
-        new AbstractTableEntity(id) {}).toArray()));
+    Stream.of(id1, id2).forEach( //
+        id -> equalsTester.addEqualityGroup(Stream.of(1, 2).map( //
+            number -> new AbstractTableEntity(id) {}).toArray()));
     equalsTester.testEquals();
   }
 

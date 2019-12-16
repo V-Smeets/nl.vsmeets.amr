@@ -52,12 +52,13 @@ class ElectricPowerFailuresEntityTest implements RandomLocalDateTimeGenerator {
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new ElectricPowerFailuresEntity());
-    Stream.of(meter1, meter2).forEach(meter -> //
-    Stream.of(localDateTime1, localDateTime2).forEach(localDateTime -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(nrOfPowerFailures1, nrOfPowerFailures2).flatMap(nrOfPowerFailures -> //
-        Stream.of(nrOfLongPowerFailures1, nrOfLongPowerFailures2).map(nrOfLongPowerFailures -> //
-        new ElectricPowerFailuresEntity(meter, localDateTime, nrOfPowerFailures, nrOfLongPowerFailures))).toArray())));
+    Stream.of(meter1, meter2).forEach( //
+        meter -> Stream.of(localDateTime1, localDateTime2).forEach( //
+            localDateTime -> equalsTester.addEqualityGroup(Stream.of(nrOfPowerFailures1, nrOfPowerFailures2).flatMap( //
+                nrOfPowerFailures -> Stream.of(nrOfLongPowerFailures1, nrOfLongPowerFailures2).map( //
+                    nrOfLongPowerFailures -> new ElectricPowerFailuresEntity(meter, localDateTime, nrOfPowerFailures,
+                        nrOfLongPowerFailures)))
+                .toArray())));
     equalsTester.testEquals();
   }
 

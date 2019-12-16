@@ -52,11 +52,12 @@ class ElectricPowerFailureEventEntityTest implements RandomDurationGenerator, Ra
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new ElectricPowerFailureEventEntity());
-    Stream.of(electricPowerFailures1, electricPowerFailures2).forEach(electricPowerFailures -> //
-    Stream.of(endOfFailureTime1, endOfFailureTime2).forEach(endOfFailureTime -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(failureDuration1, failureDuration2).map(failureDuration -> //
-        new ElectricPowerFailureEventEntity(electricPowerFailures, endOfFailureTime, failureDuration)).toArray())));
+    Stream.of(electricPowerFailures1, electricPowerFailures2).forEach( //
+        electricPowerFailures -> Stream.of(endOfFailureTime1, endOfFailureTime2).forEach( //
+            endOfFailureTime -> equalsTester.addEqualityGroup(Stream.of(failureDuration1, failureDuration2).map( //
+                failureDuration -> new ElectricPowerFailureEventEntity(electricPowerFailures, endOfFailureTime,
+                    failureDuration))
+                .toArray())));
     equalsTester.testEquals();
   }
 

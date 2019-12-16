@@ -27,26 +27,6 @@ import java.time.ZoneOffset;
 public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, RandomZoneOffsetGenerator {
 
   /**
-   * The maximum number of seconds (relative to the epoch) that can be used for a
-   * random date/time.
-   *
-   * @return The maximum number of seconds.
-   */
-  default long maxSeconds() {
-    return LocalDateTimeGeneratorConstants.RANGE_MAXIMUM_DATE_TIME.toEpochSecond(ZoneOffset.UTC);
-  }
-
-  /**
-   * The minimum number of seconds (relative to the epoch) that can be used for a
-   * random date/time.
-   *
-   * @return The minimum number of seconds.
-   */
-  default long minSeconds() {
-    return LocalDateTimeGeneratorConstants.RANGE_MINIMUM_DATE_TIME.toEpochSecond(ZoneOffset.UTC);
-  }
-
-  /**
    * Create a random {@link LocalDateTime} that is guaranteed not equal to an
    * element of <code>notEqualTo</code>.
    *
@@ -55,8 +35,11 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
    * @return A random {@link LocalDateTime}.
    */
   default LocalDateTime randomLocalDateTime(final LocalDateTime... notEqualTo) {
-    final LocalDateTime randomValue = LocalDateTime.ofEpochSecond(randomLongRange(minSeconds(), maxSeconds() + 1L),
-        randomIntRange(0, 1_000_000_000), randomZoneOffset());
+    final ZoneOffset offset = ZoneOffset.UTC;
+    final long startInclusiveSeconds = LocalDateTime.MIN.toEpochSecond(offset);
+    final long endExclusiveSeconds = LocalDateTime.MAX.toEpochSecond(offset) + 1L;
+    final LocalDateTime randomValue = LocalDateTime.ofEpochSecond(
+        randomLongRange(startInclusiveSeconds, endExclusiveSeconds), randomIntRange(0, 1_000_000_000), offset);
     boolean alreadyUsed = false;
     for (final LocalDateTime localDateTime : notEqualTo) {
       if (randomValue.equals(localDateTime)) {
@@ -80,8 +63,11 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
    * @return A random {@link LocalDateTime}.
    */
   default LocalDateTime randomLocalDateTimeZeroPrecision(final LocalDateTime... notEqualTo) {
+    final ZoneOffset offset = ZoneOffset.UTC;
+    final long startInclusiveSeconds = LocalDateTime.MIN.toEpochSecond(offset);
+    final long endExclusiveSeconds = LocalDateTime.MAX.toEpochSecond(offset) + 1L;
     final LocalDateTime randomValue =
-        LocalDateTime.ofEpochSecond(randomLongRange(minSeconds(), maxSeconds() + 1L), 0, randomZoneOffset());
+        LocalDateTime.ofEpochSecond(randomLongRange(startInclusiveSeconds, endExclusiveSeconds), 0, offset);
     boolean alreadyUsed = false;
     for (final LocalDateTime localDateTime : notEqualTo) {
       if (randomValue.equals(localDateTime)) {
@@ -91,6 +77,42 @@ public interface RandomLocalDateTimeGenerator extends RandomLongGenerator, Rando
     }
     if (alreadyUsed) {
       return randomLocalDateTimeZeroPrecision(notEqualTo);
+    } else {
+      return randomValue;
+    }
+  }
+
+  /**
+   * Create a random {@link LocalDateTime} within the specified range that is
+   * guaranteed not equal to an element of <code>notEqualTo</code>.
+   *
+   * @param startInclusive
+   *        The lower value of the range. This value is allowed to be returned.
+   * @param endExclusive
+   *        The upper value of the range. This value isn't allowed to be returned.
+   * @param notEqualTo
+   *        The values that are not allowed.
+   * @return A random {@link LocalDateTime}.
+   */
+  default LocalDateTime randomLocalDateTimeZeroPrecisionRange(final LocalDateTime startInclusive,
+      final LocalDateTime endExclusive, final LocalDateTime... notEqualTo) {
+    if (!endExclusive.isAfter(startInclusive)) {
+      throw new IllegalArgumentException(String.format("Invalid range: %s .. %s", startInclusive, endExclusive));
+    }
+    final ZoneOffset offset = ZoneOffset.UTC;
+    final long startInclusiveSeconds = startInclusive.toEpochSecond(offset);
+    final long endExclusiveSeconds = endExclusive.toEpochSecond(offset);
+    final LocalDateTime randomValue =
+        LocalDateTime.ofEpochSecond(randomLongRange(startInclusiveSeconds, endExclusiveSeconds), 0, offset);
+    boolean alreadyUsed = false;
+    for (final LocalDateTime localDateTime : notEqualTo) {
+      if (randomValue.equals(localDateTime)) {
+        alreadyUsed = true;
+        break;
+      }
+    }
+    if (alreadyUsed) {
+      return randomLocalDateTimeZeroPrecisionRange(startInclusive, endExclusive, notEqualTo);
     } else {
       return randomValue;
     }

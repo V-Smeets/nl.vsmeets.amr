@@ -59,12 +59,13 @@ class ElectricPowerReadingEntityTest implements RandomLocalDateTimeGenerator {
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new ElectricPowerReadingEntity());
-    Stream.of(meter1, meter2).forEach(meter -> //
-    Stream.of(localDateTime1, localDateTime2).forEach(localDateTime -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(consumedPower1, consumedPower2).flatMap(consumedPower -> //
-        Stream.of(producedPower1, producedPower2).map(producedPower -> //
-        new ElectricPowerReadingEntity(meter, localDateTime, consumedPower, producedPower))).toArray())));
+    Stream.of(meter1, meter2).forEach( //
+        meter -> Stream.of(localDateTime1, localDateTime2).forEach( //
+            localDateTime -> equalsTester.addEqualityGroup(Stream.of(consumedPower1, consumedPower2).flatMap( //
+                consumedPower -> Stream.of(producedPower1, producedPower2).map( //
+                    producedPower -> new ElectricPowerReadingEntity(meter, localDateTime, consumedPower,
+                        producedPower)))
+                .toArray())));
     equalsTester.testEquals();
   }
 

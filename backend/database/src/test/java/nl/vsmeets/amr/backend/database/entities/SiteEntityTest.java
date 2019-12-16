@@ -43,10 +43,9 @@ class SiteEntityTest implements RandomStringGenerator, RandomZoneIdGenerator {
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new SiteEntity());
-    Stream.of(name1, name2).forEach(name -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(timeZone1, timeZone2).map(timeZone -> //
-        new SiteEntity(name, timeZone)).toArray()));
+    Stream.of(name1, name2).forEach( //
+        name -> equalsTester.addEqualityGroup(Stream.of(timeZone1, timeZone2).map( //
+            timeZone -> new SiteEntity(name, timeZone)).toArray()));
     equalsTester.testEquals();
   }
 

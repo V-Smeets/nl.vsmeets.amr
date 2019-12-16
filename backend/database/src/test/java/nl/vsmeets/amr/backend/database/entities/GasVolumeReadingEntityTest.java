@@ -55,11 +55,10 @@ class GasVolumeReadingEntityTest implements RandomLocalDateTimeGenerator {
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new GasVolumeReadingEntity());
-    Stream.of(meter1, meter2).forEach(meter -> //
-    Stream.of(localDateTime1, localDateTime2).forEach(localDateTime -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(consumedGas1, consumedGas2).map(consumedGas -> //
-        new GasVolumeReadingEntity(meter, localDateTime, consumedGas)).toArray())));
+    Stream.of(meter1, meter2).forEach( //
+        meter -> Stream.of(localDateTime1, localDateTime2).forEach( //
+            localDateTime -> equalsTester.addEqualityGroup(Stream.of(consumedGas1, consumedGas2).map( //
+                consumedGas -> new GasVolumeReadingEntity(meter, localDateTime, consumedGas)).toArray())));
     equalsTester.testEquals();
   }
 

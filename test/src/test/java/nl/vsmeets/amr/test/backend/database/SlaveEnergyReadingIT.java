@@ -18,7 +18,6 @@ package nl.vsmeets.amr.test.backend.database;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Optional;
 
 import javax.measure.Quantity;
@@ -29,6 +28,7 @@ import javax.measure.spi.QuantityFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -88,8 +88,10 @@ class SlaveEnergyReadingIT
   @Qualifier("wattHour")
   private Unit<Energy> wattHour;
 
-  private final LocalDateTime localDateTime1 = randomLocalDateTimeZeroPrecision();
-  private final LocalDateTime localDateTime2 = randomLocalDateTimeZeroPrecision(localDateTime1);
+  private final LocalDateTime localDateTime1 = randomLocalDateTimeZeroPrecisionRange(
+      DatabaseConstants.MIN_LOCAL_DATE_TIME, DatabaseConstants.MAX_LOCAL_DATE_TIME);
+  private final LocalDateTime localDateTime2 = randomLocalDateTimeZeroPrecisionRange(
+      DatabaseConstants.MIN_LOCAL_DATE_TIME, DatabaseConstants.MAX_LOCAL_DATE_TIME, localDateTime1);
   private Quantity<Energy> consumedEnergy1;
   private Quantity<Energy> consumedEnergy2;
 
@@ -198,9 +200,8 @@ class SlaveEnergyReadingIT
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -999_999_999L, -1L, 0L, 1L, 999_999_999L })
-  void testLocalDateTime(final long seconds) {
-    final LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.ofTotalSeconds(0));
+  @MethodSource("nl.vsmeets.amr.test.backend.database.DatabaseConstants#validLocalDateTimeValues")
+  void testLocalDateTime(final LocalDateTime localDateTime) {
     final SlaveEnergyReading EnergyReading2 =
         assertDoesNotThrow(() -> EnergyReadingFactory.create(meter2, localDateTime, consumedEnergy2));
     assertEquals(localDateTime, EnergyReading2.getLocalDateTime());

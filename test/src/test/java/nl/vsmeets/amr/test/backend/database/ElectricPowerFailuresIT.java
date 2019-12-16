@@ -18,13 +18,12 @@ package nl.vsmeets.amr.test.backend.database;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -76,8 +75,10 @@ class ElectricPowerFailuresIT
   private Meter meter1;
   private Meter meter2;
 
-  private final LocalDateTime localDateTime1 = randomLocalDateTimeZeroPrecision();
-  private final LocalDateTime localDateTime2 = randomLocalDateTimeZeroPrecision(localDateTime1);
+  private final LocalDateTime localDateTime1 = randomLocalDateTimeZeroPrecisionRange(
+      DatabaseConstants.MIN_LOCAL_DATE_TIME, DatabaseConstants.MAX_LOCAL_DATE_TIME);
+  private final LocalDateTime localDateTime2 = randomLocalDateTimeZeroPrecisionRange(
+      DatabaseConstants.MIN_LOCAL_DATE_TIME, DatabaseConstants.MAX_LOCAL_DATE_TIME, localDateTime1);
   private final Integer nrOfPowerFailures1 = randomInt();
   private final Integer nrOfPowerFailures2 = randomInt(nrOfPowerFailures1);
   private final Integer nrOfLongPowerFailures1 = randomInt();
@@ -157,9 +158,8 @@ class ElectricPowerFailuresIT
   }
 
   @ParameterizedTest
-  @ValueSource(longs = { -999_999_999L, -1L, 0L, 1L, 999_999_999L })
-  void testLocalDateTime(final long seconds) {
-    final LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.ofTotalSeconds(0));
+  @MethodSource("nl.vsmeets.amr.test.backend.database.DatabaseConstants#validLocalDateTimeValues")
+  void testLocalDateTime(final LocalDateTime localDateTime) {
     final ElectricPowerFailures electricPowerFailures2 = assertDoesNotThrow(
         () -> electricPowerFailuresFactory.create(meter2, localDateTime, nrOfPowerFailures2, nrOfLongPowerFailures2));
     assertEquals(localDateTime, electricPowerFailures2.getLocalDateTime());

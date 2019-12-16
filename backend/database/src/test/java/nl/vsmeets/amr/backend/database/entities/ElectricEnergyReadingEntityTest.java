@@ -62,14 +62,14 @@ class ElectricEnergyReadingEntityTest implements RandomShortGenerator, RandomLoc
   void testEquals() {
     final EqualsTester equalsTester = new EqualsTester();
     equalsTester.addEqualityGroup(new ElectricEnergyReadingEntity());
-    Stream.of(meter1, meter2).forEach(meter -> //
-    Stream.of(localDateTime1, localDateTime2).forEach(localDateTime -> //
-    Stream.of(tariffIndicator1, tariffIndicator2).forEach(tariffIndicator -> //
-    equalsTester.addEqualityGroup( //
-        Stream.of(consumedEnergy1, consumedEnergy2).flatMap(consumedEnergy -> //
-        Stream.of(producedEnergy1, producedEnergy2).map(producedEnergy -> //
-        new ElectricEnergyReadingEntity(meter, localDateTime, tariffIndicator, consumedEnergy, producedEnergy)))
-            .toArray()))));
+    Stream.of(meter1, meter2).forEach( //
+        meter -> Stream.of(localDateTime1, localDateTime2).forEach( //
+            localDateTime -> Stream.of(tariffIndicator1, tariffIndicator2).forEach( //
+                tariffIndicator -> equalsTester.addEqualityGroup(Stream.of(consumedEnergy1, consumedEnergy2).flatMap( //
+                    consumedEnergy -> Stream.of(producedEnergy1, producedEnergy2).map( //
+                        producedEnergy -> new ElectricEnergyReadingEntity(meter, localDateTime, tariffIndicator,
+                            consumedEnergy, producedEnergy)))
+                    .toArray()))));
     equalsTester.testEquals();
   }
 

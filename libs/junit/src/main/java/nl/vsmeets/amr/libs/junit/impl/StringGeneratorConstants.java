@@ -13,31 +13,26 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.libs.junit;
+package nl.vsmeets.amr.libs.junit.impl;
 
-import java.time.LocalDateTime;
+import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
- * Constant values used by the {@link RandomLocalDateTimeGenerator}.
+ * Constant values used by the {@link RandomStringGenerator}.
  *
  * @author vincent
  */
-final class LocalDateTimeGeneratorConstants {
+public final class StringGeneratorConstants {
 
   /**
-   * The minimum value of the allowed date/time range.
+   * The number of characters in a string, in case no length has been defined.
    */
-  public static final LocalDateTime RANGE_MINIMUM_DATE_TIME = LocalDateTime.of(0, 1, 1, 0, 0, 0);
-
-  /**
-   * The maximum value of the allowed date/time range.
-   */
-  public static final LocalDateTime RANGE_MAXIMUM_DATE_TIME = LocalDateTime.of(4000, 12, 31, 23, 59, 59);
+  public static final int DEFAULT_STRING_LENGTH = 8;
 
   /**
    * No instance can be created.
    */
-  private LocalDateTimeGeneratorConstants() {
+  private StringGeneratorConstants() {
   }
 
 }
