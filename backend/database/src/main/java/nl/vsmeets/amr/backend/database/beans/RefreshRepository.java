@@ -20,6 +20,8 @@ package nl.vsmeets.amr.backend.database.beans;
  * the entity manager.
  *
  * @author vincent
+ * @param <T>
+ *        The type of the entity.
  */
 public interface RefreshRepository<T> {
 

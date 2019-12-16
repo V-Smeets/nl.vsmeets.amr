@@ -24,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
  * the entity manager.
  *
  * @author vincent
+ * @param <T>
+ *        The type of the entity.
  */
 @Transactional(readOnly = true)
 public class RefreshRepositoryImpl<T> implements RefreshRepository<T> {
