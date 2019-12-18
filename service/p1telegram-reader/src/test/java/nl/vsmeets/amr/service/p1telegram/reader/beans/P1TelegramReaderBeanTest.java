@@ -81,15 +81,12 @@ class P1TelegramReaderBeanTest implements RandomStringGenerator {
 
   @Test
   void testSaveEmptyCrcFound() throws IOException {
-    final String site = randomString();
     final StringBuilder inputData = new StringBuilder();
     inputData.append("/Header").append(CR_NL);
     inputData.append(CR_NL);
     inputData.append("Data").append(CR_NL);
     inputData.append("!");
     final BufferedReader bufferedReader = new BufferedReader(new StringReader(inputData.toString()));
-
-    when(properties.getSite()).thenReturn(site);
 
     p1TelegramReaderBean.save(bufferedReader);
 
@@ -133,15 +130,12 @@ class P1TelegramReaderBeanTest implements RandomStringGenerator {
 
   @Test
   void testSaveNoCrcLineFound() throws IOException {
-    final String site = randomString();
     final StringBuilder inputData = new StringBuilder();
     inputData.append("/Header").append(CR_NL);
     inputData.append(CR_NL);
     inputData.append("Data").append(CR_NL);
     inputData.append("/Header").append(CR_NL);
     final BufferedReader bufferedReader = new BufferedReader(new StringReader(inputData.toString()));
-
-    when(properties.getSite()).thenReturn(site);
 
     p1TelegramReaderBean.save(bufferedReader);
 

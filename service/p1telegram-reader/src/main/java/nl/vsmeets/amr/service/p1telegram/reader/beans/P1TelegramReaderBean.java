@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.github.snksoft.crc.CRC;
@@ -60,59 +61,67 @@ public class P1TelegramReaderBean implements P1TelegramReader {
   private final P1TelegramSender p1TelegramSender;
 
   @Override
-  public void save(final BufferedReader bufferedReader) throws IOException {
+  public void save(@NonNull final BufferedReader bufferedReader) throws IOException {
+    final StringBuilder dataBuffer = new StringBuilder(P1_TELEGRAM_SIZE);
+    final StringBuilder crcBuffer = new StringBuilder();
+    StringBuilder p1TelegramBuffer = dataBuffer;
+    for (int characterValue = bufferedReader.read(); characterValue >= 0; characterValue = bufferedReader.read()) {
+      final char character = (char) characterValue;
+
+      // Before the character has been appended to the buffer.
+      if (character == '/') {
+        dataBuffer.setLength(0);
+        crcBuffer.setLength(0);
+        p1TelegramBuffer = dataBuffer;
+      }
+
+      // Append the character to the buffer.
+      p1TelegramBuffer.append(character);
+
+      // After the character has been appended to the buffer.
+      switch (character) {
+        case '!':
+          p1TelegramBuffer = crcBuffer;
+          break;
+
+        case '\n':
+          if (p1TelegramBuffer == crcBuffer) {
+            sendTelegram(dataBuffer, crcBuffer);
+            p1TelegramBuffer = dataBuffer;
+          }
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+
+  /**
+   * Check and send the P1 telegram.
+   *
+   * @param dataBuffer
+   *        The buffer that holds the data part of the telegram.
+   * @param crcBuffer
+   *        The buffer that holds the expected CRC of the dataBuffer.
+   */
+  private void sendTelegram(@NonNull final StringBuilder dataBuffer, @NonNull final StringBuilder crcBuffer) {
     final String site = properties.getSite();
-    StringBuilder p1TelegramBuffer = null;
-    boolean startOfLine = true;
-    for (int i = bufferedReader.read(); i >= 0; i = bufferedReader.read()) {
-      char c = (char) i;
-      if (startOfLine) {
-        switch (c) {
-          // Start of the Header line.
-          case '/':
-            if (p1TelegramBuffer != null) {
-              log.warn("No CRC line found in the P1 telegram: {}", p1TelegramBuffer);
-            }
-            p1TelegramBuffer = new StringBuilder(P1_TELEGRAM_SIZE);
-            break;
 
-          // Start of the CRC line.
-          case '!':
-            if (p1TelegramBuffer == null) {
-              log.warn("CRC line found without a header line");
-              break;
-            }
-            p1TelegramBuffer.append(c);
-            final String p1TelegramWithoutCrc = p1TelegramBuffer.toString();
-            final long calculatedCrc = crc.calculateCRC(p1TelegramWithoutCrc.getBytes(StandardCharsets.US_ASCII));
-            // Read the CRC16 in hex without \r\n
-            final String crcCharacters = bufferedReader.readLine();
-            if (crcCharacters == null || crcCharacters.length() != 4) {
-              log.warn("Incomplete CRC found. {}", p1TelegramBuffer);
-              p1TelegramBuffer = null;
-              c = '\n';
-              break;
-            }
-            p1TelegramBuffer.append(crcCharacters).append("\r\n");
-            final long expectedCrc = Long.parseLong(crcCharacters, 16);
-            if (calculatedCrc != expectedCrc) {
-              log.warn("Incorrect CRC. Expected: {}, Calculated: {}", expectedCrc, calculatedCrc);
-              c = '\n';
-              break;
-            }
-            p1TelegramSender.send(site, p1TelegramBuffer.toString());
-            p1TelegramBuffer = null;
-            startOfLine = true;
-            continue;
+    final String data = dataBuffer.toString();
+    final byte[] dataBytes = data.getBytes(StandardCharsets.US_ASCII);
+    final long calculatedCrc = crc.calculateCRC(dataBytes);
 
-          default:
-            break;
-        }
-      }
-      if (p1TelegramBuffer != null) {
-        p1TelegramBuffer.append(c);
-      }
-      startOfLine = c == '\r' || c == '\n';
+    final String crcString = crcBuffer.toString().trim();
+    final long expectedCrc = Long.parseLong(crcString, 16);
+
+    if (expectedCrc == calculatedCrc) {
+      final StringBuilder p1TelegramBuffer = new StringBuilder(dataBuffer.length() + crcBuffer.length());
+      p1TelegramBuffer.append(dataBuffer);
+      p1TelegramBuffer.append(crcBuffer);
+      p1TelegramSender.send(site, p1TelegramBuffer.toString());
+    } else {
+      log.warn("Incorrect CRC. Expected: {}, Calculated: {}", expectedCrc, calculatedCrc);
     }
   }
 
