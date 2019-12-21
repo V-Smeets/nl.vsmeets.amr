@@ -18,6 +18,8 @@ package nl.vsmeets.amr.backend.jms.beans;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,7 @@ public class P1TelegramSenderBean implements P1TelegramSender {
   /**
    * The properties for this bean.
    */
+  @Valid
   private final BackendJmsProperties properties;
 
   /**

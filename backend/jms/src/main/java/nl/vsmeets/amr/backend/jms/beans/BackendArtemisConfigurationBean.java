@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.apache.activemq.artemis.core.config.BridgeConfiguration;
 import org.apache.activemq.artemis.core.config.Configuration;
 import org.springframework.boot.autoconfigure.jms.artemis.ArtemisConfigurationCustomizer;
@@ -41,6 +43,7 @@ public class BackendArtemisConfigurationBean implements ArtemisConfigurationCust
   /**
    * The properties for this bean.
    */
+  @Valid
   private final BackendJmsProperties properties;
 
   @Override
