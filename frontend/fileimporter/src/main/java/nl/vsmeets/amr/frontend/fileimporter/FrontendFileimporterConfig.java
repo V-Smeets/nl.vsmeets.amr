@@ -13,30 +13,22 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.service.fileimporter;
+package nl.vsmeets.amr.frontend.fileimporter;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import nl.vsmeets.amr.service.p1telegram.reader.ServiceP1TelegramReaderConfig;
 
 /**
- * Unit tests for the class {@link ServiceFileimporterConfig}.
+ * The configuration class for file importer service.
  *
  * @author vincent
  */
-class ServiceFileimporterConfigTest {
-
-  private ServiceFileimporterConfig serviceFileimporterConfig;
-
-  @BeforeEach
-  void setUp() throws Exception {
-    serviceFileimporterConfig = new ServiceFileimporterConfig();
-  }
-
-  @Test
-  void testConfigExists() {
-    assertNotNull(serviceFileimporterConfig);
-  }
+@Configuration
+@ComponentScan
+@Import({ ServiceP1TelegramReaderConfig.class })
+public class FrontendFileimporterConfig {
 
 }

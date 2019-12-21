@@ -18,4 +18,4 @@
  *
  * @author vincent
  */
-package nl.vsmeets.amr.service.fileimporter;
+package nl.vsmeets.amr.frontend.fileimporter;

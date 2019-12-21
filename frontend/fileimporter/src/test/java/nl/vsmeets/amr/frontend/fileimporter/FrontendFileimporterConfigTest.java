@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Vincent Smeets
+ * Copyright (C) 2019 Vincent Smeets
  * <p>
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -13,9 +13,30 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
+package nl.vsmeets.amr.frontend.fileimporter;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 /**
- * This package implements the API to use the file importer.
+ * Unit tests for the class {@link FrontendFileimporterConfig}.
  *
  * @author vincent
  */
-package nl.vsmeets.amr.service.fileimporter.beans;
+class FrontendFileimporterConfigTest {
+
+  private FrontendFileimporterConfig frontendFileimporterConfig;
+
+  @BeforeEach
+  void setUp() throws Exception {
+    frontendFileimporterConfig = new FrontendFileimporterConfig();
+  }
+
+  @Test
+  void testConfigExists() {
+    assertNotNull(frontendFileimporterConfig);
+  }
+
+}

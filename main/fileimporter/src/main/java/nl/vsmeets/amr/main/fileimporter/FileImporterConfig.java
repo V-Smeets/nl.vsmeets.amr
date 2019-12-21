@@ -20,7 +20,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 
-import nl.vsmeets.amr.service.fileimporter.ServiceFileimporterConfig;
+import nl.vsmeets.amr.frontend.fileimporter.FrontendFileimporterConfig;
 
 /**
  * The main entry point to import P1-Telegrams from a file.
@@ -28,7 +28,7 @@ import nl.vsmeets.amr.service.fileimporter.ServiceFileimporterConfig;
  * @author vincent
  */
 @SpringBootApplication
-@Import({ ServiceFileimporterConfig.class })
+@Import({ FrontendFileimporterConfig.class })
 public class FileImporterConfig {
 
   /**
