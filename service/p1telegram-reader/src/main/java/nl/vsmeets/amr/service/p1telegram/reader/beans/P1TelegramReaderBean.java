@@ -21,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 
 import javax.validation.Valid;
 
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.github.snksoft.crc.CRC;
@@ -64,7 +63,7 @@ public class P1TelegramReaderBean implements P1TelegramReader {
   private final P1TelegramSender p1TelegramSender;
 
   @Override
-  public void save(@NonNull final BufferedReader bufferedReader) throws IOException {
+  public void save(final BufferedReader bufferedReader) throws IOException {
     final StringBuilder dataBuffer = new StringBuilder(P1_TELEGRAM_SIZE);
     final StringBuilder crcBuffer = new StringBuilder();
     StringBuilder p1TelegramBuffer = dataBuffer;
@@ -108,7 +107,7 @@ public class P1TelegramReaderBean implements P1TelegramReader {
    * @param crcBuffer
    *        The buffer that holds the expected CRC of the dataBuffer.
    */
-  private void sendTelegram(@NonNull final StringBuilder dataBuffer, @NonNull final StringBuilder crcBuffer) {
+  private void sendTelegram(final StringBuilder dataBuffer, final StringBuilder crcBuffer) {
     final String site = properties.getSite();
 
     final String data = dataBuffer.toString();
