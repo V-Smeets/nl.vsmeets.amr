@@ -19,6 +19,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import javax.validation.Valid;
+
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +55,7 @@ public class P1TelegramReaderBean implements P1TelegramReader {
   /**
    * The properties for this module.
    */
+  @Valid
   private final ServiceP1TelegramReaderProperties properties;
 
   /**
