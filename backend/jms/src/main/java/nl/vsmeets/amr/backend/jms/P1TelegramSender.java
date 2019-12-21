@@ -15,8 +15,6 @@
  */
 package nl.vsmeets.amr.backend.jms;
 
-import org.springframework.lang.NonNull;
-
 /**
  * Provide the communication with the JMS server to send P1 telegrams.
  *
@@ -32,6 +30,6 @@ public interface P1TelegramSender {
    * @param p1Telegram
    *        The P1 telegram.
    */
-  void send(@NonNull final String site, @NonNull final String p1Telegram);
+  void send(final String site, final String p1Telegram);
 
 }

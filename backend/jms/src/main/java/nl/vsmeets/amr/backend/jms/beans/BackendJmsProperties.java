@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -55,16 +58,19 @@ public class BackendJmsProperties {
     /**
      * The name.
      */
+    @NotEmpty
     private String name;
 
     /**
      * The queue from where the messages are read.
      */
+    @NotEmpty
     private String queueName;
 
     /**
-     * The name connection where the messages are forwarded to.
+     * The name of the connection where the messages are forwarded to.
      */
+    @NotEmpty
     private String staticConnector;
 
     /**
@@ -80,6 +86,7 @@ public class BackendJmsProperties {
     /**
      * The address to where the messages are forwarded.
      */
+    @NotEmpty
     private String forwardingAddress;
 
   }
@@ -87,6 +94,7 @@ public class BackendJmsProperties {
   /**
    * The name of the Artemis broker.
    */
+  @NotEmpty
   private String name;
 
   /**
@@ -103,16 +111,19 @@ public class BackendJmsProperties {
   /**
    * A list of bridge properties.
    */
+  @Valid
   private List<BridgeProperties> bridges = new ArrayList<>();
 
   /**
    * The name of the destination to which the received telegrams are sent.
    */
+  @NotEmpty
   private String destinationName;
 
   /**
    * The name of the message header to hold the name of the site.
    */
+  @NotEmpty
   private String headerFieldSite;
 
 }

@@ -18,8 +18,9 @@ package nl.vsmeets.amr.backend.jms.beans;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.jms.core.JmsMessagingTemplate;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ public class P1TelegramSenderBean implements P1TelegramSender {
   /**
    * The properties for this bean.
    */
+  @Valid
   private final BackendJmsProperties properties;
 
   /**
@@ -47,7 +49,7 @@ public class P1TelegramSenderBean implements P1TelegramSender {
   private final JmsMessagingTemplate jmsMessagingTemplate;
 
   @Override
-  public void send(@NonNull final String site, @NonNull final String p1Telegram) {
+  public void send(final String site, final String p1Telegram) {
     final String headerFieldSite = properties.getHeaderFieldSite();
     final String destinationName = properties.getDestinationName();
     final Map<String, Object> headers = new HashMap<>();

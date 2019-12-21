@@ -15,6 +15,8 @@
  */
 package nl.vsmeets.amr.service.p1telegram.reader.beans;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +41,7 @@ public class ServiceP1TelegramReaderProperties {
   /**
    * The name of this site.
    */
+  @NotEmpty
   private String site;
 
 }
