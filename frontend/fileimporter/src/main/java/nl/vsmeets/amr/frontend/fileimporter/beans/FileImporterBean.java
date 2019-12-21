@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.service.fileimporter.beans;
+package nl.vsmeets.amr.frontend.fileimporter.beans;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
