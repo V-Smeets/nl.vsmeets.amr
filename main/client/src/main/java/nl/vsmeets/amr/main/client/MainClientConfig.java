@@ -18,6 +18,9 @@ package nl.vsmeets.amr.main.client;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Import;
+
+import nl.vsmeets.amr.frontend.serial.FrontendSerialConfig;
 
 /**
  * The main entry point for the client.
@@ -25,6 +28,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * @author vincent
  */
 @SpringBootApplication
+@Import(FrontendSerialConfig.class)
 public class MainClientConfig {
 
   /**
