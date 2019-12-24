@@ -7,20 +7,16 @@
 
   <parent>
     <groupId>nl.vsmeets.amr</groupId>
-    <artifactId>main</artifactId>
+    <artifactId>frontend</artifactId>
     <version>jgitver</version>
   </parent>
 
-  <artifactId>main-client</artifactId>
+  <artifactId>frontend-serial</artifactId>
   <packaging>jar</packaging>
   <name>${project.groupId}:${project.artifactId}</name>
 
   <dependencies>
     <!-- compile -->
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>frontend-serial</artifactId>
-    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>

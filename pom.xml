@@ -76,6 +76,11 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>frontend-serial</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>libs-junit</artifactId>
         <version>${project.version}</version>
       </dependency>
