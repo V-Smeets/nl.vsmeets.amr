@@ -18,6 +18,10 @@
   <dependencies>
     <!-- compile -->
     <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>service-p1telegram-reader</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.fazecast</groupId>
       <artifactId>jSerialComm</artifactId>
     </dependency>

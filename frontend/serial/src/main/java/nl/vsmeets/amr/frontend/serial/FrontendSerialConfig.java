@@ -20,11 +20,13 @@ import javax.validation.Valid;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortInvalidPortException;
 
 import nl.vsmeets.amr.frontend.serial.beans.FrontendSerialProperties;
+import nl.vsmeets.amr.service.p1telegram.reader.ServiceP1TelegramReaderConfig;
 
 /**
  * The configuration class for the frontend serial module.
@@ -33,6 +35,7 @@ import nl.vsmeets.amr.frontend.serial.beans.FrontendSerialProperties;
  */
 @Configuration
 @ComponentScan
+@Import(ServiceP1TelegramReaderConfig.class)
 public class FrontendSerialConfig {
 
   @Bean
