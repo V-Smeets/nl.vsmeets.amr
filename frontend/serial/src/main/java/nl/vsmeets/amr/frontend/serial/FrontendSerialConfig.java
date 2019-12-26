@@ -15,8 +15,16 @@
  */
 package nl.vsmeets.amr.frontend.serial;
 
+import javax.validation.Valid;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
+import com.fazecast.jSerialComm.SerialPort;
+import com.fazecast.jSerialComm.SerialPortInvalidPortException;
+
+import nl.vsmeets.amr.frontend.serial.beans.FrontendSerialProperties;
 
 /**
  * The configuration class for the frontend serial module.
@@ -26,5 +34,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan
 public class FrontendSerialConfig {
+
+  @Bean
+  public SerialPort serialPort(@Valid final FrontendSerialProperties properties) {
+    final SerialPort serialPort = SerialPort.getCommPort(properties.getDevice().toString());
+    serialPort.setComPortParameters(properties.getBaudRate(), properties.getDataBits(), properties.getStopBits(),
+        properties.getParity());
+    if (!serialPort.openPort()) {
+      throw new SerialPortInvalidPortException(properties.toString());
+    }
+    return serialPort;
+  }
 
 }
