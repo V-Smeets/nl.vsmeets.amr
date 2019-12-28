@@ -31,6 +31,7 @@
   </modules>
 
   <properties>
+    <com.fazecast.jSerialComm.version>2.5.3</com.fazecast.jSerialComm.version>
     <com.github.snksoft.crc.version>1.0.2</com.github.snksoft.crc.version>
     <com.google.guava.guava-testlib.version>28.1-jre</com.google.guava.guava-testlib.version>
     <com.mockrunner.mockrunner.version>2.0.1</com.mockrunner.mockrunner.version>
@@ -76,6 +77,11 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>frontend-serial</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>libs-junit</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -90,6 +96,11 @@
         <version>${project.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>com.fazecast</groupId>
+        <artifactId>jSerialComm</artifactId>
+        <version>${com.fazecast.jSerialComm.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.github.snksoft</groupId>
         <artifactId>crc</artifactId>
