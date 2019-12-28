@@ -19,6 +19,7 @@
   <modules>
     <module>client</module>
     <module>fileimporter</module>
+    <module>server</module>
   </modules>
 
   <build>
