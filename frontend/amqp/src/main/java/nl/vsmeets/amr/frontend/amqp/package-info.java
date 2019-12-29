@@ -13,30 +13,9 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.main.server;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
-
-import nl.vsmeets.amr.frontend.amqp.FrontendAmqpConfig;
-
 /**
- * The main entry point for the server.
+ * This package defines the API to use the AMQP front end.
  *
  * @author vincent
  */
-@SpringBootApplication
-@Import({ FrontendAmqpConfig.class })
-public class MainServerConfig {
-
-  /**
-   * The main entry point.
-   *
-   * @param args
-   *        The command line arguments.
-   */
-  public static void main(final String[] args) {
-    SpringApplication.run(MainServerConfig.class, args);
-  }
-}
+package nl.vsmeets.amr.frontend.amqp;
