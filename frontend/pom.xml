@@ -17,6 +17,7 @@
   <description>The modules that provide an interface for other systems to this application.</description>
 
   <modules>
+    <module>amqp</module>
     <module>fileimporter</module>
     <module>serial</module>
   </modules>
