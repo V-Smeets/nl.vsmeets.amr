@@ -15,16 +15,12 @@
  */
 package nl.vsmeets.amr.frontend.amqp;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -59,9 +55,9 @@ public class FrontendAmqpConfig {
   }
 
   @Bean
-  public SimpleMessageListenerContainer messageListenerContainer(SimpleRabbitListenerContainerFactory factory,
-      @Qualifier("queue") Queue queue, P1TelegramReceiverBean p1TelegramReceiverBean,
-      @Qualifier("errorHandler") ErrorHandler errorHandler) {
+  public SimpleMessageListenerContainer messageListenerContainer(final SimpleRabbitListenerContainerFactory factory,
+      @Qualifier("queue") final Queue queue, final P1TelegramReceiverBean p1TelegramReceiverBean,
+      @Qualifier("errorHandler") final ErrorHandler errorHandler) {
     final SimpleMessageListenerContainer container = factory.createListenerContainer();
     container.setQueues(queue);
     container.setMessageListener(p1TelegramReceiverBean);
