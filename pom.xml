@@ -62,6 +62,11 @@
     <dependencies>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>backend-amqp</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>backend-database</artifactId>
         <version>${project.version}</version>
       </dependency>
