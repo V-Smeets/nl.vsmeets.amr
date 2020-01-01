@@ -30,7 +30,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.github.snksoft.crc.CRC;
 
-import nl.vsmeets.amr.backend.jms.P1TelegramSender;
+import nl.vsmeets.amr.backend.amqp.P1TelegramSender;
 import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**

@@ -13,36 +13,23 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.service.p1telegram.reader;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-
-import com.github.snksoft.crc.CRC;
-import com.github.snksoft.crc.CRC.Parameters;
-
-import nl.vsmeets.amr.backend.amqp.BackendAmqpConfig;
+package nl.vsmeets.amr.backend.amqp;
 
 /**
- * The configuration class for service P1 telegram reader.
+ * Provide the communication with the AMQP server to send P1 telegrams.
  *
  * @author vincent
  */
-@Configuration
-@ComponentScan
-@Import({ BackendAmqpConfig.class })
-public class ServiceP1TelegramReaderConfig {
+public interface P1TelegramSender {
 
   /**
-   * A bean that calculates the CRC.
+   * Send a P1 telegram to the server for a specific site.
    *
-   * @return The CRC bean.
+   * @param site
+   *        The site.
+   * @param p1Telegram
+   *        The P1 telegram.
    */
-  @Bean
-  public CRC crc() {
-    return new CRC(Parameters.CRC16);
-  }
+  void send(final String site, final String p1Telegram);
 
 }
