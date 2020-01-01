@@ -27,7 +27,7 @@ import com.github.snksoft.crc.CRC;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import nl.vsmeets.amr.backend.jms.P1TelegramSender;
+import nl.vsmeets.amr.backend.amqp.P1TelegramSender;
 import nl.vsmeets.amr.service.p1telegram.reader.P1TelegramReader;
 
 /**

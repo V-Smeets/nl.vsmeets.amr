@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Import;
 import com.github.snksoft.crc.CRC;
 import com.github.snksoft.crc.CRC.Parameters;
 
-import nl.vsmeets.amr.backend.jms.BackendJmsConfig;
+import nl.vsmeets.amr.backend.amqp.BackendAmqpConfig;
 
 /**
  * The configuration class for service P1 telegram reader.
@@ -32,7 +32,7 @@ import nl.vsmeets.amr.backend.jms.BackendJmsConfig;
  */
 @Configuration
 @ComponentScan
-@Import({ BackendJmsConfig.class })
+@Import({ BackendAmqpConfig.class })
 public class ServiceP1TelegramReaderConfig {
 
   /**

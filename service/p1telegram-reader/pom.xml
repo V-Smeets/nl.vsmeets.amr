@@ -19,7 +19,7 @@
     <!-- compile -->
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>backend-jms</artifactId>
+      <artifactId>backend-amqp</artifactId>
     </dependency>
     <dependency>
       <groupId>com.github.snksoft</groupId>
