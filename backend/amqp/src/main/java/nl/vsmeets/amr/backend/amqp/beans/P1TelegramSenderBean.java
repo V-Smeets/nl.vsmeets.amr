@@ -43,7 +43,7 @@ public class P1TelegramSenderBean implements P1TelegramSender {
   /**
    * The character set that will be used to encode the message.
    */
-  private static final Charset CHARACTER_SET = StandardCharsets.US_ASCII;
+  private static final Charset CHARACTER_SET = StandardCharsets.UTF_8;
 
   /**
    * The properties for this bean.
