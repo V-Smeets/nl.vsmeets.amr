@@ -19,7 +19,6 @@
   <modules>
     <module>amqp</module>
     <module>database</module>
-    <module>jms</module>
   </modules>
 
 </project>
