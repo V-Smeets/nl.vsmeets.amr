@@ -32,10 +32,10 @@ import org.springframework.context.annotation.Configuration;
 
 import com.rabbitmq.client.Channel;
 
-import nl.vsmeets.amr.test.frontend.fileimporter.FrontendFileimporterIT;
+import nl.vsmeets.amr.backend.amqp.BackendAmqpConfig;
 
 /**
- * The configuration for the {@link FrontendFileimporterIT}.
+ * The configuration for the {@link BackendAmqpConfig}.
  *
  * @author vincent
  */
