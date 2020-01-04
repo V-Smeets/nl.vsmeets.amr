@@ -13,19 +13,12 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.test.frontend.fileimporter;
+package nl.vsmeets.amr.test.frontend.serial;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -43,13 +36,14 @@ import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-import nl.vsmeets.amr.frontend.fileimporter.FrontendFileimporterConfig;
+import nl.vsmeets.amr.frontend.serial.FrontendSerialConfig;
 import nl.vsmeets.amr.test.frontend.BackendAmqpITConfig;
 import nl.vsmeets.amr.test.frontend.BackendAmqpITListener;
 
 /**
- * The integration tests for the front end file importer.
+ * The integration tests for the serial front end.
  *
  * @author vincent
  */
@@ -57,7 +51,8 @@ import nl.vsmeets.amr.test.frontend.BackendAmqpITListener;
 // @formatter:off
     classes = {
         BackendAmqpITConfig.class,
-        FrontendFileimporterConfig.class },
+        FrontendSerialITConfig.class,
+        FrontendSerialConfig.class },
     args = {
         "--No-Runner" },
     properties = {
@@ -66,11 +61,12 @@ import nl.vsmeets.amr.test.frontend.BackendAmqpITListener;
         "amr.service.p1telegram.reader.site=IntegrationTest" }
     // @formatter:on
 )
+@ActiveProfiles("test")
 @EnableConfigurationProperties
-public class FrontendFileimporterIT {
+public class FrontendSerialIT {
 
   @Autowired
-  @Qualifier("fileImporterBean")
+  @Qualifier("serialReaderBean")
   private ApplicationRunner applicationRunner;
 
   @Autowired
@@ -84,58 +80,8 @@ public class FrontendFileimporterIT {
   }
 
   @Test
-  void testRunEmptyFile() throws Exception {
-    final File filename = resourceToFile("/frontend/fileimporter/empty.txt");
-    final ApplicationArguments args = new DefaultApplicationArguments(filename.getPath());
-
-    applicationRunner.run(args);
-
-    assertEquals(0, exitCodeGenerator.getExitCode());
-  }
-
-  @Test
-  void testRunIncorrectCrc() throws Exception {
-    final File filename = resourceToFile("/frontend/fileimporter/incorrect-crc.txt");
-    final ApplicationArguments args = new DefaultApplicationArguments(filename.getPath());
-
-    applicationRunner.run(args);
-
-    assertEquals(0, exitCodeGenerator.getExitCode());
-  }
-
-  @Test
-  void testRunMissingCrc() throws Exception {
-    final File filename = resourceToFile("/frontend/fileimporter/missing-crc.txt");
-    final ApplicationArguments args = new DefaultApplicationArguments(filename.getPath());
-
-    applicationRunner.run(args);
-
-    assertEquals(0, exitCodeGenerator.getExitCode());
-  }
-
-  @Test
-  void testRunMissingHeader() throws Exception {
-    final File filename = resourceToFile("/frontend/fileimporter/missing-header.txt");
-    final ApplicationArguments args = new DefaultApplicationArguments(filename.getPath());
-
-    applicationRunner.run(args);
-
-    assertEquals(0, exitCodeGenerator.getExitCode());
-  }
-
-  @Test
-  void testRunNoFiles() throws Exception {
+  void testRun() throws Exception {
     final ApplicationArguments args = new DefaultApplicationArguments();
-
-    applicationRunner.run(args);
-
-    assertEquals(0, exitCodeGenerator.getExitCode());
-  }
-
-  @Test
-  void testRunP1Telegram() throws Exception {
-    final File filename = resourceToFile("/frontend/fileimporter/p1-telegram.txt");
-    final ApplicationArguments args = new DefaultApplicationArguments(filename.getPath());
 
     applicationRunner.run(args);
 
@@ -179,45 +125,6 @@ public class FrontendFileimporterIT {
     assertEquals(MessageProperties.CONTENT_TYPE_TEXT_PLAIN, messageProperties.getContentType());
     assertEquals(body.length, messageProperties.getContentLength());
     assertEquals(MessageDeliveryMode.PERSISTENT, messageProperties.getDeliveryMode());
-  }
-
-  @Test
-  void testRunUnknownFile() throws Exception {
-    final ApplicationArguments args = new DefaultApplicationArguments("/Unknown file");
-
-    applicationRunner.run(args);
-
-    assertEquals(1, exitCodeGenerator.getExitCode());
-  }
-
-  /**
-   * Convert a resource to a file and return it.
-   *
-   * @param resourceName
-   *        The name of the resource.
-   * @return The file.
-   * @throws IOException
-   */
-  private File resourceToFile(final String resourceName) throws IOException {
-    final InputStream inputStream = getClass().getResourceAsStream(resourceName);
-
-    final Path resourcePath = Paths.get(resourceName);
-    final String fileName = resourcePath.getFileName().toString();
-    final int dotIndex = fileName.indexOf('.');
-    String prefix;
-    String suffix;
-    if (dotIndex >= 3) {
-      prefix = fileName.substring(0, dotIndex);
-      suffix = fileName.substring(dotIndex);
-    } else {
-      prefix = fileName;
-      suffix = null;
-    }
-    final File outputFile = File.createTempFile(prefix, suffix);
-    outputFile.deleteOnExit();
-
-    Files.copy(inputStream, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    return outputFile;
   }
 
 }

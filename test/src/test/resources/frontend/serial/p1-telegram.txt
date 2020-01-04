@@ -1,0 +1,10 @@
+/0005 P1-Telegram
+
+Date line 1
+Date line 2
+!CC67
+/0015 P1-Telegram
+
+Date line 3
+Date line 4
+!7457

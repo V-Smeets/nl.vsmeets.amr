@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortInvalidPortException;
@@ -39,6 +40,7 @@ import nl.vsmeets.amr.service.p1telegram.reader.ServiceP1TelegramReaderConfig;
 public class FrontendSerialConfig {
 
   @Bean
+  @Profile("!test")
   public SerialPort serialPort(@Valid final FrontendSerialProperties properties) {
     final SerialPort serialPort = SerialPort.getCommPort(properties.getDevice().toString());
     serialPort.setComPortParameters(properties.getBaudRate(), properties.getDataBits(), properties.getStopBits(),

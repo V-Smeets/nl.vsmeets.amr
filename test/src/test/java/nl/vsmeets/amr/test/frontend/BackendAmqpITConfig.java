@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.test.frontend.fileimporter;
+package nl.vsmeets.amr.test.frontend;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.*;
@@ -32,18 +32,20 @@ import org.springframework.context.annotation.Configuration;
 
 import com.rabbitmq.client.Channel;
 
+import nl.vsmeets.amr.backend.amqp.BackendAmqpConfig;
+
 /**
- * The configuration for the {@link FrontendFileimporterIT}.
+ * The configuration for the {@link BackendAmqpConfig}.
  *
  * @author vincent
  */
 @Configuration
 @RabbitListenerTest(capture = true, spy = true)
-public class FrontendFileimporterITConfig {
+public class BackendAmqpITConfig {
 
   @Bean
-  public BackendAmqpListener backendAmqpListener() {
-    return new BackendAmqpListener();
+  public BackendAmqpITListener backendAmqpITListener() {
+    return new BackendAmqpITListener();
   }
 
   @Bean
