@@ -45,6 +45,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.test.context.SpringBootTest;
 
 import nl.vsmeets.amr.frontend.fileimporter.FrontendFileimporterConfig;
+import nl.vsmeets.amr.test.frontend.BackendAmqpITConfig;
+import nl.vsmeets.amr.test.frontend.BackendAmqpITListener;
 
 /**
  * The integration tests for the front end file importer.
@@ -54,13 +56,13 @@ import nl.vsmeets.amr.frontend.fileimporter.FrontendFileimporterConfig;
 @SpringBootTest(
 // @formatter:off
     classes = {
-        FrontendFileimporterITConfig.class,
+        BackendAmqpITConfig.class,
         FrontendFileimporterConfig.class },
     args = {
         "--No-Runner" },
     properties = {
         "amr.backend.amqp.exchange-name=exchange",
-        "amr.backend.amqp.routing-key=" + BackendAmqpListener.CLIENT_QUEUE_QUEUE,
+        "amr.backend.amqp.routing-key=" + BackendAmqpITListener.CLIENT_QUEUE_QUEUE,
         "amr.service.p1telegram.reader.site=IntegrationTest" }
     // @formatter:on
 )
@@ -139,12 +141,12 @@ public class FrontendFileimporterIT {
 
     assertEquals(0, exitCodeGenerator.getExitCode());
 
-    final BackendAmqpListener listener = harness.getSpy(BackendAmqpListener.CLIENT_QUEUE_ID);
+    final BackendAmqpITListener listener = harness.getSpy(BackendAmqpITListener.CLIENT_QUEUE_ID);
     assertNotNull(listener);
     verify(listener, times(2)).clientQueue(any(Message.class));
 
     InvocationData invocationData =
-        harness.getNextInvocationDataFor(BackendAmqpListener.CLIENT_QUEUE_ID, 10, TimeUnit.SECONDS);
+        harness.getNextInvocationDataFor(BackendAmqpITListener.CLIENT_QUEUE_ID, 10, TimeUnit.SECONDS);
     assertNotNull(invocationData);
     Object[] arguments = invocationData.getArguments();
     assertNotNull(arguments);
@@ -161,7 +163,7 @@ public class FrontendFileimporterIT {
     assertEquals(body.length, messageProperties.getContentLength());
     assertEquals(MessageDeliveryMode.PERSISTENT, messageProperties.getDeliveryMode());
 
-    invocationData = harness.getNextInvocationDataFor(BackendAmqpListener.CLIENT_QUEUE_ID, 10, TimeUnit.SECONDS);
+    invocationData = harness.getNextInvocationDataFor(BackendAmqpITListener.CLIENT_QUEUE_ID, 10, TimeUnit.SECONDS);
     assertNotNull(invocationData);
     arguments = invocationData.getArguments();
     assertNotNull(arguments);

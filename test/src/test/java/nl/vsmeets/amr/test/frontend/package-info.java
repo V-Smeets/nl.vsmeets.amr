@@ -13,23 +13,9 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package nl.vsmeets.amr.test.frontend.fileimporter;
-
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-
 /**
- * This class will be a listener for the AMQP back end.
+ * The integration tests for the front end.
  *
  * @author vincent
  */
-public class BackendAmqpListener {
-
-  public static final String CLIENT_QUEUE_ID = "clientQueue";
-  public static final String CLIENT_QUEUE_QUEUE = "nl.vsmeets.amr.client";
-
-  @RabbitListener(id = CLIENT_QUEUE_ID, queues = CLIENT_QUEUE_QUEUE)
-  public void clientQueue(final Message message) {
-  }
-
-}
+package nl.vsmeets.amr.test.frontend;
