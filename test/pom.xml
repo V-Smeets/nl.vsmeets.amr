@@ -30,12 +30,12 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>libs-junit</artifactId>
+      <artifactId>frontend-fileimporter</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>service-p1telegram-reader</artifactId>
+      <artifactId>libs-junit</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -44,8 +44,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.mockrunner</groupId>
-      <artifactId>mockrunner-jms</artifactId>
+      <groupId>org.springframework.amqp</groupId>
+      <artifactId>spring-rabbit-test</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

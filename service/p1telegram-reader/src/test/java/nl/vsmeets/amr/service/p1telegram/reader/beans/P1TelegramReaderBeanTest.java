@@ -144,14 +144,11 @@ class P1TelegramReaderBeanTest implements RandomStringGenerator {
 
   @Test
   void testSaveNoHeaderLineFound() throws IOException {
-    final String site = randomString();
     final StringBuilder inputData = new StringBuilder();
     inputData.append(CR_NL);
     inputData.append("Data").append(CR_NL);
     inputData.append("!0101").append(CR_NL);
     final BufferedReader bufferedReader = new BufferedReader(new StringReader(inputData.toString()));
-
-    when(properties.getSite()).thenReturn(site);
 
     p1TelegramReaderBean.save(bufferedReader);
 

@@ -64,14 +64,16 @@ public class P1TelegramReaderBean implements P1TelegramReader {
 
   @Override
   public void save(final BufferedReader bufferedReader) throws IOException {
+    final StringBuilder trashBuffer = new StringBuilder();
     final StringBuilder dataBuffer = new StringBuilder(P1_TELEGRAM_SIZE);
     final StringBuilder crcBuffer = new StringBuilder();
-    StringBuilder p1TelegramBuffer = dataBuffer;
+    StringBuilder p1TelegramBuffer = trashBuffer;
     for (int characterValue = bufferedReader.read(); characterValue >= 0; characterValue = bufferedReader.read()) {
       final char character = (char) characterValue;
 
       // Before the character has been appended to the buffer.
-      if (character == '/') {
+      if (p1TelegramBuffer == trashBuffer && character == '/') {
+        trashBuffer.setLength(0);
         dataBuffer.setLength(0);
         crcBuffer.setLength(0);
         p1TelegramBuffer = dataBuffer;
@@ -83,13 +85,15 @@ public class P1TelegramReaderBean implements P1TelegramReader {
       // After the character has been appended to the buffer.
       switch (character) {
         case '!':
-          p1TelegramBuffer = crcBuffer;
+          if (p1TelegramBuffer == dataBuffer) {
+            p1TelegramBuffer = crcBuffer;
+          }
           break;
 
         case '\n':
           if (p1TelegramBuffer == crcBuffer) {
             sendTelegram(dataBuffer, crcBuffer);
-            p1TelegramBuffer = dataBuffer;
+            p1TelegramBuffer = trashBuffer;
           }
           break;
 
