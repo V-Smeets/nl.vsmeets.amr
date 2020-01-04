@@ -54,6 +54,10 @@ public class FileImporterBean implements ApplicationRunner, ExitCodeGenerator {
 
   @Override
   public void run(final ApplicationArguments args) throws Exception {
+    if (args.containsOption("No-Runner")) {
+      exitCode = 0;
+      return;
+    }
     for (final String fileName : args.getNonOptionArgs()) {
       log.debug("Importing file {}", fileName);
       try (BufferedReader reader = new BufferedReader(new FileReader(fileName, StandardCharsets.UTF_8))) {
