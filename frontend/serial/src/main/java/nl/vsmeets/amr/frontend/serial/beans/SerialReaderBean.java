@@ -60,6 +60,10 @@ public class SerialReaderBean implements ApplicationRunner, ExitCodeGenerator {
 
   @Override
   public void run(final ApplicationArguments args) throws Exception {
+    if (args.containsOption("No-Runner")) {
+      exitCode = 0;
+      return;
+    }
     try (InputStream inputStream = serialPort.getInputStream()) {
       final Reader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
       final BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
