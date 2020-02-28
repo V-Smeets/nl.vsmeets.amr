@@ -97,4 +97,14 @@ class FileImporterBeanTest {
     assertEquals(0, fileImporterBean.getExitCode());
   }
 
+  @Test
+  void testRunOptionNoRunner() throws Exception {
+    final String[] args = new String[] { "--No-Runner" };
+    final ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+
+    fileImporterBean.run(applicationArguments);
+
+    assertEquals(0, fileImporterBean.getExitCode());
+  }
+
 }
