@@ -30,6 +30,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.DefaultApplicationArguments;
 
 import com.fazecast.jSerialComm.SerialPort;
 
@@ -75,6 +76,16 @@ class SerialReaderBeanTest implements RandomStringGenerator {
     when(serialPort.getInputStream()).then(i -> inputStream);
 
     serialReaderBean.run(args);
+
+    assertEquals(0, serialReaderBean.getExitCode());
+  }
+
+  @Test
+  void testRunOptionNoRunner() throws Exception {
+    final String[] args = new String[] { "--No-Runner" };
+    final ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+
+    serialReaderBean.run(applicationArguments);
 
     assertEquals(0, serialReaderBean.getExitCode());
   }
