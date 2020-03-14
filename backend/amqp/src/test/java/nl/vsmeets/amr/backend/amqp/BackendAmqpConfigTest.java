@@ -27,6 +27,9 @@ import org.junit.jupiter.api.Test;
  */
 class BackendAmqpConfigTest {
 
+  /**
+   * The object under test.
+   */
   private BackendAmqpConfig backendAmqpConfig;
 
   @BeforeEach

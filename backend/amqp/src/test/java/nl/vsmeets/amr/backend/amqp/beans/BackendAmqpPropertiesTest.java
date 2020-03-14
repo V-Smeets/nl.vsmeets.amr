@@ -28,14 +28,18 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-
 /**
  * Unit tests for the class {@link BackendAmqpProperties}.
  *
  * @author vincent
  */
-class BackendAmqpPropertiesTest implements RandomStringGenerator {
+class BackendAmqpPropertiesTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String exchangeName = "Exchange Name";
+  private static final String routingKey = "Routing Key";
 
   private static ValidatorFactory factory;
 
@@ -44,13 +48,12 @@ class BackendAmqpPropertiesTest implements RandomStringGenerator {
     factory = Validation.buildDefaultValidatorFactory();
   }
 
-  private Validator validator;
-
-  private final String exchangeName = randomString();
-
-  private final String routingKey = randomString();
-
+  /**
+   * The object under test.
+   */
   private BackendAmqpProperties backendAmqpProperties;
+
+  private Validator validator;
 
   @BeforeEach
   void setUp() throws Exception {

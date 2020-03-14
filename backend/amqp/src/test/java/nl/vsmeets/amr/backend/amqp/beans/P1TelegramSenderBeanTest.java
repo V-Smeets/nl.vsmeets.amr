@@ -32,7 +32,6 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 
 import nl.vsmeets.amr.libs.amqp.AmqpConstants;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link P1TelegramSenderBean}.
@@ -40,15 +39,22 @@ import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class P1TelegramSenderBeanTest implements RandomStringGenerator {
+class P1TelegramSenderBeanTest {
 
-  private final String exchangeName = randomString();
-  private final String routingKey = randomString();
+  /**
+   * Values used during tests.
+   */
+  private static final String exchangeName = "Exchange Name";
+  private static final String routingKey = "Routing Key";
+
   private final BackendAmqpProperties properties = new BackendAmqpProperties();
 
   @Mock
   private AmqpTemplate amqpTemplate;
 
+  /**
+   * The object under test.
+   */
   private P1TelegramSenderBean p1TelegramSenderBean;
 
   @Captor
@@ -68,8 +74,8 @@ class P1TelegramSenderBeanTest implements RandomStringGenerator {
 
   @Test
   void testSend() throws UnsupportedEncodingException {
-    final String site = randomString();
-    final String p1Telegram = randomString();
+    final String site = "Site";
+    final String p1Telegram = "P1 Telegram";
 
     p1TelegramSenderBean.send(site, p1Telegram);
 
