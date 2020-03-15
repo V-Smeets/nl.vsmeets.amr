@@ -31,7 +31,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.github.snksoft.crc.CRC;
 
 import nl.vsmeets.amr.backend.amqp.P1TelegramSender;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link P1TelegramReaderBean}.
@@ -39,7 +38,12 @@ import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class P1TelegramReaderBeanTest implements RandomStringGenerator {
+class P1TelegramReaderBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String site = "Site";
 
   private static final String CR_NL = "\r\n";
 
@@ -61,7 +65,6 @@ class P1TelegramReaderBeanTest implements RandomStringGenerator {
 
   @Test
   void testSave() throws IOException {
-    final String site = randomString();
     final StringBuilder p1Telegram = new StringBuilder();
     p1Telegram.append("/Header").append(CR_NL);
     p1Telegram.append(CR_NL);
@@ -95,7 +98,6 @@ class P1TelegramReaderBeanTest implements RandomStringGenerator {
 
   @Test
   void testSaveIncompleteCrcFound() throws IOException {
-    final String site = randomString();
     final StringBuilder inputData = new StringBuilder();
     inputData.append("/Header").append(CR_NL);
     inputData.append(CR_NL);
@@ -112,7 +114,6 @@ class P1TelegramReaderBeanTest implements RandomStringGenerator {
 
   @Test
   void testSaveIncorrectCrcFound() throws IOException {
-    final String site = randomString();
     final StringBuilder inputData = new StringBuilder();
     inputData.append("/Header").append(CR_NL);
     inputData.append(CR_NL);

@@ -20,22 +20,23 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-
 /**
  * Unit tests for the class {@link ServiceP1TelegramReaderProperties}.
  *
  * @author vincent
  */
-class ServiceP1TelegramReaderPropertiesTest implements RandomStringGenerator {
+class ServiceP1TelegramReaderPropertiesTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String site = "Site";
 
   private ServiceP1TelegramReaderProperties serviceP1TelegramReaderProperties;
-  private String site;
 
   @BeforeEach
   void setUp() throws Exception {
     serviceP1TelegramReaderProperties = new ServiceP1TelegramReaderProperties();
-    site = randomString();
     serviceP1TelegramReaderProperties.setSite(site);
   }
 
