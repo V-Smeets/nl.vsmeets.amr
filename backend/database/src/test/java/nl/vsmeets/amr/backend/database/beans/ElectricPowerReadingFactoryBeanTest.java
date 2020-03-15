@@ -36,7 +36,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricPowerReading;
 import nl.vsmeets.amr.backend.database.entities.ElectricPowerReadingEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link ElectricPowerReadingFactoryBean}.
@@ -44,7 +43,12 @@ import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPowerReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
+class ElectricPowerReadingFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime = LocalDateTime.MIN;
 
   /**
    * The object under test.
@@ -65,8 +69,6 @@ class ElectricPowerReadingFactoryBeanTest implements RandomLocalDateTimeGenerato
   @Test
   void testCreate(@Mock final MeterEntity meter, @Mock final Quantity<Power> consumedPower,
       @Mock final Quantity<Power> producedPower) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-
     when(repository.save(any(ElectricPowerReadingEntity.class))).then(i -> i.getArgument(0));
 
     final ElectricPowerReading result =
@@ -84,8 +86,6 @@ class ElectricPowerReadingFactoryBeanTest implements RandomLocalDateTimeGenerato
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Power> consumedPower, @Mock final Quantity<Power> producedPower) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-
     when(repository.save(any(ElectricPowerReadingEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class,
@@ -94,7 +94,6 @@ class ElectricPowerReadingFactoryBeanTest implements RandomLocalDateTimeGenerato
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ElectricPowerReading electricPowerReading) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
     final Optional<? extends ElectricPowerReading> expectedResult = Optional.of(electricPowerReading);
 
     when(repository.findByMeterAndLocalDateTime(meter, localDateTime)).then(i -> expectedResult);

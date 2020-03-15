@@ -26,15 +26,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-
 /**
  * Unit tests for the class {@link MeterEntity}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class MeterEntityTest implements RandomStringGenerator {
+class MeterEntityTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String equipmentIdentifier1 = "Equipment Identifier 1";
+  private static final String equipmentIdentifier2 = "Equipment Identifier 2";
 
   @Mock
   private P1TelegramEntity p1Telegram1;
@@ -44,8 +48,6 @@ class MeterEntityTest implements RandomStringGenerator {
   private MeasuredMediumEntity measuredMedium1;
   @Mock
   private MeasuredMediumEntity measuredMedium2;
-  private final String equipmentIdentifier1 = randomString();
-  private final String equipmentIdentifier2 = randomString(equipmentIdentifier1);
 
   @Test
   void testEquals() {

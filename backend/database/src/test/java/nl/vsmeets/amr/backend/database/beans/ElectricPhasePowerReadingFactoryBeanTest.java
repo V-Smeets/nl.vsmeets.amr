@@ -38,8 +38,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricPhasePowerReading;
 import nl.vsmeets.amr.backend.database.entities.ElectricPhasePowerReadingEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link ElectricPhasePowerReadingFactoryBean}.
@@ -47,7 +45,13 @@ import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPhasePowerReadingFactoryBeanTest implements RandomByteGenerator, RandomLocalDateTimeGenerator {
+class ElectricPhasePowerReadingFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime = LocalDateTime.MIN;
+  private static final Byte phaseNumber = Byte.MIN_VALUE;
 
   /**
    * The object under test.
@@ -69,9 +73,6 @@ class ElectricPhasePowerReadingFactoryBeanTest implements RandomByteGenerator, R
   void testCreate(@Mock final MeterEntity meter, @Mock final Quantity<ElectricPotential> instantaneousVoltage,
       @Mock final Quantity<ElectricCurrent> instantaneousCurrent,
       @Mock final Quantity<Power> instantaneousConsumedPower, @Mock final Quantity<Power> instantaneousProducedPower) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final Byte phaseNumber = randomByte();
-
     when(repository.save(any(ElectricPhasePowerReadingEntity.class))).then(i -> i.getArgument(0));
 
     final ElectricPhasePowerReading result =
@@ -95,9 +96,6 @@ class ElectricPhasePowerReadingFactoryBeanTest implements RandomByteGenerator, R
       @Mock final Quantity<ElectricPotential> instantaneousVoltage,
       @Mock final Quantity<ElectricCurrent> instantaneousCurrent,
       @Mock final Quantity<Power> instantaneousConsumedPower, @Mock final Quantity<Power> instantaneousProducedPower) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final Byte phaseNumber = randomByte();
-
     when(repository.save(any(ElectricPhasePowerReadingEntity.class)))
         .thenThrow(new DataIntegrityViolationException(null));
 
@@ -107,8 +105,6 @@ class ElectricPhasePowerReadingFactoryBeanTest implements RandomByteGenerator, R
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ElectricPhasePowerReading electricPhasePowerReading) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final Byte phaseNumber = randomByte();
     final Optional<? extends ElectricPhasePowerReading> expectedResult = Optional.of(electricPhasePowerReading);
 
     when(repository.findByMeterAndLocalDateTimeAndPhaseNumber(meter, localDateTime, phaseNumber))

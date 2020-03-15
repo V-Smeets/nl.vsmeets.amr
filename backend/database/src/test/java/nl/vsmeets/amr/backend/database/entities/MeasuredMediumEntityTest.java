@@ -23,20 +23,20 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-
 /**
  * Unit tests for the class {@link MeasuredMediumEntity}.
  *
  * @author vincent
  */
-class MeasuredMediumEntityTest implements RandomByteGenerator, RandomStringGenerator {
+class MeasuredMediumEntityTest {
 
-  private final Byte mediumId1 = randomByte();
-  private final Byte mediumId2 = randomByte(mediumId1);
-  private final String name1 = randomString();
-  private final String name2 = randomString(name1);
+  /**
+   * Values used during tests.
+   */
+  private static final Byte mediumId1 = 1;
+  private static final Byte mediumId2 = 2;
+  private static final String name1 = "Name 1";
+  private static final String name2 = "Name 2";
 
   @Test
   void testEquals() {

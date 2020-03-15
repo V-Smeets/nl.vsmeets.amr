@@ -24,20 +24,21 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
-
 /**
  * Unit tests for the class {@link SiteEntity}.
  *
  * @author vincent
  */
-class SiteEntityTest implements RandomStringGenerator, RandomZoneIdGenerator {
+class SiteEntityTest {
 
-  private final String name1 = randomString();
-  private final String name2 = randomString(name1);
-  private final ZoneId timeZone1 = randomZoneId();
-  private final ZoneId timeZone2 = randomZoneId(timeZone1);
+  /**
+   * Values used during tests.
+   */
+  private static final String name1 = "Name 1";
+  private static final String name2 = "Name 2";
+  private static final String[] ZoneIds = ZoneId.getAvailableZoneIds().toArray(String[]::new);
+  private static final ZoneId timeZone1 = ZoneId.of(ZoneIds[0]);
+  private static final ZoneId timeZone2 = ZoneId.of(ZoneIds[1]);
 
   @Test
   void testEquals() {

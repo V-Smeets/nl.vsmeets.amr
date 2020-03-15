@@ -36,8 +36,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricEnergyReading;
 import nl.vsmeets.amr.backend.database.entities.ElectricEnergyReadingEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
-import nl.vsmeets.amr.libs.junit.RandomShortGenerator;
 
 /**
  * Unit tests for the class {@link ElectricEnergyReadingFactoryBean}.
@@ -45,12 +43,18 @@ import nl.vsmeets.amr.libs.junit.RandomShortGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricEnergyReadingFactoryBeanTest implements RandomShortGenerator, RandomLocalDateTimeGenerator {
+class ElectricEnergyReadingFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime = LocalDateTime.MIN;
+  private static final Short tariffIndicator = Short.MIN_VALUE;
 
   /**
    * The object under test.
    */
-  private ElectricEnergyReadingFactoryBean testObject;
+  private ElectricEnergyReadingFactoryBean electricEnergyReadingFactoryBean;
 
   /**
    * Constructor parameters.
@@ -60,19 +64,16 @@ class ElectricEnergyReadingFactoryBeanTest implements RandomShortGenerator, Rand
 
   @BeforeEach
   void setUp() throws Exception {
-    testObject = new ElectricEnergyReadingFactoryBean(repository);
+    electricEnergyReadingFactoryBean = new ElectricEnergyReadingFactoryBean(repository);
   }
 
   @Test
   void testCreate(@Mock final MeterEntity meter, @Mock final Quantity<Energy> consumedEnergy,
       @Mock final Quantity<Energy> producedEnergy) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final Short tariffIndicator = randomShort();
-
     when(repository.save(any(ElectricEnergyReadingEntity.class))).then(i -> i.getArgument(0));
 
-    final ElectricEnergyReading result = assertDoesNotThrow(
-        () -> testObject.create(meter, localDateTime, tariffIndicator, consumedEnergy, producedEnergy));
+    final ElectricEnergyReading result = assertDoesNotThrow(() -> electricEnergyReadingFactoryBean.create(meter,
+        localDateTime, tariffIndicator, consumedEnergy, producedEnergy));
     verify(repository).refresh(any(ElectricEnergyReadingEntity.class));
     assertAll( //
         () -> assertNull(result.getId()), //
@@ -87,25 +88,19 @@ class ElectricEnergyReadingFactoryBeanTest implements RandomShortGenerator, Rand
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Energy> consumedEnergy, @Mock final Quantity<Energy> producedEnergy) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final Short tariffIndicator = randomShort();
-
     when(repository.save(any(ElectricEnergyReadingEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
-    assertThrows(ConstraintViolationException.class,
-        () -> testObject.create(meter, localDateTime, tariffIndicator, consumedEnergy, producedEnergy));
+    assertThrows(ConstraintViolationException.class, () -> electricEnergyReadingFactoryBean.create(meter, localDateTime,
+        tariffIndicator, consumedEnergy, producedEnergy));
   }
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ElectricEnergyReading electricEnergyReading) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final Short tariffIndicator = randomShort();
     final Optional<? extends ElectricEnergyReading> expectedResult = Optional.of(electricEnergyReading);
-
     when(repository.findByMeterAndLocalDateTimeAndTariffIndicator(meter, localDateTime, tariffIndicator))
         .then(i -> expectedResult);
 
-    assertEquals(expectedResult, testObject.find(meter, localDateTime, tariffIndicator));
+    assertEquals(expectedResult, electricEnergyReadingFactoryBean.find(meter, localDateTime, tariffIndicator));
   }
 
 }

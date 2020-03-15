@@ -23,11 +23,11 @@ import java.time.Duration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationContext;
-
-import nl.vsmeets.amr.libs.junit.RandomLongGenerator;
 
 /**
  * Unit tests for the class {@link Duration2LongConverter}.
@@ -35,7 +35,14 @@ import nl.vsmeets.amr.libs.junit.RandomLongGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class Duration2LongConverterTest implements RandomLongGenerator {
+class Duration2LongConverterTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final long dbDataMin = -999_999_999L;
+  private static final long dbDataZero = 0L;
+  private static final long dbDataMax = 1_000_000_000L;
 
   /**
    * The object under test.
@@ -47,9 +54,9 @@ class Duration2LongConverterTest implements RandomLongGenerator {
     testObject = new Duration2LongConverter();
   }
 
-  @Test
-  void testConvertToDatabaseColumn() {
-    final Long dbData = randomLongRange(-999_999_999, 1_000_000_000);
+  @ParameterizedTest
+  @ValueSource(longs = { dbDataMin, dbDataZero, dbDataMax })
+  void testConvertToDatabaseColumn(final long dbData) {
     final Duration attribute = Duration.ofSeconds(dbData);
 
     assertEquals(dbData, testObject.convertToDatabaseColumn(attribute));
@@ -61,9 +68,9 @@ class Duration2LongConverterTest implements RandomLongGenerator {
     assertNull(testObject.convertToDatabaseColumn(null));
   }
 
-  @Test
-  void testConvertToEntityAttribute() {
-    final Long dbData = randomLongRange(-999_999_999, 1_000_000_000);
+  @ParameterizedTest
+  @ValueSource(longs = { dbDataMin, dbDataZero, dbDataMax })
+  void testConvertToEntityAttribute(final long dbData) {
     final Duration attribute = Duration.ofSeconds(dbData);
 
     assertEquals(attribute, testObject.convertToEntityAttribute(dbData));

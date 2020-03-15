@@ -36,7 +36,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.GasVolumeReading;
 import nl.vsmeets.amr.backend.database.entities.GasVolumeReadingEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link GasVolumeReadingFactoryBean}.
@@ -44,7 +43,12 @@ import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class GasVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
+class GasVolumeReadingFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime = LocalDateTime.MIN;
 
   /**
    * The object under test.
@@ -64,8 +68,6 @@ class GasVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
 
   @Test
   void testCreate(@Mock final MeterEntity meter, @Mock final Quantity<Volume> consumedGas) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-
     when(repository.save(any(GasVolumeReadingEntity.class))).then(i -> i.getArgument(0));
 
     final GasVolumeReading result = assertDoesNotThrow(() -> testObject.create(meter, localDateTime, consumedGas));
@@ -81,8 +83,6 @@ class GasVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Volume> consumedGas) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-
     when(repository.save(any(GasVolumeReadingEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, localDateTime, consumedGas));
@@ -90,7 +90,6 @@ class GasVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final GasVolumeReading gasVolumeReading) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
     final Optional<? extends GasVolumeReading> expectedResult = Optional.of(gasVolumeReading);
 
     when(repository.findByMeterAndLocalDateTime(meter, localDateTime)).then(i -> expectedResult);

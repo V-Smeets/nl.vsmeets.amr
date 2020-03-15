@@ -36,8 +36,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricMessage;
 import nl.vsmeets.amr.backend.database.entities.ElectricMessageEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link ElectricMessageFactoryBean}.
@@ -45,7 +43,13 @@ import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricMessageFactoryBeanTest implements RandomStringGenerator, RandomLocalDateTimeGenerator {
+class ElectricMessageFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime = LocalDateTime.MIN;
+  private static final String textMessage = "Text Message";
 
   /**
    * The object under test.
@@ -66,9 +70,6 @@ class ElectricMessageFactoryBeanTest implements RandomStringGenerator, RandomLoc
   @Test
   void testCreate(@Mock final MeterEntity meter, @Mock final Quantity<Energy> consumedEnergy,
       @Mock final Quantity<Energy> producedEnergy) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final String textMessage = randomString();
-
     when(repository.save(any(ElectricMessageEntity.class))).then(i -> i.getArgument(0));
 
     final ElectricMessage result = assertDoesNotThrow(() -> testObject.create(meter, localDateTime, textMessage));
@@ -84,9 +85,6 @@ class ElectricMessageFactoryBeanTest implements RandomStringGenerator, RandomLoc
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Energy> consumedEnergy, @Mock final Quantity<Energy> producedEnergy) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final String textMessage = randomString();
-
     when(repository.save(any(ElectricMessageEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, localDateTime, textMessage));
@@ -94,9 +92,7 @@ class ElectricMessageFactoryBeanTest implements RandomStringGenerator, RandomLoc
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ElectricMessage electricMessage) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
     final Optional<? extends ElectricMessage> expectedResult = Optional.of(electricMessage);
-
     when(repository.findByMeterAndLocalDateTime(meter, localDateTime)).then(i -> expectedResult);
 
     assertEquals(expectedResult, testObject.find(meter, localDateTime));

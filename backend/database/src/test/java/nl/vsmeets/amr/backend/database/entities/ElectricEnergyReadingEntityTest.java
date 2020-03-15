@@ -30,25 +30,26 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
-import nl.vsmeets.amr.libs.junit.RandomShortGenerator;
-
 /**
  * Unit tests for the class {@link ElectricEnergyReadingEntity}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricEnergyReadingEntityTest implements RandomShortGenerator, RandomLocalDateTimeGenerator {
+class ElectricEnergyReadingEntityTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime1 = LocalDateTime.MIN;
+  private static final LocalDateTime localDateTime2 = LocalDateTime.MAX;
+  private static final Short tariffIndicator1 = 1;
+  private static final Short tariffIndicator2 = 2;
 
   @Mock
   private MeterEntity meter1;
   @Mock
   private MeterEntity meter2;
-  private final LocalDateTime localDateTime1 = randomLocalDateTime();
-  private final LocalDateTime localDateTime2 = randomLocalDateTime(localDateTime1);
-  private final Short tariffIndicator1 = randomShort();
-  private final Short tariffIndicator2 = randomShort(tariffIndicator1);
   @Mock
   private Quantity<Energy> consumedEnergy1;
   @Mock

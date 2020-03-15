@@ -47,11 +47,6 @@
 
     <!-- test -->
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>libs-junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava-testlib</artifactId>
       <scope>test</scope>

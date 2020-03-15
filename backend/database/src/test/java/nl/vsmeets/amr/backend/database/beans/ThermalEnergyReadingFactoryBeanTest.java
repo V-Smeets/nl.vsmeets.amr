@@ -36,7 +36,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ThermalEnergyReading;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
 import nl.vsmeets.amr.backend.database.entities.ThermalEnergyReadingEntity;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link ThermalEnergyReadingFactoryBean}.
@@ -44,7 +43,12 @@ import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ThermalEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
+class ThermalEnergyReadingFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime = LocalDateTime.MIN;
 
   /**
    * The object under test.
@@ -64,8 +68,6 @@ class ThermalEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerato
 
   @Test
   void testCreate(@Mock final MeterEntity meter, @Mock final Quantity<Energy> consumedEnergy) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-
     when(repository.save(any(ThermalEnergyReadingEntity.class))).then(i -> i.getArgument(0));
 
     final ThermalEnergyReading result =
@@ -82,8 +84,6 @@ class ThermalEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerato
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Energy> consumedEnergy) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-
     when(repository.save(any(ThermalEnergyReadingEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, localDateTime, consumedEnergy));
@@ -91,7 +91,6 @@ class ThermalEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerato
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ThermalEnergyReading thermalEnergyReading) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
     final Optional<? extends ThermalEnergyReading> expectedResult = Optional.of(thermalEnergyReading);
 
     when(repository.findByMeterAndLocalDateTime(meter, localDateTime)).then(i -> expectedResult);

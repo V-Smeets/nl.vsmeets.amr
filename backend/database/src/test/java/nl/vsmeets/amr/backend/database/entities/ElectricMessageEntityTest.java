@@ -27,25 +27,26 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-
 /**
  * Unit tests for the class {@link ElectricMessageEntity}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricMessageEntityTest implements RandomStringGenerator, RandomLocalDateTimeGenerator {
+class ElectricMessageEntityTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime1 = LocalDateTime.MIN;
+  private static final LocalDateTime localDateTime2 = LocalDateTime.MAX;
+  private static final String textMessage1 = "Text Message 1";
+  private static final String textMessage2 = "Text Message 2";
 
   @Mock
   private MeterEntity meter1;
   @Mock
   private MeterEntity meter2;
-  private final LocalDateTime localDateTime1 = randomLocalDateTime();
-  private final LocalDateTime localDateTime2 = randomLocalDateTime(localDateTime1);
-  private final String textMessage1 = randomString();
-  private final String textMessage2 = randomString(textMessage1);
 
   @Test
   void testEquals() {

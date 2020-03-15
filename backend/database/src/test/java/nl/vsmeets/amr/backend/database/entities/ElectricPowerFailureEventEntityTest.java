@@ -28,25 +28,26 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.libs.junit.RandomDurationGenerator;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
-
 /**
  * Unit tests for the class {@link ElectricPowerFailureEventEntity}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPowerFailureEventEntityTest implements RandomDurationGenerator, RandomLocalDateTimeGenerator {
+class ElectricPowerFailureEventEntityTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime endOfFailureTime1 = LocalDateTime.MIN;
+  private static final LocalDateTime endOfFailureTime2 = LocalDateTime.MAX;
+  private static final Duration failureDuration1 = Duration.ofSeconds(1L, 2L);
+  private static final Duration failureDuration2 = Duration.ofSeconds(3L, 4L);
 
   @Mock
   private ElectricPowerFailuresEntity electricPowerFailures1;
   @Mock
   private ElectricPowerFailuresEntity electricPowerFailures2;
-  private final LocalDateTime endOfFailureTime1 = randomLocalDateTime();
-  private final LocalDateTime endOfFailureTime2 = randomLocalDateTime(endOfFailureTime1);
-  private final Duration failureDuration1 = randomDuration();
-  private final Duration failureDuration2 = randomDuration(failureDuration1);
 
   @Test
   void testEquals() {

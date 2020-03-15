@@ -33,8 +33,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricPhaseVoltageErrors;
 import nl.vsmeets.amr.backend.database.entities.ElectricPhaseVoltageErrorsEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link ElectricPhaseVoltageErrorsFactoryBean}.
@@ -42,7 +40,15 @@ import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPhaseVoltageErrorsFactoryBeanTest implements RandomByteGenerator, RandomLocalDateTimeGenerator {
+class ElectricPhaseVoltageErrorsFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime = LocalDateTime.MIN;
+  private static final Byte phaseNumber = Byte.MIN_VALUE;
+  private static final Integer nrOfVoltageSags = Integer.MIN_VALUE;
+  private static final Integer nrOfVoltageSwells = Integer.MIN_VALUE;
 
   /**
    * The object under test.
@@ -62,11 +68,6 @@ class ElectricPhaseVoltageErrorsFactoryBeanTest implements RandomByteGenerator, 
 
   @Test
   void testCreate(@Mock final MeterEntity meter) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final Byte phaseNumber = randomByte();
-    final Integer nrOfVoltageSags = randomInt();
-    final Integer nrOfVoltageSwells = randomInt();
-
     when(repository.save(any(ElectricPhaseVoltageErrorsEntity.class))).then(i -> i.getArgument(0));
 
     final ElectricPhaseVoltageErrors result = assertDoesNotThrow(
@@ -84,11 +85,6 @@ class ElectricPhaseVoltageErrorsFactoryBeanTest implements RandomByteGenerator, 
 
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final Byte phaseNumber = randomByte();
-    final Integer nrOfVoltageSags = randomInt();
-    final Integer nrOfVoltageSwells = randomInt();
-
     when(repository.save(any(ElectricPhaseVoltageErrorsEntity.class)))
         .thenThrow(new DataIntegrityViolationException(null));
 
@@ -98,8 +94,6 @@ class ElectricPhaseVoltageErrorsFactoryBeanTest implements RandomByteGenerator, 
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final ElectricPhaseVoltageErrors electricPhaseVoltageErrors) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-    final Byte phaseNumber = randomByte();
     final Optional<? extends ElectricPhaseVoltageErrors> expectedResult = Optional.of(electricPhaseVoltageErrors);
 
     when(repository.findByMeterAndLocalDateTimeAndPhaseNumber(meter, localDateTime, phaseNumber))

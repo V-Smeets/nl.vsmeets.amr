@@ -32,8 +32,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.P1Telegram;
 import nl.vsmeets.amr.backend.database.entities.P1TelegramEntity;
 import nl.vsmeets.amr.backend.database.entities.SiteEntity;
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link P1TelegramFactoryBean}.
@@ -41,7 +39,13 @@ import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class P1TelegramFactoryBeanTest implements RandomByteGenerator, RandomStringGenerator {
+class P1TelegramFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String headerInformation = "Header Information";
+  private static final Byte versionInformation = Byte.MIN_VALUE;
 
   /**
    * The object under test.
@@ -61,9 +65,6 @@ class P1TelegramFactoryBeanTest implements RandomByteGenerator, RandomStringGene
 
   @Test
   void testCreate(@Mock final SiteEntity site) {
-    final String headerInformation = randomString();
-    final Byte versionInformation = randomByte();
-
     when(repository.save(any(P1TelegramEntity.class))).then(i -> i.getArgument(0));
 
     final P1Telegram result = assertDoesNotThrow(() -> testObject.create(site, headerInformation, versionInformation));
@@ -78,9 +79,6 @@ class P1TelegramFactoryBeanTest implements RandomByteGenerator, RandomStringGene
 
   @Test
   void testCreateDataIntegrityViolationException(@Mock final SiteEntity site) {
-    final String headerInformation = randomString();
-    final Byte versionInformation = randomByte();
-
     when(repository.save(any(P1TelegramEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class,
@@ -89,8 +87,6 @@ class P1TelegramFactoryBeanTest implements RandomByteGenerator, RandomStringGene
 
   @Test
   void testFind(@Mock final SiteEntity site, @Mock final P1Telegram p1Telegram) {
-    final String headerInformation = randomString();
-    final Byte versionInformation = randomByte();
     final Optional<? extends P1Telegram> expectedResult = Optional.of(p1Telegram);
 
     when(repository.findBySiteAndHeaderInformationAndVersionInformation(site, headerInformation, versionInformation))
