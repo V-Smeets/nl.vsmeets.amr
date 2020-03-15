@@ -25,26 +25,24 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import nl.vsmeets.amr.libs.junit.RandomIntGenerator;
-
 /**
  * Unit tests for the class {@link FrontendSerialProperties}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class FrontendSerialPropertiesTest implements RandomIntGenerator {
+class FrontendSerialPropertiesTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final Integer baudRate = 115_200;
+  private static final Integer dataBits = 8;
+  private static final Integer parity = 0;
+  private static final Integer stopBits = 1;
 
   @Mock
   private Path device;
-
-  private final Integer baudRate = randomIntRange(0, 115_200);
-
-  private final Integer dataBits = randomIntRange(5, 9);
-
-  private final Integer parity = randomIntRange(0, 5);
-
-  private final Integer stopBits = randomIntRange(1, 4);
 
   private FrontendSerialProperties frontendSerialProperties;
 
