@@ -32,6 +32,7 @@ import javax.measure.spi.ServiceProvider;
 import javax.measure.spi.SystemOfUnits;
 import javax.measure.spi.SystemOfUnitsService;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -48,14 +49,19 @@ class LibsMeasureConfigTest {
   /**
    * The object under test.
    */
-  private final LibsMeasureConfig testObject = new LibsMeasureConfig();
+  private LibsMeasureConfig libsMeasureConfig;
+
+  @BeforeEach
+  void setUp() throws Exception {
+    libsMeasureConfig = new LibsMeasureConfig();
+  }
 
   @Test
   void testAmpere(@Mock final SystemOfUnits systemOfUnits, @Mock final Unit<ElectricCurrent> ampere) {
     when(ampere.asType(ElectricCurrent.class)).then(i -> ampere);
     when(systemOfUnits.getUnit("A")).then(i -> ampere);
 
-    assertEquals(ampere, testObject.ampere(systemOfUnits));
+    assertEquals(ampere, libsMeasureConfig.ampere(systemOfUnits));
   }
 
   @Test
@@ -65,14 +71,14 @@ class LibsMeasureConfigTest {
     when(deciMeter.pow(3)).then(i -> cubicDeciMeter);
     when(meter.prefix(MetricPrefix.DECI)).then(i -> deciMeter);
 
-    assertEquals(cubicDeciMeter, testObject.cubicDeciMeter(meter));
+    assertEquals(cubicDeciMeter, libsMeasureConfig.cubicDeciMeter(meter));
   }
 
   @Test
   void testDeciVolt(@Mock final Unit<ElectricPotential> volt, @Mock final Unit<ElectricPotential> deciVolt) {
     when(volt.prefix(MetricPrefix.DECI)).then(i -> deciVolt);
 
-    assertEquals(deciVolt, testObject.deciVolt(volt));
+    assertEquals(deciVolt, libsMeasureConfig.deciVolt(volt));
   }
 
   @Test
@@ -80,7 +86,7 @@ class LibsMeasureConfigTest {
       @Mock final QuantityFactory<ElectricCurrent> electricCurrentQuantityFactory) {
     when(serviceProvider.getQuantityFactory(ElectricCurrent.class)).then(i -> electricCurrentQuantityFactory);
 
-    assertEquals(electricCurrentQuantityFactory, testObject.electricCurrentQuantityFactory(serviceProvider));
+    assertEquals(electricCurrentQuantityFactory, libsMeasureConfig.electricCurrentQuantityFactory(serviceProvider));
   }
 
   @Test
@@ -88,7 +94,7 @@ class LibsMeasureConfigTest {
       @Mock final QuantityFactory<ElectricPotential> electricPotentialQuantityFactory) {
     when(serviceProvider.getQuantityFactory(ElectricPotential.class)).then(i -> electricPotentialQuantityFactory);
 
-    assertEquals(electricPotentialQuantityFactory, testObject.electricPotentialQuantityFactory(serviceProvider));
+    assertEquals(electricPotentialQuantityFactory, libsMeasureConfig.electricPotentialQuantityFactory(serviceProvider));
   }
 
   @Test
@@ -96,7 +102,7 @@ class LibsMeasureConfigTest {
       @Mock final QuantityFactory<Energy> energyQuantityFactory) {
     when(serviceProvider.getQuantityFactory(Energy.class)).then(i -> energyQuantityFactory);
 
-    assertEquals(energyQuantityFactory, testObject.energyQuantityFactory(serviceProvider));
+    assertEquals(energyQuantityFactory, libsMeasureConfig.energyQuantityFactory(serviceProvider));
   }
 
   @Test
@@ -104,7 +110,7 @@ class LibsMeasureConfigTest {
     when(hour.asType(Time.class)).then(i -> hour);
     when(systemOfUnits.getUnit("h")).then(i -> hour);
 
-    assertEquals(hour, testObject.hour(systemOfUnits));
+    assertEquals(hour, libsMeasureConfig.hour(systemOfUnits));
   }
 
   @Test
@@ -112,14 +118,14 @@ class LibsMeasureConfigTest {
     when(joule.asType(Energy.class)).then(i -> joule);
     when(systemOfUnits.getUnit("J")).then(i -> joule);
 
-    assertEquals(joule, testObject.joule(systemOfUnits));
+    assertEquals(joule, libsMeasureConfig.joule(systemOfUnits));
   }
 
   @Test
   void testMegaJoule(@Mock final Unit<Energy> joule, @Mock final Unit<Energy> megaJoule) {
     when(joule.prefix(MetricPrefix.MEGA)).then(i -> megaJoule);
 
-    assertEquals(megaJoule, testObject.megaJoule(joule));
+    assertEquals(megaJoule, libsMeasureConfig.megaJoule(joule));
   }
 
   @Test
@@ -127,7 +133,7 @@ class LibsMeasureConfigTest {
     when(meter.asType(Length.class)).then(i -> meter);
     when(systemOfUnits.getUnit("m")).then(i -> meter);
 
-    assertEquals(meter, testObject.meter(systemOfUnits));
+    assertEquals(meter, libsMeasureConfig.meter(systemOfUnits));
   }
 
   @Test
@@ -135,12 +141,12 @@ class LibsMeasureConfigTest {
       @Mock final QuantityFactory<Power> powerQuantityFactory) {
     when(serviceProvider.getQuantityFactory(Power.class)).then(i -> powerQuantityFactory);
 
-    assertEquals(powerQuantityFactory, testObject.powerQuantityFactory(serviceProvider));
+    assertEquals(powerQuantityFactory, libsMeasureConfig.powerQuantityFactory(serviceProvider));
   }
 
   @Test
   void testServiceProvider() {
-    assertNotNull(testObject.serviceProvider());
+    assertNotNull(libsMeasureConfig.serviceProvider());
   }
 
   @Test
@@ -148,7 +154,7 @@ class LibsMeasureConfigTest {
       @Mock final SystemOfUnits systemOfUnits) {
     when(systemOfUnitsService.getSystemOfUnits()).then(i -> systemOfUnits);
 
-    assertEquals(systemOfUnits, testObject.systemOfUnits(systemOfUnitsService));
+    assertEquals(systemOfUnits, libsMeasureConfig.systemOfUnits(systemOfUnitsService));
   }
 
   @Test
@@ -156,7 +162,7 @@ class LibsMeasureConfigTest {
       @Mock final SystemOfUnitsService systemOfUnitsService) {
     when(serviceProvider.getSystemOfUnitsService()).then(i -> systemOfUnitsService);
 
-    assertEquals(systemOfUnitsService, testObject.systemOfUnitsService(serviceProvider));
+    assertEquals(systemOfUnitsService, libsMeasureConfig.systemOfUnitsService(serviceProvider));
   }
 
   @Test
@@ -164,7 +170,7 @@ class LibsMeasureConfigTest {
     when(volt.asType(ElectricPotential.class)).then(i -> volt);
     when(systemOfUnits.getUnit("V")).then(i -> volt);
 
-    assertEquals(volt, testObject.volt(systemOfUnits));
+    assertEquals(volt, libsMeasureConfig.volt(systemOfUnits));
   }
 
   @Test
@@ -172,7 +178,7 @@ class LibsMeasureConfigTest {
       @Mock final QuantityFactory<Volume> volumeQuantityFactory) {
     when(serviceProvider.getQuantityFactory(Volume.class)).then(i -> volumeQuantityFactory);
 
-    assertEquals(volumeQuantityFactory, testObject.volumeQuantityFactory(serviceProvider));
+    assertEquals(volumeQuantityFactory, libsMeasureConfig.volumeQuantityFactory(serviceProvider));
   }
 
   @Test
@@ -180,7 +186,7 @@ class LibsMeasureConfigTest {
     when(watt.asType(Power.class)).then(i -> watt);
     when(systemOfUnits.getUnit("W")).then(i -> watt);
 
-    assertEquals(watt, testObject.watt(systemOfUnits));
+    assertEquals(watt, libsMeasureConfig.watt(systemOfUnits));
   }
 
   @Test
@@ -188,7 +194,7 @@ class LibsMeasureConfigTest {
     when(wattHour.asType(Energy.class)).then(i -> wattHour);
     when(watt.multiply(hour)).then(i -> wattHour);
 
-    assertEquals(wattHour, testObject.wattHour(watt, hour));
+    assertEquals(wattHour, libsMeasureConfig.wattHour(watt, hour));
   }
 
 }
