@@ -30,7 +30,6 @@ import org.springframework.util.ErrorHandler;
 import nl.vsmeets.amr.frontend.amqp.beans.FrontendAmqpProperties;
 import nl.vsmeets.amr.frontend.amqp.beans.P1TelegramReceiverBean;
 import nl.vsmeets.amr.frontend.amqp.beans.ServerFatalExceptionStrategy;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link FrontendAmqpConfig}.
@@ -38,7 +37,13 @@ import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class FrontendAmqpConfigTest implements RandomStringGenerator {
+class FrontendAmqpConfigTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String queueName = "Queue Name";
+  private static final String deadLetterQueueName = "Dead Letter Queue Name";
 
   private FrontendAmqpConfig frontendAmqpConfig;
 
@@ -50,7 +55,6 @@ class FrontendAmqpConfigTest implements RandomStringGenerator {
   @Test
   void testDeadLetterQueue() {
     final FrontendAmqpProperties properties = mock(FrontendAmqpProperties.class);
-    final String deadLetterQueueName = randomString();
     when(properties.getDeadLetterQueueName()).then(i -> deadLetterQueueName);
 
     final Queue deadLetterQueue = frontendAmqpConfig.deadLetterQueue(properties);
@@ -93,8 +97,6 @@ class FrontendAmqpConfigTest implements RandomStringGenerator {
   @Test
   void testQueue() {
     final FrontendAmqpProperties properties = mock(FrontendAmqpProperties.class);
-    final String queueName = randomString();
-    final String deadLetterQueueName = randomString(queueName);
     when(properties.getQueueName()).then(i -> queueName);
     when(properties.getDeadLetterQueueName()).then(i -> deadLetterQueueName);
 
