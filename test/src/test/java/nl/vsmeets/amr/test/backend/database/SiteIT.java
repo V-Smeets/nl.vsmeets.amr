@@ -30,8 +30,6 @@ import nl.vsmeets.amr.backend.database.BackendDatabaseConfig;
 import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.Site;
 import nl.vsmeets.amr.backend.database.SiteFactory;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
 
 /**
  * Integration tests for {@link Site}.
@@ -40,12 +38,17 @@ import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
 @DataJpaTest
-class SiteIT implements RandomStringGenerator, RandomZoneIdGenerator {
+class SiteIT {
 
-  private final String name1 = randomString();
-  private final String name2 = randomString(name1);
-  private final ZoneId timeZone1 = randomZoneId();
-  private final ZoneId timeZone2 = randomZoneId(timeZone1);
+  /**
+   * Values used during tests.
+   */
+  private static final String siteName1 = "Name 1";
+  private static final String siteName2 = "Name 2";
+  private static final String siteNameMax = String.format("%64s", "");
+  private static final String[] ZoneIds = ZoneId.getAvailableZoneIds().toArray(String[]::new);
+  private static final ZoneId timeZone1 = ZoneId.of(ZoneIds[0]);
+  private static final ZoneId timeZone2 = ZoneId.of(ZoneIds[1]);
 
   @Autowired
   private SiteFactory siteFactory;
@@ -53,13 +56,13 @@ class SiteIT implements RandomStringGenerator, RandomZoneIdGenerator {
 
   @BeforeEach
   void setup() {
-    site = assertDoesNotThrow(() -> siteFactory.create(name1, timeZone1));
+    site = assertDoesNotThrow(() -> siteFactory.create(siteName1, timeZone1));
     assertNotNull(site);
   }
 
   @Test
   void testFind() {
-    final Optional<? extends Site> foundSite = siteFactory.find(name1);
+    final Optional<? extends Site> foundSite = siteFactory.find(siteName1);
     assertAll( //
         () -> assertNotNull(foundSite), //
         () -> assertTrue(foundSite.isPresent()), //
@@ -72,7 +75,7 @@ class SiteIT implements RandomStringGenerator, RandomZoneIdGenerator {
     final Integer id1 = site.getId();
     assertNotNull(id1);
 
-    final Site site2 = assertDoesNotThrow(() -> siteFactory.create(name2, timeZone2));
+    final Site site2 = assertDoesNotThrow(() -> siteFactory.create(siteName2, timeZone2));
     assertNotNull(site2);
     final Integer id2 = site2.getId();
     assertNotNull(id2);
@@ -82,12 +85,12 @@ class SiteIT implements RandomStringGenerator, RandomZoneIdGenerator {
 
   @Test
   void testName() {
-    assertEquals(name1, site.getName());
+    assertEquals(siteName1, site.getName());
   }
 
   @Test
   void testNameInvalidLength() {
-    assertThrows(ConstraintViolationException.class, () -> siteFactory.create(randomStringOfCharacters(65), timeZone2));
+    assertThrows(ConstraintViolationException.class, () -> siteFactory.create(siteNameMax + " ", timeZone2));
   }
 
   @Test
@@ -97,7 +100,7 @@ class SiteIT implements RandomStringGenerator, RandomZoneIdGenerator {
 
   @Test
   void testNameValidLength() {
-    assertDoesNotThrow(() -> siteFactory.create(randomStringOfCharacters(64), timeZone2));
+    assertDoesNotThrow(() -> siteFactory.create(siteNameMax, timeZone2));
   }
 
   @Test
@@ -107,15 +110,15 @@ class SiteIT implements RandomStringGenerator, RandomZoneIdGenerator {
 
   @Test
   void testTimeZoneNotNull() {
-    assertThrows(NullPointerException.class, () -> siteFactory.create(name2, null));
+    assertThrows(NullPointerException.class, () -> siteFactory.create(siteName2, null));
   }
 
   @Test
   void testUnique() {
     assertAll( //
-        () -> assertThrows(ConstraintViolationException.class, () -> siteFactory.create(name1, timeZone1)), //
-        () -> assertThrows(ConstraintViolationException.class, () -> siteFactory.create(name1, timeZone2)), //
-        () -> assertDoesNotThrow(() -> siteFactory.create(name2, timeZone1)) //
+        () -> assertThrows(ConstraintViolationException.class, () -> siteFactory.create(siteName1, timeZone1)), //
+        () -> assertThrows(ConstraintViolationException.class, () -> siteFactory.create(siteName1, timeZone2)), //
+        () -> assertDoesNotThrow(() -> siteFactory.create(siteName2, timeZone1)) //
     );
   }
 
