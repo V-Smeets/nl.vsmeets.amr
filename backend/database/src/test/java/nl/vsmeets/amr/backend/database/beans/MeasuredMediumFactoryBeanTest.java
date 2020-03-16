@@ -27,7 +27,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import nl.vsmeets.amr.backend.database.MeasuredMedium;
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
 
 /**
  * Unit tests for the class {@link MeasuredMediumFactoryBean}.
@@ -35,7 +34,12 @@ import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class MeasuredMediumFactoryBeanTest implements RandomByteGenerator {
+class MeasuredMediumFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final Byte mediumId = Byte.MIN_VALUE;
 
   /**
    * The object under test.
@@ -55,7 +59,6 @@ class MeasuredMediumFactoryBeanTest implements RandomByteGenerator {
 
   @Test
   void testFind(@Mock final MeasuredMedium measuredMedium) {
-    final Byte mediumId = randomByte();
     final Optional<? extends MeasuredMedium> result = Optional.of(measuredMedium);
 
     when(repository.findByMediumId(mediumId)).then(i -> result);

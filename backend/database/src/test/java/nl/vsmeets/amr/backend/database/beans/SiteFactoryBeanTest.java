@@ -32,7 +32,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.Site;
 import nl.vsmeets.amr.backend.database.entities.SiteEntity;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link SiteFactoryBean}.
@@ -40,7 +39,13 @@ import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class SiteFactoryBeanTest implements RandomStringGenerator {
+class SiteFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String name = "Name";
+  private static final ZoneId timeZone = ZoneId.systemDefault();
 
   /**
    * The object under test.
@@ -60,9 +65,6 @@ class SiteFactoryBeanTest implements RandomStringGenerator {
 
   @Test
   void testCreate() {
-    final String name = randomString();
-    final ZoneId timeZone = ZoneId.systemDefault();
-
     when(repository.save(any(SiteEntity.class))).then(i -> i.getArgument(0));
 
     final Site result = assertDoesNotThrow(() -> testObject.create(name, timeZone));
@@ -76,9 +78,6 @@ class SiteFactoryBeanTest implements RandomStringGenerator {
 
   @Test
   void testCreateDataIntegrityViolationException() {
-    final String name = randomString();
-    final ZoneId timeZone = ZoneId.systemDefault();
-
     when(repository.save(any(SiteEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class, () -> testObject.create(name, timeZone));
@@ -86,7 +85,6 @@ class SiteFactoryBeanTest implements RandomStringGenerator {
 
   @Test
   void testFind(@Mock final Site site) {
-    final String name = randomString();
     final Optional<? extends Site> expectedResult = Optional.of(site);
 
     when(repository.findByName(name)).then(i -> expectedResult);

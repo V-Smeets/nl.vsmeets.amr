@@ -26,25 +26,26 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-
 /**
  * Unit tests for the class {@link P1TelegramEntity}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class P1TelegramEntityTest implements RandomByteGenerator, RandomStringGenerator {
+class P1TelegramEntityTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String headerInformation1 = "Header Information 1";
+  private static final String headerInformation2 = "Header Information 2";
+  private static final Byte versionInformation1 = 1;
+  private static final Byte versionInformation2 = 2;
 
   @Mock
   private SiteEntity siteEntity1;
   @Mock
   private SiteEntity siteEntity2;
-  private final String headerInformation1 = randomString();
-  private final String headerInformation2 = randomString(headerInformation1);
-  private final Byte versionInformation1 = randomByte();
-  private final Byte versionInformation2 = randomByte(versionInformation1);
 
   @Test
   void testEquals() {

@@ -33,7 +33,6 @@ import nl.vsmeets.amr.backend.database.Meter;
 import nl.vsmeets.amr.backend.database.entities.MeasuredMediumEntity;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
 import nl.vsmeets.amr.backend.database.entities.P1TelegramEntity;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 
 /**
  * Unit tests for the class {@link MeterFactoryBean}.
@@ -41,7 +40,12 @@ import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class MeterFactoryBeanTest implements RandomStringGenerator {
+class MeterFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String equipmentIdentifier = "Equipment Identifier";
 
   /**
    * The object under test.
@@ -61,8 +65,6 @@ class MeterFactoryBeanTest implements RandomStringGenerator {
 
   @Test
   void testCreate(@Mock final P1TelegramEntity p1Telegram, @Mock final MeasuredMediumEntity measuredMedium) {
-    final String equipmentIdentifier = randomString();
-
     when(repository.save(any(MeterEntity.class))).then(i -> i.getArgument(0));
 
     final Meter result = assertDoesNotThrow(() -> testObject.create(p1Telegram, measuredMedium, equipmentIdentifier));
@@ -78,8 +80,6 @@ class MeterFactoryBeanTest implements RandomStringGenerator {
   @Test
   void testCreateDataIntegrityViolationException(@Mock final P1TelegramEntity p1Telegram,
       @Mock final MeasuredMediumEntity measuredMedium) {
-    final String equipmentIdentifier = randomString();
-
     when(repository.save(any(MeterEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class,
@@ -89,7 +89,6 @@ class MeterFactoryBeanTest implements RandomStringGenerator {
   @Test
   void testFind(@Mock final P1TelegramEntity p1Telegram, @Mock final MeasuredMediumEntity measuredMedium,
       @Mock final Meter meter) {
-    final String equipmentIdentifier = randomString();
     final Optional<? extends Meter> expectedResult = Optional.of(meter);
 
     when(repository.findByP1TelegramAndMeasuredMediumAndEquipmentIdentifier(p1Telegram, measuredMedium,

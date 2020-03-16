@@ -17,6 +17,7 @@ package nl.vsmeets.amr.test.backend.database;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.ZoneId;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -35,9 +36,6 @@ import nl.vsmeets.amr.backend.database.P1Telegram;
 import nl.vsmeets.amr.backend.database.P1TelegramFactory;
 import nl.vsmeets.amr.backend.database.Site;
 import nl.vsmeets.amr.backend.database.SiteFactory;
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
 
 /**
  * Integration tests for {@link P1Telegram}.
@@ -46,7 +44,25 @@ import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
 @DataJpaTest
-class MeterIT implements RandomByteGenerator, RandomStringGenerator, RandomZoneIdGenerator {
+class MeterIT {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String siteName1 = "Name 1";
+  private static final String siteName2 = "Name 2";
+  private static final String[] ZoneIds = ZoneId.getAvailableZoneIds().toArray(String[]::new);
+  private static final ZoneId timeZone1 = ZoneId.of(ZoneIds[0]);
+  private static final ZoneId timeZone2 = ZoneId.of(ZoneIds[1]);
+  private static final String headerInformation1 = "Header Info 1";
+  private static final String headerInformation2 = "Header Info 2";
+  private static final byte versionInformation1 = 0x00;
+  private static final byte versionInformation2 = -1; // 0xFF;
+  private static final byte measuredMediumId1 = 0x00;
+  private static final byte measuredMediumId2 = 0x19;
+  private static final String equipmentIdentifier1 = "Equipment Identifier 1";
+  private static final String equipmentIdentifier2 = "Equipment Identifier 2";
+  private static final String equipmentIdentifierMax = String.format("%48s", "");
 
   @Autowired
   private SiteFactory siteFactory;
@@ -63,27 +79,22 @@ class MeterIT implements RandomByteGenerator, RandomStringGenerator, RandomZoneI
   private MeasuredMedium measuredMedium1;
   private MeasuredMedium measuredMedium2;
 
-  private final String equipmentIdentifier1 = randomString();
-  private final String equipmentIdentifier2 = randomString(equipmentIdentifier1);
-
   @Autowired
   private MeterFactory meterFactory;
   private Meter meter;
 
   @BeforeEach
   void setup() {
-    site1 = assertDoesNotThrow(() -> siteFactory.create(randomString(), randomZoneId()));
+    site1 = assertDoesNotThrow(() -> siteFactory.create(siteName1, timeZone1));
     assertNotNull(site1);
-    site2 =
-        assertDoesNotThrow(() -> siteFactory.create(randomString(site1.getName()), randomZoneId(site1.getTimeZone())));
+    site2 = assertDoesNotThrow(() -> siteFactory.create(siteName2, timeZone2));
     assertNotNull(site2);
-    p1Telegram1 = assertDoesNotThrow(() -> p1TelegramFactory.create(site1, randomString(), randomByte()));
+    p1Telegram1 = assertDoesNotThrow(() -> p1TelegramFactory.create(site1, headerInformation1, versionInformation1));
     assertNotNull(p1Telegram1);
-    p1Telegram2 = assertDoesNotThrow(() -> p1TelegramFactory.create(site2,
-        randomString(p1Telegram1.getHeaderInformation()), randomByte(p1Telegram1.getVersionInformation())));
+    p1Telegram2 = assertDoesNotThrow(() -> p1TelegramFactory.create(site2, headerInformation2, versionInformation2));
     assertNotNull(p1Telegram2);
     final Optional<? extends MeasuredMedium> optionalMeasuredMedium1 =
-        assertDoesNotThrow(() -> measuredMediumFactory.find((byte) 0x02));
+        assertDoesNotThrow(() -> measuredMediumFactory.find(measuredMediumId1));
     assertAll( //
         () -> assertNotNull(optionalMeasuredMedium1), //
         () -> assertTrue(optionalMeasuredMedium1.isPresent()) //
@@ -91,7 +102,7 @@ class MeterIT implements RandomByteGenerator, RandomStringGenerator, RandomZoneI
     measuredMedium1 = optionalMeasuredMedium1.get();
     assertNotNull(measuredMedium1);
     final Optional<? extends MeasuredMedium> optionalMeasuredMedium2 =
-        assertDoesNotThrow(() -> measuredMediumFactory.find((byte) 0x03));
+        assertDoesNotThrow(() -> measuredMediumFactory.find(measuredMediumId2));
     assertAll( //
         () -> assertNotNull(optionalMeasuredMedium2), //
         () -> assertTrue(optionalMeasuredMedium2.isPresent()) //
@@ -112,7 +123,7 @@ class MeterIT implements RandomByteGenerator, RandomStringGenerator, RandomZoneI
   @Test
   void testEquipmentIdentifierInvalidLength() {
     assertThrows(ConstraintViolationException.class,
-        () -> meterFactory.create(p1Telegram2, measuredMedium2, randomStringOfCharacters(49)));
+        () -> meterFactory.create(p1Telegram2, measuredMedium2, equipmentIdentifierMax + " "));
   }
 
   @Test
@@ -122,7 +133,7 @@ class MeterIT implements RandomByteGenerator, RandomStringGenerator, RandomZoneI
 
   @Test
   void testEquipmentIdentifierValidLength() {
-    assertDoesNotThrow(() -> meterFactory.create(p1Telegram2, measuredMedium2, randomStringOfCharacters(48)));
+    assertDoesNotThrow(() -> meterFactory.create(p1Telegram2, measuredMedium2, equipmentIdentifierMax));
   }
 
   @Test

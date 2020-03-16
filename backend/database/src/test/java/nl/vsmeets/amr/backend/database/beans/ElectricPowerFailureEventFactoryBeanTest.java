@@ -34,8 +34,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.ElectricPowerFailureEvent;
 import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailureEventEntity;
 import nl.vsmeets.amr.backend.database.entities.ElectricPowerFailuresEntity;
-import nl.vsmeets.amr.libs.junit.RandomDurationGenerator;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link ElectricPowerFailureEventFactoryBean}.
@@ -43,7 +41,13 @@ import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPowerFailureEventFactoryBeanTest implements RandomDurationGenerator, RandomLocalDateTimeGenerator {
+class ElectricPowerFailureEventFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime endOfFailureTime = LocalDateTime.MIN;
+  private static final Duration failureDuration = Duration.ZERO;
 
   /**
    * The object under test.
@@ -63,9 +67,6 @@ class ElectricPowerFailureEventFactoryBeanTest implements RandomDurationGenerato
 
   @Test
   void testCreate(@Mock final ElectricPowerFailuresEntity electricPowerFailures) {
-    final LocalDateTime endOfFailureTime = randomLocalDateTime();
-    final Duration failureDuration = randomDuration();
-
     when(repository.save(any(ElectricPowerFailureEventEntity.class))).then(i -> i.getArgument(0));
 
     final ElectricPowerFailureEvent result =
@@ -81,9 +82,6 @@ class ElectricPowerFailureEventFactoryBeanTest implements RandomDurationGenerato
 
   @Test
   void testCreateDataIntegrityViolationException(@Mock final ElectricPowerFailuresEntity electricPowerFailures) {
-    final LocalDateTime endOfFailureTime = randomLocalDateTime();
-    final Duration failureDuration = randomDuration();
-
     when(repository.save(any(ElectricPowerFailureEventEntity.class)))
         .thenThrow(new DataIntegrityViolationException(null));
 
@@ -94,7 +92,6 @@ class ElectricPowerFailureEventFactoryBeanTest implements RandomDurationGenerato
   @Test
   void testFind(@Mock final ElectricPowerFailuresEntity electricPowerFailures,
       @Mock final ElectricPowerFailureEvent electricPowerFailureEvent) {
-    final LocalDateTime endOfFailureTime = randomLocalDateTime();
     final Optional<? extends ElectricPowerFailureEvent> expectedResult = Optional.of(electricPowerFailureEvent);
 
     when(repository.findByElectricPowerFailuresAndEndOfFailureTime(electricPowerFailures, endOfFailureTime))

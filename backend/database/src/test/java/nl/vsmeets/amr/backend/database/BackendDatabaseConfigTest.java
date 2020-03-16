@@ -27,6 +27,9 @@ import org.junit.jupiter.api.Test;
  */
 class BackendDatabaseConfigTest {
 
+  /**
+   * The object under test.
+   */
   private BackendDatabaseConfig backendDatabaseConfig;
 
   @BeforeEach

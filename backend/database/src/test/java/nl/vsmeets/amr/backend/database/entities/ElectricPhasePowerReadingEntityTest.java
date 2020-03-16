@@ -32,25 +32,26 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
-
 /**
  * Unit tests for the class {@link ElectricPhasePowerReadingEntity}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPhasePowerReadingEntityTest implements RandomByteGenerator, RandomLocalDateTimeGenerator {
+class ElectricPhasePowerReadingEntityTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime1 = LocalDateTime.MIN;
+  private static final LocalDateTime localDateTime2 = LocalDateTime.MAX;
+  private static final Byte phaseNumber1 = 1;
+  private static final Byte phaseNumber2 = 2;
 
   @Mock
   private MeterEntity meter1;
   @Mock
   private MeterEntity meter2;
-  private final LocalDateTime localDateTime1 = randomLocalDateTime();
-  private final LocalDateTime localDateTime2 = randomLocalDateTime(localDateTime1);
-  private final Byte phaseNumber1 = randomByte();
-  private final Byte phaseNumber2 = randomByte(phaseNumber1);
   @Mock
   private Quantity<ElectricPotential> instantaneousVoltage1;
   @Mock

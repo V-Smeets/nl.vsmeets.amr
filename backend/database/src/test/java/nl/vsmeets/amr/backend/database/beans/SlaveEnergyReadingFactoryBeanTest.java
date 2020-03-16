@@ -36,7 +36,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.SlaveEnergyReading;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
 import nl.vsmeets.amr.backend.database.entities.SlaveEnergyReadingEntity;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link SlaveEnergyReadingFactoryBean}.
@@ -44,7 +43,12 @@ import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class SlaveEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
+class SlaveEnergyReadingFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime = LocalDateTime.MIN;
 
   /**
    * The object under test.
@@ -64,8 +68,6 @@ class SlaveEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerator 
 
   @Test
   void testCreate(@Mock final MeterEntity meter, @Mock final Quantity<Energy> consumedEnergy) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-
     when(repository.save(any(SlaveEnergyReadingEntity.class))).then(i -> i.getArgument(0));
 
     final SlaveEnergyReading result = assertDoesNotThrow(() -> testObject.create(meter, localDateTime, consumedEnergy));
@@ -81,8 +83,6 @@ class SlaveEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerator 
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Energy> consumedEnergy) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-
     when(repository.save(any(SlaveEnergyReadingEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, localDateTime, consumedEnergy));
@@ -90,7 +90,6 @@ class SlaveEnergyReadingFactoryBeanTest implements RandomLocalDateTimeGenerator 
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final SlaveEnergyReading slaveEnergyReading) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
     final Optional<? extends SlaveEnergyReading> expectedResult = Optional.of(slaveEnergyReading);
 
     when(repository.findByMeterAndLocalDateTime(meter, localDateTime)).then(i -> expectedResult);

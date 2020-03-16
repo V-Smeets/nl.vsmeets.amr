@@ -17,6 +17,7 @@ package nl.vsmeets.amr.test.backend.database;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.ZoneId;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -31,9 +32,6 @@ import nl.vsmeets.amr.backend.database.P1Telegram;
 import nl.vsmeets.amr.backend.database.P1TelegramFactory;
 import nl.vsmeets.amr.backend.database.Site;
 import nl.vsmeets.amr.backend.database.SiteFactory;
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
 
 /**
  * Integration tests for {@link P1Telegram}.
@@ -42,17 +40,26 @@ import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
 @DataJpaTest
-class P1TelegramIT implements RandomByteGenerator, RandomStringGenerator, RandomZoneIdGenerator {
+class P1TelegramIT {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String siteName1 = "Name 1";
+  private static final String siteName2 = "Name 2";
+  private static final String[] ZoneIds = ZoneId.getAvailableZoneIds().toArray(String[]::new);
+  private static final ZoneId timeZone1 = ZoneId.of(ZoneIds[0]);
+  private static final ZoneId timeZone2 = ZoneId.of(ZoneIds[1]);
+  private static final String headerInformation1 = "Header Info 1";
+  private static final String headerInformation2 = "Header Info 2";
+  private static final String headerInformationMax = String.format("%16s", "");
+  private static final byte versionInformation1 = 0x00;
+  private static final byte versionInformation2 = -1; // 0xFF;
 
   @Autowired
   private SiteFactory siteFactory;
   private Site site1;
   private Site site2;
-
-  private final String headerInformation1 = randomString();
-  private final String headerInformation2 = randomString(headerInformation1);
-  private final Byte versionInformation1 = randomByte();
-  private final Byte versionInformation2 = randomByte(versionInformation1);
 
   @Autowired
   private P1TelegramFactory p1TelegramFactory;
@@ -60,10 +67,9 @@ class P1TelegramIT implements RandomByteGenerator, RandomStringGenerator, Random
 
   @BeforeEach
   void setup() {
-    site1 = assertDoesNotThrow(() -> siteFactory.create(randomString(), randomZoneId()));
+    site1 = assertDoesNotThrow(() -> siteFactory.create(siteName1, timeZone1));
     assertNotNull(site1);
-    site2 =
-        assertDoesNotThrow(() -> siteFactory.create(randomString(site1.getName()), randomZoneId(site1.getTimeZone())));
+    site2 = assertDoesNotThrow(() -> siteFactory.create(siteName2, timeZone2));
     assertNotNull(site2);
 
     p1Telegram = assertDoesNotThrow(() -> p1TelegramFactory.create(site1, headerInformation1, versionInformation1));
@@ -90,7 +96,7 @@ class P1TelegramIT implements RandomByteGenerator, RandomStringGenerator, Random
   @Test
   void testHeaderInformationInvalidLength() {
     assertThrows(ConstraintViolationException.class,
-        () -> p1TelegramFactory.create(site2, randomStringOfCharacters(17), versionInformation2));
+        () -> p1TelegramFactory.create(site2, headerInformationMax + " ", versionInformation2));
   }
 
   @Test
@@ -100,7 +106,7 @@ class P1TelegramIT implements RandomByteGenerator, RandomStringGenerator, Random
 
   @Test
   void testHeaderInformationValidLength() {
-    assertDoesNotThrow(() -> p1TelegramFactory.create(site2, randomStringOfCharacters(16), versionInformation2));
+    assertDoesNotThrow(() -> p1TelegramFactory.create(site2, headerInformationMax, versionInformation2));
   }
 
   @Test

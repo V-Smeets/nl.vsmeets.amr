@@ -23,17 +23,18 @@ import org.junit.jupiter.api.Test;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.libs.junit.RandomIntGenerator;
-
 /**
  * Unit tests for the class {@link AbstractTableEntity}.
  *
  * @author vincent
  */
-class AbstractTableEntityTest implements RandomIntGenerator {
+class AbstractTableEntityTest {
 
-  private final Integer id1 = randomInt();
-  private final Integer id2 = randomInt(id1);
+  /**
+   * Values used during tests.
+   */
+  private static final Integer id1 = 1;
+  private static final Integer id2 = 2;
 
   @Test
   void testEquals() {

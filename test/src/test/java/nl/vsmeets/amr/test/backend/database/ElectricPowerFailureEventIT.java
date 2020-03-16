@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -44,11 +45,6 @@ import nl.vsmeets.amr.backend.database.P1Telegram;
 import nl.vsmeets.amr.backend.database.P1TelegramFactory;
 import nl.vsmeets.amr.backend.database.Site;
 import nl.vsmeets.amr.backend.database.SiteFactory;
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomDurationGenerator;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
 
 /**
  * Integration tests for {@link ElectricPowerFailureEvent}.
@@ -57,8 +53,34 @@ import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
 @DataJpaTest
-class ElectricPowerFailureEventIT implements RandomByteGenerator, RandomDurationGenerator, RandomLocalDateTimeGenerator,
-    RandomStringGenerator, RandomZoneIdGenerator {
+class ElectricPowerFailureEventIT {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String siteName1 = "Name 1";
+  private static final String siteName2 = "Name 2";
+  private static final String[] ZoneIds = ZoneId.getAvailableZoneIds().toArray(String[]::new);
+  private static final ZoneId timeZone1 = ZoneId.of(ZoneIds[0]);
+  private static final ZoneId timeZone2 = ZoneId.of(ZoneIds[1]);
+  private static final String headerInformation1 = "Header Info 1";
+  private static final String headerInformation2 = "Header Info 2";
+  private static final byte versionInformation1 = 0x00;
+  private static final byte versionInformation2 = -1; // 0xFF;
+  private static final byte measuredMediumId1 = 0x00;
+  private static final byte measuredMediumId2 = 0x19;
+  private static final String equipmentIdentifier1 = "Equipment Identifier 1";
+  private static final String equipmentIdentifier2 = "Equipment Identifier 2";
+  private static final LocalDateTime localDateTime1 = DatabaseConstants.MIN_LOCAL_DATE_TIME;
+  private static final LocalDateTime localDateTime2 = DatabaseConstants.MAX_LOCAL_DATE_TIME;
+  private static final int nrOfPowerFailures1 = 1;
+  private static final int nrOfPowerFailures2 = 2;
+  private static final int nrOfLongPowerFailures1 = 3;
+  private static final int nrOfLongPowerFailures2 = 4;
+  private static final Duration failureDuration1 = Duration.ofSeconds(0L);
+  private static final Duration failureDuration2 = Duration.ofSeconds(999_999_999L);
+  private static final LocalDateTime endOfFailureTime1 = DatabaseConstants.MIN_LOCAL_DATE_TIME;
+  private static final LocalDateTime endOfFailureTime2 = DatabaseConstants.MAX_LOCAL_DATE_TIME;
 
   @Autowired
   private SiteFactory siteFactory;
@@ -85,31 +107,22 @@ class ElectricPowerFailureEventIT implements RandomByteGenerator, RandomDuration
   private ElectricPowerFailures electricPowerFailures1;
   private ElectricPowerFailures electricPowerFailures2;
 
-  private final Duration failureDuration1 = randomDurationSeconds();
-  private final Duration failureDuration2 = randomDurationSeconds(failureDuration1);
-  private final LocalDateTime endOfFailureTime1 = randomLocalDateTimeZeroPrecisionRange(
-      DatabaseConstants.MIN_LOCAL_DATE_TIME, DatabaseConstants.MAX_LOCAL_DATE_TIME);
-  private final LocalDateTime endOfFailureTime2 = randomLocalDateTimeZeroPrecisionRange(
-      DatabaseConstants.MIN_LOCAL_DATE_TIME, DatabaseConstants.MAX_LOCAL_DATE_TIME, endOfFailureTime1);
-
   @Autowired
   private ElectricPowerFailureEventFactory electricPowerFailureEventFactory;
   private ElectricPowerFailureEvent electricPowerFailureEvent;
 
   @BeforeEach
   void setup() {
-    site1 = assertDoesNotThrow(() -> siteFactory.create(randomString(), randomZoneId()));
+    site1 = assertDoesNotThrow(() -> siteFactory.create(siteName1, timeZone1));
     assertNotNull(site1);
-    site2 =
-        assertDoesNotThrow(() -> siteFactory.create(randomString(site1.getName()), randomZoneId(site1.getTimeZone())));
+    site2 = assertDoesNotThrow(() -> siteFactory.create(siteName2, timeZone2));
     assertNotNull(site2);
-    p1Telegram1 = assertDoesNotThrow(() -> p1TelegramFactory.create(site1, randomString(), randomByte()));
+    p1Telegram1 = assertDoesNotThrow(() -> p1TelegramFactory.create(site1, headerInformation1, versionInformation1));
     assertNotNull(p1Telegram1);
-    p1Telegram2 = assertDoesNotThrow(() -> p1TelegramFactory.create(site2,
-        randomString(p1Telegram1.getHeaderInformation()), randomByte(p1Telegram1.getVersionInformation())));
+    p1Telegram2 = assertDoesNotThrow(() -> p1TelegramFactory.create(site2, headerInformation2, versionInformation2));
     assertNotNull(p1Telegram2);
     final Optional<? extends MeasuredMedium> optionalMeasuredMedium1 =
-        assertDoesNotThrow(() -> measuredMediumFactory.find((byte) 0x02));
+        assertDoesNotThrow(() -> measuredMediumFactory.find(measuredMediumId1));
     assertAll( //
         () -> assertNotNull(optionalMeasuredMedium1), //
         () -> assertTrue(optionalMeasuredMedium1.isPresent()) //
@@ -117,25 +130,22 @@ class ElectricPowerFailureEventIT implements RandomByteGenerator, RandomDuration
     measuredMedium1 = optionalMeasuredMedium1.get();
     assertNotNull(measuredMedium1);
     final Optional<? extends MeasuredMedium> optionalMeasuredMedium2 =
-        assertDoesNotThrow(() -> measuredMediumFactory.find((byte) 0x03));
+        assertDoesNotThrow(() -> measuredMediumFactory.find(measuredMediumId2));
     assertAll( //
         () -> assertNotNull(optionalMeasuredMedium2), //
         () -> assertTrue(optionalMeasuredMedium2.isPresent()) //
     );
     measuredMedium2 = optionalMeasuredMedium2.get();
     assertNotNull(measuredMedium2);
-    meter1 = assertDoesNotThrow(() -> meterFactory.create(p1Telegram1, measuredMedium1, randomString()));
+    meter1 = assertDoesNotThrow(() -> meterFactory.create(p1Telegram1, measuredMedium1, equipmentIdentifier1));
     assertNotNull(meter1);
-    meter2 = assertDoesNotThrow(
-        () -> meterFactory.create(p1Telegram2, measuredMedium2, randomString(meter1.getEquipmentIdentifier())));
+    meter2 = assertDoesNotThrow(() -> meterFactory.create(p1Telegram2, measuredMedium2, equipmentIdentifier2));
     assertNotNull(meter2);
-    electricPowerFailures1 = assertDoesNotThrow(() -> electricPowerFailuresFactory.create(meter1,
-        randomLocalDateTimeZeroPrecision(), randomInt(), randomInt()));
+    electricPowerFailures1 = assertDoesNotThrow(
+        () -> electricPowerFailuresFactory.create(meter1, localDateTime1, nrOfPowerFailures1, nrOfLongPowerFailures1));
     assertNotNull(electricPowerFailures1);
-    electricPowerFailures2 = assertDoesNotThrow(() -> electricPowerFailuresFactory.create(meter2,
-        randomLocalDateTimeZeroPrecision(electricPowerFailures1.getLocalDateTime()),
-        randomInt(electricPowerFailures1.getNrOfPowerFailures()),
-        randomInt(electricPowerFailures1.getNrOfLongPowerFailures())));
+    electricPowerFailures2 = assertDoesNotThrow(
+        () -> electricPowerFailuresFactory.create(meter2, localDateTime2, nrOfPowerFailures2, nrOfLongPowerFailures2));
     assertNotNull(electricPowerFailures2);
 
     electricPowerFailureEvent = assertDoesNotThrow(

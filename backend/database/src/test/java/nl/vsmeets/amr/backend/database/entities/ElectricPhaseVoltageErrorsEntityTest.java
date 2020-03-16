@@ -27,29 +27,30 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.common.testing.EqualsTester;
 
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
-
 /**
  * Unit tests for the class {@link ElectricPhaseVoltageErrorsEntity}.
  *
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class ElectricPhaseVoltageErrorsEntityTest implements RandomByteGenerator, RandomLocalDateTimeGenerator {
+class ElectricPhaseVoltageErrorsEntityTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime1 = LocalDateTime.MIN;
+  private static final LocalDateTime localDateTime2 = LocalDateTime.MAX;
+  private static final Byte phaseNumber1 = 1;
+  private static final Byte phaseNumber2 = 2;
+  private static final Integer nrOfVoltageSags1 = 3;
+  private static final Integer nrOfVoltageSags2 = 4;
+  private static final Integer nrOfVoltageSwells1 = 5;
+  private static final Integer nrOfVoltageSwells2 = 6;
 
   @Mock
   private MeterEntity meter1;
   @Mock
   private MeterEntity meter2;
-  private final LocalDateTime localDateTime1 = randomLocalDateTime();
-  private final LocalDateTime localDateTime2 = randomLocalDateTime(localDateTime1);
-  private final Byte phaseNumber1 = randomByte();
-  private final Byte phaseNumber2 = randomByte(phaseNumber1);
-  private final Integer nrOfVoltageSags1 = randomInt();
-  private final Integer nrOfVoltageSags2 = randomInt(nrOfVoltageSags1);
-  private final Integer nrOfVoltageSwells1 = randomInt();
-  private final Integer nrOfVoltageSwells2 = randomInt(nrOfVoltageSwells1);
 
   @Test
   void testEquals() {

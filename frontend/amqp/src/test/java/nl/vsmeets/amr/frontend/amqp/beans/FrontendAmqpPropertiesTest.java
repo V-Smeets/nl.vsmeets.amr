@@ -20,18 +20,20 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-
 /**
  * Unit tests for the class {@link FrontendAmqpProperties}.
  *
  * @author vincent
  */
-class FrontendAmqpPropertiesTest implements RandomStringGenerator {
+class FrontendAmqpPropertiesTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String queueName = "Queue Name";
+  private static final String deadLetterQueueName = "Dead Letter Queue Name";
 
   private FrontendAmqpProperties frontendAmqpProperties;
-  private final String queueName = randomString();
-  private final String deadLetterQueueName = randomString();
 
   @BeforeEach
   void setUp() throws Exception {

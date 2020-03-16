@@ -36,7 +36,6 @@ import nl.vsmeets.amr.backend.database.ConstraintViolationException;
 import nl.vsmeets.amr.backend.database.WaterVolumeReading;
 import nl.vsmeets.amr.backend.database.entities.MeterEntity;
 import nl.vsmeets.amr.backend.database.entities.WaterVolumeReadingEntity;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
 
 /**
  * Unit tests for the class {@link WaterVolumeReadingFactoryBean}.
@@ -44,7 +43,12 @@ import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class WaterVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator {
+class WaterVolumeReadingFactoryBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final LocalDateTime localDateTime = LocalDateTime.MIN;
 
   /**
    * The object under test.
@@ -64,8 +68,6 @@ class WaterVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator 
 
   @Test
   void testCreate(@Mock final MeterEntity meter, @Mock final Quantity<Volume> consumedWater) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-
     when(repository.save(any(WaterVolumeReadingEntity.class))).then(i -> i.getArgument(0));
 
     final WaterVolumeReading result = assertDoesNotThrow(() -> testObject.create(meter, localDateTime, consumedWater));
@@ -81,8 +83,6 @@ class WaterVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator 
   @Test
   void testCreateDataIntegrityViolationException(@Mock final MeterEntity meter,
       @Mock final Quantity<Volume> consumedWater) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
-
     when(repository.save(any(WaterVolumeReadingEntity.class))).thenThrow(new DataIntegrityViolationException(null));
 
     assertThrows(ConstraintViolationException.class, () -> testObject.create(meter, localDateTime, consumedWater));
@@ -90,7 +90,6 @@ class WaterVolumeReadingFactoryBeanTest implements RandomLocalDateTimeGenerator 
 
   @Test
   void testFind(@Mock final MeterEntity meter, @Mock final WaterVolumeReading waterVolumeReading) {
-    final LocalDateTime localDateTime = randomLocalDateTime();
     final Optional<? extends WaterVolumeReading> expectedResult = Optional.of(waterVolumeReading);
 
     when(repository.findByMeterAndLocalDateTime(meter, localDateTime)).then(i -> expectedResult);

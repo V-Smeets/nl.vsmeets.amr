@@ -18,7 +18,6 @@
 
   <modules>
     <module>amqp</module>
-    <module>junit</module>
     <module>measure</module>
   </modules>
 

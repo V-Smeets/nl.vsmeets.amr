@@ -34,7 +34,6 @@ import org.springframework.boot.DefaultApplicationArguments;
 
 import com.fazecast.jSerialComm.SerialPort;
 
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
 import nl.vsmeets.amr.service.p1telegram.reader.P1TelegramReader;
 
 /**
@@ -43,7 +42,12 @@ import nl.vsmeets.amr.service.p1telegram.reader.P1TelegramReader;
  * @author vincent
  */
 @ExtendWith(MockitoExtension.class)
-class SerialReaderBeanTest implements RandomStringGenerator {
+class SerialReaderBeanTest {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String serialData = "Serial Data";
 
   @Mock
   private SerialPort serialPort;
@@ -60,7 +64,7 @@ class SerialReaderBeanTest implements RandomStringGenerator {
   @Test
   void testRunError() throws Exception {
     final ApplicationArguments args = mock(ApplicationArguments.class);
-    final InputStream inputStream = new ByteArrayInputStream(randomString().getBytes(StandardCharsets.UTF_8));
+    final InputStream inputStream = new ByteArrayInputStream(serialData.getBytes(StandardCharsets.UTF_8));
     when(serialPort.getInputStream()).then(i -> inputStream);
     doThrow(new IOException()).when(p1TelegramReader).save(any());
 
@@ -72,7 +76,7 @@ class SerialReaderBeanTest implements RandomStringGenerator {
   @Test
   void testRunOk() throws Exception {
     final ApplicationArguments args = mock(ApplicationArguments.class);
-    final InputStream inputStream = new ByteArrayInputStream(randomString().getBytes(StandardCharsets.UTF_8));
+    final InputStream inputStream = new ByteArrayInputStream(serialData.getBytes(StandardCharsets.UTF_8));
     when(serialPort.getInputStream()).then(i -> inputStream);
 
     serialReaderBean.run(args);

@@ -18,6 +18,7 @@ package nl.vsmeets.amr.test.backend.database;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import javax.measure.Quantity;
@@ -49,11 +50,6 @@ import nl.vsmeets.amr.backend.database.P1Telegram;
 import nl.vsmeets.amr.backend.database.P1TelegramFactory;
 import nl.vsmeets.amr.backend.database.Site;
 import nl.vsmeets.amr.backend.database.SiteFactory;
-import nl.vsmeets.amr.libs.junit.RandomByteGenerator;
-import nl.vsmeets.amr.libs.junit.RandomLocalDateTimeGenerator;
-import nl.vsmeets.amr.libs.junit.RandomShortGenerator;
-import nl.vsmeets.amr.libs.junit.RandomStringGenerator;
-import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
 
 /**
  * Integration tests for {@link ElectricPhasePowerReading}.
@@ -62,8 +58,36 @@ import nl.vsmeets.amr.libs.junit.RandomZoneIdGenerator;
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
 @DataJpaTest
-class ElectricPhasePowerReadingIT implements RandomByteGenerator, RandomLocalDateTimeGenerator, RandomShortGenerator,
-    RandomStringGenerator, RandomZoneIdGenerator {
+class ElectricPhasePowerReadingIT {
+
+  /**
+   * Values used during tests.
+   */
+  private static final String siteName1 = "Name 1";
+  private static final String siteName2 = "Name 2";
+  private static final String[] ZoneIds = ZoneId.getAvailableZoneIds().toArray(String[]::new);
+  private static final ZoneId timeZone1 = ZoneId.of(ZoneIds[0]);
+  private static final ZoneId timeZone2 = ZoneId.of(ZoneIds[1]);
+  private static final String headerInformation1 = "Header Info 1";
+  private static final String headerInformation2 = "Header Info 2";
+  private static final byte versionInformation1 = 0x00;
+  private static final byte versionInformation2 = -1; // 0xFF;
+  private static final byte measuredMediumId1 = 0x00;
+  private static final byte measuredMediumId2 = 0x19;
+  private static final String equipmentIdentifier1 = "Equipment Identifier 1";
+  private static final String equipmentIdentifier2 = "Equipment Identifier 2";
+  private static final LocalDateTime localDateTime1 = DatabaseConstants.MIN_LOCAL_DATE_TIME;
+  private static final LocalDateTime localDateTime2 = DatabaseConstants.MAX_LOCAL_DATE_TIME;
+  private static final byte phaseNumber1 = 0x00;
+  private static final byte phaseNumber2 = -1; // 0xFF;
+  private static final short instantaneousVoltageValue1 = 0;
+  private static final short instantaneousVoltageValue2 = 9_999;
+  private static final short instantaneousCurrentValue1 = 0;
+  private static final short instantaneousCurrentValue2 = 999;
+  private static final int instantaneousConsumedPowerValue1 = 0;
+  private static final int instantaneousConsumedPowerValue2 = 99_999;
+  private static final int instantaneousProducedPowerValue1 = 0;
+  private static final int instantaneousProducedPowerValue2 = 99_999;
 
   @Autowired
   private SiteFactory siteFactory;
@@ -103,12 +127,6 @@ class ElectricPhasePowerReadingIT implements RandomByteGenerator, RandomLocalDat
   @Qualifier("watt")
   private Unit<Power> watt;
 
-  private final LocalDateTime localDateTime1 = randomLocalDateTimeZeroPrecisionRange(
-      DatabaseConstants.MIN_LOCAL_DATE_TIME, DatabaseConstants.MAX_LOCAL_DATE_TIME);
-  private final LocalDateTime localDateTime2 = randomLocalDateTimeZeroPrecisionRange(
-      DatabaseConstants.MIN_LOCAL_DATE_TIME, DatabaseConstants.MAX_LOCAL_DATE_TIME, localDateTime1);
-  private final Byte phaseNumber1 = randomByte();
-  private final Byte phaseNumber2 = randomByte(phaseNumber1);
   private Quantity<ElectricPotential> instantaneousVoltage1;
   private Quantity<ElectricPotential> instantaneousVoltage2;
   private Quantity<ElectricCurrent> instantaneousCurrent1;
@@ -124,18 +142,16 @@ class ElectricPhasePowerReadingIT implements RandomByteGenerator, RandomLocalDat
 
   @BeforeEach
   void setup() {
-    site1 = assertDoesNotThrow(() -> siteFactory.create(randomString(), randomZoneId()));
+    site1 = assertDoesNotThrow(() -> siteFactory.create(siteName1, timeZone1));
     assertNotNull(site1);
-    site2 =
-        assertDoesNotThrow(() -> siteFactory.create(randomString(site1.getName()), randomZoneId(site1.getTimeZone())));
+    site2 = assertDoesNotThrow(() -> siteFactory.create(siteName2, timeZone2));
     assertNotNull(site2);
-    p1Telegram1 = assertDoesNotThrow(() -> p1TelegramFactory.create(site1, randomString(), randomByte()));
+    p1Telegram1 = assertDoesNotThrow(() -> p1TelegramFactory.create(site1, headerInformation1, versionInformation1));
     assertNotNull(p1Telegram1);
-    p1Telegram2 = assertDoesNotThrow(() -> p1TelegramFactory.create(site2,
-        randomString(p1Telegram1.getHeaderInformation()), randomByte(p1Telegram1.getVersionInformation())));
+    p1Telegram2 = assertDoesNotThrow(() -> p1TelegramFactory.create(site2, headerInformation2, versionInformation2));
     assertNotNull(p1Telegram2);
     final Optional<? extends MeasuredMedium> optionalMeasuredMedium1 =
-        assertDoesNotThrow(() -> measuredMediumFactory.find((byte) 0x02));
+        assertDoesNotThrow(() -> measuredMediumFactory.find(measuredMediumId1));
     assertAll( //
         () -> assertNotNull(optionalMeasuredMedium1), //
         () -> assertTrue(optionalMeasuredMedium1.isPresent()) //
@@ -143,32 +159,26 @@ class ElectricPhasePowerReadingIT implements RandomByteGenerator, RandomLocalDat
     measuredMedium1 = optionalMeasuredMedium1.get();
     assertNotNull(measuredMedium1);
     final Optional<? extends MeasuredMedium> optionalMeasuredMedium2 =
-        assertDoesNotThrow(() -> measuredMediumFactory.find((byte) 0x03));
+        assertDoesNotThrow(() -> measuredMediumFactory.find(measuredMediumId2));
     assertAll( //
         () -> assertNotNull(optionalMeasuredMedium2), //
         () -> assertTrue(optionalMeasuredMedium2.isPresent()) //
     );
     measuredMedium2 = optionalMeasuredMedium2.get();
     assertNotNull(measuredMedium2);
-    meter1 = assertDoesNotThrow(() -> meterFactory.create(p1Telegram1, measuredMedium1, randomString()));
+    meter1 = assertDoesNotThrow(() -> meterFactory.create(p1Telegram1, measuredMedium1, equipmentIdentifier1));
     assertNotNull(meter1);
-    meter2 = assertDoesNotThrow(
-        () -> meterFactory.create(p1Telegram2, measuredMedium2, randomString(meter1.getEquipmentIdentifier())));
+    meter2 = assertDoesNotThrow(() -> meterFactory.create(p1Telegram2, measuredMedium2, equipmentIdentifier2));
     assertNotNull(meter2);
 
-    instantaneousVoltage1 =
-        electricPotentialQuantityFactory.create(randomShortRange((short) 0, (short) 10_000), deciVolt);
-    instantaneousVoltage2 = electricPotentialQuantityFactory
-        .create(randomShortRange((short) 0, (short) 10_000, instantaneousVoltage1.getValue().shortValue()), deciVolt);
-    instantaneousCurrent1 = electricCurrentQuantityFactory.create(randomShortRange((short) 0, (short) 1_000), ampere);
-    instantaneousCurrent2 = electricCurrentQuantityFactory
-        .create(randomShortRange((short) 0, (short) 1_000, instantaneousCurrent1.getValue().shortValue()), ampere);
-    instantaneousConsumedPower1 = powerQuantityFactory.create(randomIntRange(0, 100_000), watt);
-    instantaneousConsumedPower2 = powerQuantityFactory
-        .create(randomIntRange(0, 100_000, instantaneousConsumedPower1.getValue().intValue()), watt);
-    instantaneousProducedPower1 = powerQuantityFactory.create(randomIntRange(0, 100_000), watt);
-    instantaneousProducedPower2 = powerQuantityFactory
-        .create(randomIntRange(0, 100_000, instantaneousProducedPower1.getValue().intValue()), watt);
+    instantaneousVoltage1 = electricPotentialQuantityFactory.create(instantaneousVoltageValue1, deciVolt);
+    instantaneousVoltage2 = electricPotentialQuantityFactory.create(instantaneousVoltageValue2, deciVolt);
+    instantaneousCurrent1 = electricCurrentQuantityFactory.create(instantaneousCurrentValue1, ampere);
+    instantaneousCurrent2 = electricCurrentQuantityFactory.create(instantaneousCurrentValue2, ampere);
+    instantaneousConsumedPower1 = powerQuantityFactory.create(instantaneousConsumedPowerValue1, watt);
+    instantaneousConsumedPower2 = powerQuantityFactory.create(instantaneousConsumedPowerValue2, watt);
+    instantaneousProducedPower1 = powerQuantityFactory.create(instantaneousProducedPowerValue1, watt);
+    instantaneousProducedPower2 = powerQuantityFactory.create(instantaneousProducedPowerValue2, watt);
 
     electricPhasePowerReading =
         assertDoesNotThrow(() -> electricPhasePowerReadingFactory.create(meter1, localDateTime1, phaseNumber1,
