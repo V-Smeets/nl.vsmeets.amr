@@ -5,6 +5,17 @@ addons:
   sonarcloud:
     organization: "v-smeets-github"
 script:
-  - mvn clean install sonar:sonar >script.log 2>&1
-after_script:
-  - tail --lines=256 script.log
+  - '
+    case "$TRAVIS_BRANCH" in
+      (master) branchTarget="";;
+      (develop) branchTarget="master";;
+      (*) branchTarget="develop";;
+    esac;
+    mvn
+      --define sonar.branch.target="$branchTarget"
+      clean
+      install
+      sonar:sonar
+    | grep --invert-match ''^Hibernate:''
+    | fgrep --invert-match ''o.s.t.c.transaction.TransactionContext''
+    '
