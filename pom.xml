@@ -31,10 +31,10 @@
   </modules>
 
   <properties>
-    <com.fazecast.jSerialComm.version>2.5.3</com.fazecast.jSerialComm.version>
+    <com.fazecast.jSerialComm.version>2.6.0</com.fazecast.jSerialComm.version>
     <com.github.snksoft.crc.version>1.0.2</com.github.snksoft.crc.version>
-    <com.google.guava.guava-testlib.version>28.1-jre</com.google.guava.guava-testlib.version>
-    <com.mockrunner.mockrunner.version>2.0.1</com.mockrunner.mockrunner.version>
+    <com.google.guava.guava-testlib.version>28.2-jre</com.google.guava.guava-testlib.version>
+    <com.mockrunner.mockrunner.version>2.0.4</com.mockrunner.mockrunner.version>
     <javax.measure.unit-api.version>2.0</javax.measure.unit-api.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
     <maven.compiler.release>11</maven.compiler.release>
@@ -46,16 +46,16 @@
     <org.apache.maven.plugins.maven-resources-plugin.version>3.1.0</org.apache.maven.plugins.maven-resources-plugin.version>
     <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M4</org.apache.maven.plugins.maven-surefire-plugin.version>
     <org.jacoco.jacoco-maven-plugin.version>0.8.5</org.jacoco.jacoco-maven-plugin.version>
-    <org.springframework.boot.spring-boot-dependencies.version>2.2.1.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
+    <org.springframework.boot.spring-boot-dependencies.version>2.2.6.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-    <tech.units.indriya.version>2.0.1</tech.units.indriya.version>
+    <tech.units.indriya.version>2.0.2</tech.units.indriya.version>
     <!--
       Keep the following versions in synch with spring.
       https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-dependency-versions.html
     -->
-    <org.projectlombok.lombok.version>1.18.10</org.projectlombok.lombok.version>
+    <org.projectlombok.lombok.version>1.18.12</org.projectlombok.lombok.version>
   </properties>
 
   <dependencyManagement>
