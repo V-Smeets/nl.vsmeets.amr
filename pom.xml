@@ -49,7 +49,11 @@
     <org.springframework.boot.spring-boot-dependencies.version>2.2.6.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
-    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.coverage.jacoco.xmlReportPaths>
+      target/site/jacoco/jacoco.xml,
+      target/site/jacoco-it/jacoco.xml,
+      target/site/jacoco-aggregate/jacoco.xml
+    </sonar.coverage.jacoco.xmlReportPaths>
     <tech.units.indriya.version>2.0.2</tech.units.indriya.version>
     <!--
       Keep the following versions in synch with spring.
