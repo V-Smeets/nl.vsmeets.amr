@@ -6,6 +6,7 @@ addons:
     organization: "v-smeets-github"
 script:
   - '
+    setState=$(set +o);
     set -o errexit -o pipefail -o xtrace;
     branchName="$TRAVIS_BRANCH";
     case "$branchName" in
@@ -20,5 +21,6 @@ script:
       install
       sonar:sonar
     | grep --invert-match ''^Hibernate:''
-    | fgrep --invert-match ''o.s.t.c.transaction.TransactionContext''
+    | fgrep --invert-match ''o.s.t.c.transaction.TransactionContext'';
+    set +vx; eval "$setState";
     '
