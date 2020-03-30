@@ -6,12 +6,15 @@ addons:
     organization: "v-smeets-github"
 script:
   - '
-    case "$TRAVIS_BRANCH" in
+    set -o errexit -o pipefail -o xtrace;
+    branchName="$TRAVIS_BRANCH";
+    case "$branchName" in
       (master) branchTarget="";;
       (develop) branchTarget="master";;
       (*) branchTarget="develop";;
     esac;
     mvn
+      --define sonar.branch.name="$branchName"
       --define sonar.branch.target="$branchTarget"
       clean
       install
