@@ -31,9 +31,9 @@
   </modules>
 
   <properties>
-    <com.fazecast.jSerialComm.version>2.6.0</com.fazecast.jSerialComm.version>
+    <com.fazecast.jSerialComm.version>2.6.2</com.fazecast.jSerialComm.version>
     <com.github.snksoft.crc.version>1.0.2</com.github.snksoft.crc.version>
-    <com.google.guava.guava-testlib.version>28.2-jre</com.google.guava.guava-testlib.version>
+    <com.google.guava.guava-testlib.version>29.0-jre</com.google.guava.guava-testlib.version>
     <com.mockrunner.mockrunner.version>2.0.4</com.mockrunner.mockrunner.version>
     <javax.measure.unit-api.version>2.0</javax.measure.unit-api.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
@@ -41,12 +41,12 @@
     <maven.compiler.source>${maven.compiler.release}</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.release}</maven.compiler.target>
     <org.apache.maven.plugins.maven-compiler-plugin.version>3.8.1</org.apache.maven.plugins.maven-compiler-plugin.version>
-    <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M4</org.apache.maven.plugins.maven-failsafe-plugin.version>
+    <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M5</org.apache.maven.plugins.maven-failsafe-plugin.version>
     <org.apache.maven.plugins.maven-jar-plugin.version>3.2.0</org.apache.maven.plugins.maven-jar-plugin.version>
     <org.apache.maven.plugins.maven-resources-plugin.version>3.1.0</org.apache.maven.plugins.maven-resources-plugin.version>
-    <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M4</org.apache.maven.plugins.maven-surefire-plugin.version>
+    <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M5</org.apache.maven.plugins.maven-surefire-plugin.version>
     <org.jacoco.jacoco-maven-plugin.version>0.8.5</org.jacoco.jacoco-maven-plugin.version>
-    <org.springframework.boot.spring-boot-dependencies.version>2.2.6.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
+    <org.springframework.boot.spring-boot-dependencies.version>2.3.1.RELEASE</org.springframework.boot.spring-boot-dependencies.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
     <sonar.coverage.jacoco.xmlReportPaths>
