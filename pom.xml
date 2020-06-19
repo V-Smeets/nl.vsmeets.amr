@@ -31,7 +31,7 @@
   </modules>
 
   <properties>
-    <com.fazecast.jSerialComm.version>2.6.0</com.fazecast.jSerialComm.version>
+    <com.fazecast.jSerialComm.version>2.6.2</com.fazecast.jSerialComm.version>
     <com.github.snksoft.crc.version>1.0.2</com.github.snksoft.crc.version>
     <com.google.guava.guava-testlib.version>28.2-jre</com.google.guava.guava-testlib.version>
     <com.mockrunner.mockrunner.version>2.0.4</com.mockrunner.mockrunner.version>
