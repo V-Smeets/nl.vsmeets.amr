@@ -67,7 +67,7 @@ import nl.vsmeets.amr.test.frontend.BackendAmqpITListener;
     // @formatter:on
 )
 @EnableConfigurationProperties
-public class FrontendFileimporterIT {
+class FrontendFileimporterIT {
 
   @Autowired
   @Qualifier("fileImporterBean")

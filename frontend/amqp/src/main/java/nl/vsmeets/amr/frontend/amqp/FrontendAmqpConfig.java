@@ -15,6 +15,8 @@
  */
 package nl.vsmeets.amr.frontend.amqp;
 
+import javax.validation.Valid;
+
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
@@ -43,17 +45,44 @@ import nl.vsmeets.amr.frontend.amqp.beans.ServerFatalExceptionStrategy;
 @RequiredArgsConstructor
 public class FrontendAmqpConfig {
 
+  /**
+   * Create the dead letter queue.
+   *
+   * @param properties
+   *        The properties that define the name of the queue.
+   * @return The queue.
+   */
   @Bean
-  public Queue deadLetterQueue(final FrontendAmqpProperties properties) {
+  public Queue deadLetterQueue(@Valid final FrontendAmqpProperties properties) {
     final String deadLetterQueueName = properties.getDeadLetterQueueName();
     return QueueBuilder.durable(deadLetterQueueName).lazy().build();
   }
 
+  /**
+   * Create the bean that will handle errors.
+   *
+   * @param exceptionStrategy
+   *        The strategy to handle the errors.
+   * @return The error handler.
+   */
   @Bean
   public ErrorHandler errorHandler(final ServerFatalExceptionStrategy exceptionStrategy) {
     return new ConditionalRejectingErrorHandler(exceptionStrategy);
   }
 
+  /**
+   * Create a message listener container that will listen for messages on a queue.
+   *
+   * @param factory
+   *        The factory to create the container.
+   * @param queue
+   *        The queue to listen to.
+   * @param p1TelegramReceiverBean
+   *        The bean that will handle the receiver messages.
+   * @param errorHandler
+   *        The handler that will handle transmission errors.
+   * @return The container.
+   */
   @Bean
   public SimpleMessageListenerContainer messageListenerContainer(final SimpleRabbitListenerContainerFactory factory,
       @Qualifier("queue") final Queue queue, final P1TelegramReceiverBean p1TelegramReceiverBean,
@@ -65,8 +94,16 @@ public class FrontendAmqpConfig {
     return container;
   }
 
+  /**
+   * Create the queue that will receive the messages.
+   *
+   * @param properties
+   *        The properties that define the name of the queue and the associated
+   *        dead letter queue.
+   * @return The queue.
+   */
   @Bean
-  public Queue queue(final FrontendAmqpProperties properties) {
+  public Queue queue(@Valid final FrontendAmqpProperties properties) {
     final String queueName = properties.getQueueName();
     final String deadLetterQueueName = properties.getDeadLetterQueueName();
     return QueueBuilder.durable(queueName).deadLetterExchange("").deadLetterRoutingKey(deadLetterQueueName).build();

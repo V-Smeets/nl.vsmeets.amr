@@ -39,6 +39,13 @@ import nl.vsmeets.amr.service.p1telegram.reader.ServiceP1TelegramReaderConfig;
 @Import(ServiceP1TelegramReaderConfig.class)
 public class FrontendSerialConfig {
 
+  /**
+   * Create a bean to communicate with the serial port.
+   *
+   * @param properties
+   *        The properties that define the serial port and it's settings.
+   * @return The initialized bean.
+   */
   @Bean
   @Profile("!test")
   public SerialPort serialPort(@Valid final FrontendSerialProperties properties) {

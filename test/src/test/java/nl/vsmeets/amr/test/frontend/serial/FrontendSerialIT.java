@@ -63,7 +63,7 @@ import nl.vsmeets.amr.test.frontend.BackendAmqpITListener;
 )
 @ActiveProfiles("test")
 @EnableConfigurationProperties
-public class FrontendSerialIT {
+class FrontendSerialIT {
 
   @Autowired
   @Qualifier("serialReaderBean")
