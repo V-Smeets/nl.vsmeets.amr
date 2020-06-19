@@ -15,6 +15,8 @@
  */
 package nl.vsmeets.amr.frontend.amqp;
 
+import javax.validation.Valid;
+
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
@@ -44,7 +46,7 @@ import nl.vsmeets.amr.frontend.amqp.beans.ServerFatalExceptionStrategy;
 public class FrontendAmqpConfig {
 
   @Bean
-  public Queue deadLetterQueue(final FrontendAmqpProperties properties) {
+  public Queue deadLetterQueue(@Valid final FrontendAmqpProperties properties) {
     final String deadLetterQueueName = properties.getDeadLetterQueueName();
     return QueueBuilder.durable(deadLetterQueueName).lazy().build();
   }
@@ -66,7 +68,7 @@ public class FrontendAmqpConfig {
   }
 
   @Bean
-  public Queue queue(final FrontendAmqpProperties properties) {
+  public Queue queue(@Valid final FrontendAmqpProperties properties) {
     final String queueName = properties.getQueueName();
     final String deadLetterQueueName = properties.getDeadLetterQueueName();
     return QueueBuilder.durable(queueName).deadLetterExchange("").deadLetterRoutingKey(deadLetterQueueName).build();
