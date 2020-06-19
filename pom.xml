@@ -33,7 +33,7 @@
   <properties>
     <com.fazecast.jSerialComm.version>2.6.2</com.fazecast.jSerialComm.version>
     <com.github.snksoft.crc.version>1.0.2</com.github.snksoft.crc.version>
-    <com.google.guava.guava-testlib.version>28.2-jre</com.google.guava.guava-testlib.version>
+    <com.google.guava.guava-testlib.version>29.0-jre</com.google.guava.guava-testlib.version>
     <com.mockrunner.mockrunner.version>2.0.4</com.mockrunner.mockrunner.version>
     <javax.measure.unit-api.version>2.0</javax.measure.unit-api.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
