@@ -19,7 +19,6 @@ script:
       --define sonar.branch.target="$branchTarget"
       clean
       install
-      sonar:sonar
-    | fgrep --invert-match ''o.s.t.c.transaction.TransactionContext'';
+      sonar:sonar;
     set +vx; eval "$setState";
     '
