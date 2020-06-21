@@ -55,7 +55,13 @@ import nl.vsmeets.amr.backend.database.SiteFactory;
  * @author vincent
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
-@DataJpaTest(showSql = false)
+@DataJpaTest(
+ // @formatter:off
+     properties = {
+         "logging.level.org.springframework.test.context.transaction.TransactionContext=WARN" },
+     showSql = false
+ //@formatter:on
+ )
 class ElectricEnergyReadingIT {
 
   /**

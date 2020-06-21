@@ -35,7 +35,13 @@ import nl.vsmeets.amr.backend.database.MeasuredMediumFactory;
  * @author vincent
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
-@DataJpaTest(showSql = false)
+@DataJpaTest(
+ // @formatter:off
+     properties = {
+         "logging.level.org.springframework.test.context.transaction.TransactionContext=WARN" },
+     showSql = false
+ //@formatter:on
+ )
 class MeasuredMediumIT {
 
   private final Byte mediumId1 = 0x02;
