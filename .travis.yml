@@ -5,6 +5,7 @@ addons:
   sonarcloud:
     organization: "v-smeets-github"
 script:
+  # Max free log output: 4500000 bytes
   - '
     setState=$(set +o);
     set -o errexit -o pipefail -o xtrace;
