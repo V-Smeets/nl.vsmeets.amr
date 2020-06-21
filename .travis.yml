@@ -20,7 +20,6 @@ script:
       clean
       install
       sonar:sonar
-    | grep --invert-match ''^Hibernate:''
     | fgrep --invert-match ''o.s.t.c.transaction.TransactionContext'';
     set +vx; eval "$setState";
     '
