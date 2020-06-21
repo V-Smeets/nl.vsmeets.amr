@@ -35,7 +35,7 @@ import nl.vsmeets.amr.backend.database.MeasuredMediumFactory;
  * @author vincent
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
-@DataJpaTest
+@DataJpaTest(showSql = false)
 class MeasuredMediumIT {
 
   private final Byte mediumId1 = 0x02;

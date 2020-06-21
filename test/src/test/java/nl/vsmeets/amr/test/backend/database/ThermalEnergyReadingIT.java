@@ -55,7 +55,7 @@ import nl.vsmeets.amr.backend.database.ThermalEnergyReadingFactory;
  * @author vincent
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
-@DataJpaTest
+@DataJpaTest(showSql = false)
 class ThermalEnergyReadingIT {
 
   /**

@@ -56,7 +56,7 @@ import nl.vsmeets.amr.backend.database.SiteFactory;
  * @author vincent
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
-@DataJpaTest
+@DataJpaTest(showSql = false)
 class ElectricPowerReadingIT {
 
   /**

@@ -55,7 +55,7 @@ import nl.vsmeets.amr.backend.database.WaterVolumeReadingFactory;
  * @author vincent
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
-@DataJpaTest
+@DataJpaTest(showSql = false)
 class WaterVolumeReadingIT {
 
   /**
