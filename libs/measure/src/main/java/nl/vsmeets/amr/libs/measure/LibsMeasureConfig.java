@@ -15,9 +15,7 @@
  */
 package nl.vsmeets.amr.libs.measure;
 
-import static javax.measure.MetricPrefix.DECI;
-import static javax.measure.MetricPrefix.MEGA;
-
+import javax.measure.MetricPrefix;
 import javax.measure.Unit;
 import javax.measure.quantity.ElectricCurrent;
 import javax.measure.quantity.ElectricPotential;
@@ -68,7 +66,7 @@ public class LibsMeasureConfig {
    */
   @Bean
   public Unit<Volume> cubicDeciMeter(final Unit<Length> meter) {
-    return DECI(meter).pow(CUBIC).asType(Volume.class);
+    return MetricPrefix.DECI(meter).pow(CUBIC).asType(Volume.class);
   }
 
   /**
@@ -80,7 +78,7 @@ public class LibsMeasureConfig {
    */
   @Bean
   public Unit<ElectricPotential> deciVolt(final Unit<ElectricPotential> volt) {
-    return DECI(volt);
+    return MetricPrefix.DECI(volt);
   }
 
   /**
@@ -152,7 +150,7 @@ public class LibsMeasureConfig {
    */
   @Bean
   public Unit<Energy> megaJoule(final Unit<Energy> joule) {
-    return MEGA(joule);
+    return MetricPrefix.MEGA(joule);
   }
 
   /**
