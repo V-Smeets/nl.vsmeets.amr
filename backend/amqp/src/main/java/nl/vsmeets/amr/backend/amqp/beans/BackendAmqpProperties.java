@@ -15,6 +15,8 @@
  */
 package nl.vsmeets.amr.backend.amqp.beans;
 
+import java.net.URL;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -38,6 +40,30 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BackendAmqpProperties {
+
+  /**
+   * The URL to access the API.
+   */
+  @NotNull
+  private URL apiUrl;
+
+  /**
+   * The user name to access the API.
+   */
+  @NotEmpty
+  private String apiUsername;
+
+  /**
+   * The password to access the API.
+   */
+  @NotEmpty
+  private String apiPassword;
+
+  /**
+   * The AMQP virtual host to use.
+   */
+  @NotEmpty
+  private String virtualHost;
 
   /**
    * The name of the AMQP exchange.

@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.net.URL;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -42,6 +43,10 @@ class BackendAmqpPropertiesTest {
   /**
    * Values used during tests.
    */
+  private static URL apiUrl;
+  private static final String apiUsername = "API Username";
+  private static final String apiPassword = "API Password";
+  private static final String virtualHost = "Virtual Host";
   private static final String exchangeName = "Exchange Name";
   private static final String routingKey = "Routing Key";
 
@@ -49,6 +54,7 @@ class BackendAmqpPropertiesTest {
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
+    apiUrl = new URL("http", "localhost", "/api");
     factory = Validation.buildDefaultValidatorFactory();
   }
 
@@ -64,12 +70,76 @@ class BackendAmqpPropertiesTest {
     validator = factory.getValidator();
 
     backendAmqpProperties = new BackendAmqpProperties();
+    backendAmqpProperties.setApiUrl(apiUrl);
+    backendAmqpProperties.setApiUsername(apiUsername);
+    backendAmqpProperties.setApiPassword(apiPassword);
+    backendAmqpProperties.setVirtualHost(virtualHost);
     backendAmqpProperties.setExchangeName(exchangeName);
     backendAmqpProperties.setRoutingKey(routingKey);
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
     assertTrue(constraintViolations.isEmpty());
+  }
+
+  @Test
+  void testGetApiPassword() {
+    assertEquals(apiPassword, backendAmqpProperties.getApiPassword());
+  }
+
+  @Test
+  void testGetApiPasswordNotEmpty() {
+    backendAmqpProperties.setApiPassword("");
+
+    final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
+        validator.validate(backendAmqpProperties);
+    assertFalse(constraintViolations.isEmpty());
+  }
+
+  @Test
+  void testGetApiPasswordNotNull() {
+    backendAmqpProperties.setApiPassword(null);
+
+    final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
+        validator.validate(backendAmqpProperties);
+    assertFalse(constraintViolations.isEmpty());
+  }
+
+  @Test
+  void testGetApiUrl() {
+    assertEquals(apiUrl, backendAmqpProperties.getApiUrl());
+  }
+
+  @Test
+  void testGetApiUrlNotNull() {
+    backendAmqpProperties.setApiUrl(null);
+
+    final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
+        validator.validate(backendAmqpProperties);
+    assertFalse(constraintViolations.isEmpty());
+  }
+
+  @Test
+  void testGetApiUsername() {
+    assertEquals(apiUsername, backendAmqpProperties.getApiUsername());
+  }
+
+  @Test
+  void testGetApiUsernameNotEmpty() {
+    backendAmqpProperties.setApiUsername("");
+
+    final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
+        validator.validate(backendAmqpProperties);
+    assertFalse(constraintViolations.isEmpty());
+  }
+
+  @Test
+  void testGetApiUsernameNotNull() {
+    backendAmqpProperties.setApiUsername(null);
+
+    final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
+        validator.validate(backendAmqpProperties);
+    assertFalse(constraintViolations.isEmpty());
   }
 
   @Test
@@ -110,11 +180,38 @@ class BackendAmqpPropertiesTest {
   }
 
   @Test
+  void testGetVirtualHosNotEmpty() {
+    backendAmqpProperties.setVirtualHost("");
+
+    final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
+        validator.validate(backendAmqpProperties);
+    assertFalse(constraintViolations.isEmpty());
+  }
+
+  @Test
+  void testGetVirtualHosNotNull() {
+    backendAmqpProperties.setVirtualHost(null);
+
+    final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
+        validator.validate(backendAmqpProperties);
+    assertFalse(constraintViolations.isEmpty());
+  }
+
+  @Test
+  void testGetVirtualHost() {
+    assertEquals(virtualHost, backendAmqpProperties.getVirtualHost());
+  }
+
+  @Test
   void testToString() {
     final String toString = backendAmqpProperties.toString();
     assertAll( //
         () -> assertNotNull(toString), //
         () -> assertTrue(toString.contains(backendAmqpProperties.getClass().getSimpleName())), //
+        () -> assertTrue(toString.contains(apiUrl.toString())), //
+        () -> assertTrue(toString.contains(apiUsername)), //
+        () -> assertTrue(toString.contains(apiPassword)), //
+        () -> assertTrue(toString.contains(virtualHost)), //
         () -> assertTrue(toString.contains(exchangeName)), //
         () -> assertTrue(toString.contains(routingKey)) //
     );
