@@ -16,7 +16,8 @@
 package nl.vsmeets.amr.backend.database.converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 
 import javax.measure.Quantity;
 import javax.measure.Unit;

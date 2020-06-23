@@ -49,6 +49,15 @@ public class Ampere2ShortConverter implements AttributeConverter<Quantity<Electr
     super();
   }
 
+  private synchronized void autoWire() {
+    if (electricCurrentQuantityFactory == null) {
+      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
+      electricCurrentQuantityFactory =
+          applicationContext.getBean("electricCurrentQuantityFactory", QuantityFactory.class);
+      ampere = applicationContext.getBean("ampere", Unit.class);
+    }
+  }
+
   @Override
   public Short convertToDatabaseColumn(final Quantity<ElectricCurrent> current) {
     autoWire();
@@ -59,15 +68,6 @@ public class Ampere2ShortConverter implements AttributeConverter<Quantity<Electr
   public Quantity<ElectricCurrent> convertToEntityAttribute(final Short value) {
     autoWire();
     return electricCurrentQuantityFactory.create(value, ampere);
-  }
-
-  private synchronized void autoWire() {
-    if (electricCurrentQuantityFactory == null) {
-      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
-      electricCurrentQuantityFactory =
-          applicationContext.getBean("electricCurrentQuantityFactory", QuantityFactory.class);
-      ampere = applicationContext.getBean("ampere", Unit.class);
-    }
   }
 
 }

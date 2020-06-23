@@ -84,21 +84,21 @@ public class P1TelegramReaderBean implements P1TelegramReader {
 
       // After the character has been appended to the buffer.
       switch (character) {
-        case '!':
-          if (p1TelegramBuffer == dataBuffer) {
-            p1TelegramBuffer = crcBuffer;
-          }
-          break;
+      case '!':
+        if (p1TelegramBuffer == dataBuffer) {
+          p1TelegramBuffer = crcBuffer;
+        }
+        break;
 
-        case '\n':
-          if (p1TelegramBuffer == crcBuffer) {
-            sendTelegram(dataBuffer, crcBuffer);
-            p1TelegramBuffer = trashBuffer;
-          }
-          break;
+      case '\n':
+        if (p1TelegramBuffer == crcBuffer) {
+          sendTelegram(dataBuffer, crcBuffer);
+          p1TelegramBuffer = trashBuffer;
+        }
+        break;
 
-        default:
-          break;
+      default:
+        break;
       }
     }
   }

@@ -15,7 +15,8 @@
  */
 package nl.vsmeets.amr.libs.measure;
 
-import static javax.measure.MetricPrefix.*;
+import static javax.measure.MetricPrefix.DECI;
+import static javax.measure.MetricPrefix.MEGA;
 
 import javax.measure.Unit;
 import javax.measure.quantity.ElectricCurrent;

@@ -15,7 +15,8 @@
  */
 package nl.vsmeets.amr.test.frontend.serial;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.InputStream;
 

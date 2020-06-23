@@ -15,9 +15,11 @@
  */
 package nl.vsmeets.amr.test.frontend.fileimporter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,6 +79,36 @@ class FrontendFileimporterIT {
   private RabbitListenerTestHarness harness;
 
   private ExitCodeGenerator exitCodeGenerator;
+
+  /**
+   * Convert a resource to a file and return it.
+   *
+   * @param resourceName
+   *        The name of the resource.
+   * @return The file.
+   * @throws IOException
+   */
+  private File resourceToFile(final String resourceName) throws IOException {
+    final InputStream inputStream = getClass().getResourceAsStream(resourceName);
+
+    final Path resourcePath = Paths.get(resourceName);
+    final String fileName = resourcePath.getFileName().toString();
+    final int dotIndex = fileName.indexOf('.');
+    String prefix;
+    String suffix;
+    if (dotIndex >= 3) {
+      prefix = fileName.substring(0, dotIndex);
+      suffix = fileName.substring(dotIndex);
+    } else {
+      prefix = fileName;
+      suffix = null;
+    }
+    final File outputFile = File.createTempFile(prefix, suffix);
+    outputFile.deleteOnExit();
+
+    Files.copy(inputStream, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    return outputFile;
+  }
 
   @BeforeEach
   void setUp() throws Exception {
@@ -188,36 +220,6 @@ class FrontendFileimporterIT {
     applicationRunner.run(args);
 
     assertEquals(1, exitCodeGenerator.getExitCode());
-  }
-
-  /**
-   * Convert a resource to a file and return it.
-   *
-   * @param resourceName
-   *        The name of the resource.
-   * @return The file.
-   * @throws IOException
-   */
-  private File resourceToFile(final String resourceName) throws IOException {
-    final InputStream inputStream = getClass().getResourceAsStream(resourceName);
-
-    final Path resourcePath = Paths.get(resourceName);
-    final String fileName = resourcePath.getFileName().toString();
-    final int dotIndex = fileName.indexOf('.');
-    String prefix;
-    String suffix;
-    if (dotIndex >= 3) {
-      prefix = fileName.substring(0, dotIndex);
-      suffix = fileName.substring(dotIndex);
-    } else {
-      prefix = fileName;
-      suffix = null;
-    }
-    final File outputFile = File.createTempFile(prefix, suffix);
-    outputFile.deleteOnExit();
-
-    Files.copy(inputStream, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    return outputFile;
   }
 
 }

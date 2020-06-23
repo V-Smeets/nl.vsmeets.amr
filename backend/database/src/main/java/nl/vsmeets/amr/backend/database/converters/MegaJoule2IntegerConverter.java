@@ -49,6 +49,14 @@ public class MegaJoule2IntegerConverter implements AttributeConverter<Quantity<E
     super();
   }
 
+  private synchronized void autoWire() {
+    if (energyQuantityFactory == null) {
+      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
+      energyQuantityFactory = applicationContext.getBean("energyQuantityFactory", QuantityFactory.class);
+      megaJoule = applicationContext.getBean("megaJoule", Unit.class);
+    }
+  }
+
   @Override
   public Integer convertToDatabaseColumn(final Quantity<Energy> energy) {
     autoWire();
@@ -59,14 +67,6 @@ public class MegaJoule2IntegerConverter implements AttributeConverter<Quantity<E
   public Quantity<Energy> convertToEntityAttribute(final Integer value) {
     autoWire();
     return energyQuantityFactory.create(value, megaJoule);
-  }
-
-  private synchronized void autoWire() {
-    if (energyQuantityFactory == null) {
-      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
-      energyQuantityFactory = applicationContext.getBean("energyQuantityFactory", QuantityFactory.class);
-      megaJoule = applicationContext.getBean("megaJoule", Unit.class);
-    }
   }
 
 }

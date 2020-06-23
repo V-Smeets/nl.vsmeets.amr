@@ -49,6 +49,15 @@ public class DeciVolt2ShortConverter implements AttributeConverter<Quantity<Elec
     super();
   }
 
+  private synchronized void autoWire() {
+    if (electricPotentialQuantityFactory == null) {
+      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
+      electricPotentialQuantityFactory =
+          applicationContext.getBean("electricPotentialQuantityFactory", QuantityFactory.class);
+      deciVolt = applicationContext.getBean("deciVolt", Unit.class);
+    }
+  }
+
   @Override
   public Short convertToDatabaseColumn(final Quantity<ElectricPotential> potential) {
     autoWire();
@@ -59,15 +68,6 @@ public class DeciVolt2ShortConverter implements AttributeConverter<Quantity<Elec
   public Quantity<ElectricPotential> convertToEntityAttribute(final Short value) {
     autoWire();
     return electricPotentialQuantityFactory.create(value, deciVolt);
-  }
-
-  private synchronized void autoWire() {
-    if (electricPotentialQuantityFactory == null) {
-      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
-      electricPotentialQuantityFactory =
-          applicationContext.getBean("electricPotentialQuantityFactory", QuantityFactory.class);
-      deciVolt = applicationContext.getBean("deciVolt", Unit.class);
-    }
   }
 
 }

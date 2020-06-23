@@ -49,6 +49,14 @@ public class CubicDeciMeter2IntegerConverter implements AttributeConverter<Quant
     super();
   }
 
+  private synchronized void autoWire() {
+    if (volumeQuantityFactory == null) {
+      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
+      volumeQuantityFactory = applicationContext.getBean("volumeQuantityFactory", QuantityFactory.class);
+      cubicDeciMeter = applicationContext.getBean("cubicDeciMeter", Unit.class);
+    }
+  }
+
   @Override
   public Integer convertToDatabaseColumn(final Quantity<Volume> volume) {
     autoWire();
@@ -59,14 +67,6 @@ public class CubicDeciMeter2IntegerConverter implements AttributeConverter<Quant
   public Quantity<Volume> convertToEntityAttribute(final Integer value) {
     autoWire();
     return volumeQuantityFactory.create(value, cubicDeciMeter);
-  }
-
-  private synchronized void autoWire() {
-    if (volumeQuantityFactory == null) {
-      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
-      volumeQuantityFactory = applicationContext.getBean("volumeQuantityFactory", QuantityFactory.class);
-      cubicDeciMeter = applicationContext.getBean("cubicDeciMeter", Unit.class);
-    }
   }
 
 }

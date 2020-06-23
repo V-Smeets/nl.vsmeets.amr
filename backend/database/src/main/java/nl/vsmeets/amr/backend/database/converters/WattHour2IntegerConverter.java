@@ -49,6 +49,14 @@ public class WattHour2IntegerConverter implements AttributeConverter<Quantity<En
     super();
   }
 
+  private synchronized void autoWire() {
+    if (energyQuantityFactory == null) {
+      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
+      energyQuantityFactory = applicationContext.getBean("energyQuantityFactory", QuantityFactory.class);
+      wattHour = applicationContext.getBean("wattHour", Unit.class);
+    }
+  }
+
   @Override
   public Integer convertToDatabaseColumn(final Quantity<Energy> energy) {
     autoWire();
@@ -59,14 +67,6 @@ public class WattHour2IntegerConverter implements AttributeConverter<Quantity<En
   public Quantity<Energy> convertToEntityAttribute(final Integer value) {
     autoWire();
     return energyQuantityFactory.create(value, wattHour);
-  }
-
-  private synchronized void autoWire() {
-    if (energyQuantityFactory == null) {
-      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
-      energyQuantityFactory = applicationContext.getBean("energyQuantityFactory", QuantityFactory.class);
-      wattHour = applicationContext.getBean("wattHour", Unit.class);
-    }
   }
 
 }

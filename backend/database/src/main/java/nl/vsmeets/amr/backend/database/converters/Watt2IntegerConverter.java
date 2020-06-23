@@ -49,6 +49,14 @@ public class Watt2IntegerConverter implements AttributeConverter<Quantity<Power>
     super();
   }
 
+  private synchronized void autoWire() {
+    if (powerQuantityFactory == null) {
+      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
+      powerQuantityFactory = applicationContext.getBean("powerQuantityFactory", QuantityFactory.class);
+      watt = applicationContext.getBean("watt", Unit.class);
+    }
+  }
+
   @Override
   public Integer convertToDatabaseColumn(final Quantity<Power> power) {
     autoWire();
@@ -59,14 +67,6 @@ public class Watt2IntegerConverter implements AttributeConverter<Quantity<Power>
   public Quantity<Power> convertToEntityAttribute(final Integer value) {
     autoWire();
     return powerQuantityFactory.create(value, watt);
-  }
-
-  private synchronized void autoWire() {
-    if (powerQuantityFactory == null) {
-      final ApplicationContext applicationContext = ApplicationContextStore.getApplicationContext();
-      powerQuantityFactory = applicationContext.getBean("powerQuantityFactory", QuantityFactory.class);
-      watt = applicationContext.getBean("watt", Unit.class);
-    }
   }
 
 }

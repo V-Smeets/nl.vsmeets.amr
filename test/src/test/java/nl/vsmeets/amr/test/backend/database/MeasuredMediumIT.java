@@ -15,7 +15,13 @@
  */
 package nl.vsmeets.amr.test.backend.database;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
@@ -36,12 +42,13 @@ import nl.vsmeets.amr.backend.database.MeasuredMediumFactory;
  */
 @ContextConfiguration(classes = { BackendDatabaseConfig.class })
 @DataJpaTest(
- // @formatter:off
-     properties = {
-         "logging.level.org.springframework.test.context.transaction.TransactionContext=WARN" },
-     showSql = false
- //@formatter:on
- )
+// @formatter:off
+    properties = {
+      "logging.level.org.springframework.test.context.transaction.TransactionContext=WARN"
+    },
+    showSql = false
+// @formatter:on
+)
 class MeasuredMediumIT {
 
   private final Byte mediumId1 = 0x02;

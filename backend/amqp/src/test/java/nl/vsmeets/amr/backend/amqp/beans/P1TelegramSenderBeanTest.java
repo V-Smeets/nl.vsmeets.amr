@@ -15,7 +15,8 @@
  */
 package nl.vsmeets.amr.backend.amqp.beans;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 
 import java.io.UnsupportedEncodingException;
