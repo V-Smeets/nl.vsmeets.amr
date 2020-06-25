@@ -15,73 +15,79 @@
  */
 package nl.vsmeets.amr.backend.amqp.beans;
 
-import java.net.URL;
-import java.util.Collection;
+import java.net.URI;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConstructorBinding;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
- * Properties for this module.
+ * The properties to define a shovel.
  *
  * @author vincent
  */
-@ConstructorBinding
-@ConfigurationProperties("amr.backend.amqp")
 @RequiredArgsConstructor
 @Getter
 @ToString
-public class BackendAmqpProperties {
+public class ShovelProperties {
 
   /**
-   * The URL to access the API.
+   * The name of the shovel.
+   */
+  @NotEmpty
+  private final String name;
+
+  /**
+   * The URI of the source AMQP server.
    */
   @NotNull
-  private final URL apiUrl;
+  private final URI sourceUri;
 
   /**
-   * The user name to access the API.
+   * The user name to connect to the source AMQP server.
+   */
+  private final String sourceUsername;
+
+  /**
+   * The password to connect to the source AMQP server.
+   */
+  private final String sourcePassword;
+
+  /**
+   * The queue to read messages from.
    */
   @NotEmpty
-  private final String apiUsername;
+  private final String sourceQueueName;
 
   /**
-   * The password to access the API.
-   */
-  @NotEmpty
-  private final String apiPassword;
-
-  /**
-   * The AMQP virtual host to use.
-   */
-  @NotEmpty
-  private final String virtualHost;
-
-  /**
-   * The name of the AMQP exchange.
+   * The URI of the destination AMQP server.
    */
   @NotNull
-  private final String exchangeName;
+  private final URI destinationUri;
 
   /**
-   * The name of the AMQP routing key.
+   * The user name to connect to the destination AMQP server.
    */
-  @NotEmpty
-  private final String routingKey;
+  private final String destinationUsername;
 
   /**
-   * The shovels that will be available.
+   * The password to connect to the destination AMQP server.
+   */
+  private final String destinationPassword;
+
+  /**
+   * The exchange to where the messages will be sent.
    */
   @NotNull
-  @Valid
-  private final Collection<ShovelProperties> shovels;
+  private final String destinationExchangeName;
+
+  /**
+   * The routing key that will be used with the exchange to send the messages.
+   */
+  @NotNull
+  private final String destinationRoutingKey;
 
 }

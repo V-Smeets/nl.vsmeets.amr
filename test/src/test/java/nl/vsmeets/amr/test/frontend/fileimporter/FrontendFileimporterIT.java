@@ -43,7 +43,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.boot.ExitCodeGenerator;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import nl.vsmeets.amr.frontend.fileimporter.FrontendFileimporterConfig;
@@ -68,7 +68,7 @@ import nl.vsmeets.amr.test.frontend.BackendAmqpITListener;
         "amr.service.p1telegram.reader.site=IntegrationTest" }
     // @formatter:on
 )
-@EnableConfigurationProperties
+@ConfigurationPropertiesScan("nl.vsmeets.amr")
 class FrontendFileimporterIT {
 
   @Autowired

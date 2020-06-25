@@ -36,7 +36,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.boot.ExitCodeGenerator;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -64,7 +64,7 @@ import nl.vsmeets.amr.test.frontend.BackendAmqpITListener;
     // @formatter:on
 )
 @ActiveProfiles("test")
-@EnableConfigurationProperties
+@ConfigurationPropertiesScan("nl.vsmeets.amr")
 class FrontendSerialIT {
 
   @Autowired

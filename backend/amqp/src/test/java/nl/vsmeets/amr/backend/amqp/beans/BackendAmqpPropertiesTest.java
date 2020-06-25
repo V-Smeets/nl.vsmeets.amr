@@ -21,7 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -49,12 +53,25 @@ class BackendAmqpPropertiesTest {
   private static final String virtualHost = "Virtual Host";
   private static final String exchangeName = "Exchange Name";
   private static final String routingKey = "Routing Key";
+  private static final String shovelName1 = "Shovel Name 1";
+  private static final String shovelName2 = "Shovel Name 2";
+  private static URI shovelSourceUri;
+  private static final String shovelSourceUsername = "Source Username";
+  private static final String shovelSourcePassword = "Source Password";
+  private static final String shovelSourceQueueName = "Source Queue Name";
+  private static URI shovelDestinationUri;
+  private static final String shovelDestinationUsername = "Destination Username";
+  private static final String shovelDestinationPassword = "Destination Password";
+  private static final String shovelDestinationExchangeName = "Destination Exchange Name";
+  private static final String shovelDestinationRoutingKey = "Destination Routing Key";
 
   private static ValidatorFactory factory;
 
   @BeforeAll
   static void setUpBeforeClass() throws Exception {
     apiUrl = new URL("http", "localhost", "/api");
+    shovelSourceUri = new URI("amqp", "source-host", "/source", null);
+    shovelDestinationUri = new URI("amqp", "destination-host", "/destination", null);
     factory = Validation.buildDefaultValidatorFactory();
   }
 
@@ -69,13 +86,15 @@ class BackendAmqpPropertiesTest {
   void setUp() throws Exception {
     validator = factory.getValidator();
 
-    backendAmqpProperties = new BackendAmqpProperties();
-    backendAmqpProperties.setApiUrl(apiUrl);
-    backendAmqpProperties.setApiUsername(apiUsername);
-    backendAmqpProperties.setApiPassword(apiPassword);
-    backendAmqpProperties.setVirtualHost(virtualHost);
-    backendAmqpProperties.setExchangeName(exchangeName);
-    backendAmqpProperties.setRoutingKey(routingKey);
+    final ShovelProperties shovel1 = new ShovelProperties(shovelName1, shovelSourceUri, shovelSourceUsername,
+        shovelSourcePassword, shovelSourceQueueName, shovelDestinationUri, shovelDestinationUsername,
+        shovelDestinationPassword, shovelDestinationExchangeName, shovelDestinationRoutingKey);
+    final ShovelProperties shovel2 = new ShovelProperties(shovelName2, shovelSourceUri, shovelSourceUsername,
+        shovelSourcePassword, shovelSourceQueueName, shovelDestinationUri, shovelDestinationUsername,
+        shovelDestinationPassword, shovelDestinationExchangeName, shovelDestinationRoutingKey);
+    final Collection<ShovelProperties> shovels = new ArrayList<>(List.of(shovel1, shovel2));
+    backendAmqpProperties =
+        new BackendAmqpProperties(apiUrl, apiUsername, apiPassword, virtualHost, exchangeName, routingKey, shovels);
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
@@ -89,7 +108,10 @@ class BackendAmqpPropertiesTest {
 
   @Test
   void testGetApiPasswordNotEmpty() {
-    backendAmqpProperties.setApiPassword("");
+    backendAmqpProperties =
+        new BackendAmqpProperties(backendAmqpProperties.getApiUrl(), backendAmqpProperties.getApiUsername(), "",
+            backendAmqpProperties.getVirtualHost(), backendAmqpProperties.getExchangeName(),
+            backendAmqpProperties.getRoutingKey(), backendAmqpProperties.getShovels());
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
@@ -98,7 +120,10 @@ class BackendAmqpPropertiesTest {
 
   @Test
   void testGetApiPasswordNotNull() {
-    backendAmqpProperties.setApiPassword(null);
+    backendAmqpProperties =
+        new BackendAmqpProperties(backendAmqpProperties.getApiUrl(), backendAmqpProperties.getApiUsername(), null,
+            backendAmqpProperties.getVirtualHost(), backendAmqpProperties.getExchangeName(),
+            backendAmqpProperties.getRoutingKey(), backendAmqpProperties.getShovels());
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
@@ -112,7 +137,10 @@ class BackendAmqpPropertiesTest {
 
   @Test
   void testGetApiUrlNotNull() {
-    backendAmqpProperties.setApiUrl(null);
+    backendAmqpProperties =
+        new BackendAmqpProperties(null, backendAmqpProperties.getApiUsername(), backendAmqpProperties.getApiPassword(),
+            backendAmqpProperties.getVirtualHost(), backendAmqpProperties.getExchangeName(),
+            backendAmqpProperties.getRoutingKey(), backendAmqpProperties.getShovels());
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
@@ -126,7 +154,10 @@ class BackendAmqpPropertiesTest {
 
   @Test
   void testGetApiUsernameNotEmpty() {
-    backendAmqpProperties.setApiUsername("");
+    backendAmqpProperties =
+        new BackendAmqpProperties(backendAmqpProperties.getApiUrl(), "", backendAmqpProperties.getApiPassword(),
+            backendAmqpProperties.getVirtualHost(), backendAmqpProperties.getExchangeName(),
+            backendAmqpProperties.getRoutingKey(), backendAmqpProperties.getShovels());
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
@@ -135,7 +166,10 @@ class BackendAmqpPropertiesTest {
 
   @Test
   void testGetApiUsernameNotNull() {
-    backendAmqpProperties.setApiUsername(null);
+    backendAmqpProperties =
+        new BackendAmqpProperties(backendAmqpProperties.getApiUrl(), null, backendAmqpProperties.getApiPassword(),
+            backendAmqpProperties.getVirtualHost(), backendAmqpProperties.getExchangeName(),
+            backendAmqpProperties.getRoutingKey(), backendAmqpProperties.getShovels());
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
@@ -149,7 +183,10 @@ class BackendAmqpPropertiesTest {
 
   @Test
   void testGetExchangeNameNotNull() {
-    backendAmqpProperties.setExchangeName(null);
+    backendAmqpProperties =
+        new BackendAmqpProperties(backendAmqpProperties.getApiUrl(), backendAmqpProperties.getApiUsername(),
+            backendAmqpProperties.getApiPassword(), backendAmqpProperties.getVirtualHost(), null,
+            backendAmqpProperties.getRoutingKey(), backendAmqpProperties.getShovels());
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
@@ -163,7 +200,10 @@ class BackendAmqpPropertiesTest {
 
   @Test
   void testGetRoutingKeyNotEmpty() {
-    backendAmqpProperties.setRoutingKey("");
+    backendAmqpProperties =
+        new BackendAmqpProperties(backendAmqpProperties.getApiUrl(), backendAmqpProperties.getApiUsername(),
+            backendAmqpProperties.getApiPassword(), backendAmqpProperties.getVirtualHost(),
+            backendAmqpProperties.getExchangeName(), "", backendAmqpProperties.getShovels());
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
@@ -172,7 +212,31 @@ class BackendAmqpPropertiesTest {
 
   @Test
   void testGetRoutingKeyNotNull() {
-    backendAmqpProperties.setRoutingKey(null);
+    backendAmqpProperties =
+        new BackendAmqpProperties(backendAmqpProperties.getApiUrl(), backendAmqpProperties.getApiUsername(),
+            backendAmqpProperties.getApiPassword(), backendAmqpProperties.getVirtualHost(),
+            backendAmqpProperties.getExchangeName(), null, backendAmqpProperties.getShovels());
+
+    final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
+        validator.validate(backendAmqpProperties);
+    assertFalse(constraintViolations.isEmpty());
+  }
+
+  @Test
+  void testGetShovels() {
+    final Collection<ShovelProperties> shovels = backendAmqpProperties.getShovels();
+    assertAll( //
+        () -> assertNotNull(shovels), //
+        () -> assertEquals(2, shovels.size()) //
+    );
+  }
+
+  @Test
+  void testGetShovelsNotNull() {
+    backendAmqpProperties =
+        new BackendAmqpProperties(backendAmqpProperties.getApiUrl(), backendAmqpProperties.getApiUsername(),
+            backendAmqpProperties.getApiPassword(), backendAmqpProperties.getVirtualHost(),
+            backendAmqpProperties.getExchangeName(), backendAmqpProperties.getRoutingKey(), null);
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
@@ -181,7 +245,10 @@ class BackendAmqpPropertiesTest {
 
   @Test
   void testGetVirtualHosNotEmpty() {
-    backendAmqpProperties.setVirtualHost("");
+    backendAmqpProperties =
+        new BackendAmqpProperties(backendAmqpProperties.getApiUrl(), backendAmqpProperties.getApiUsername(),
+            backendAmqpProperties.getApiPassword(), "", backendAmqpProperties.getExchangeName(),
+            backendAmqpProperties.getRoutingKey(), backendAmqpProperties.getShovels());
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);
@@ -190,7 +257,10 @@ class BackendAmqpPropertiesTest {
 
   @Test
   void testGetVirtualHosNotNull() {
-    backendAmqpProperties.setVirtualHost(null);
+    backendAmqpProperties =
+        new BackendAmqpProperties(backendAmqpProperties.getApiUrl(), backendAmqpProperties.getApiUsername(),
+            backendAmqpProperties.getApiPassword(), null, backendAmqpProperties.getExchangeName(),
+            backendAmqpProperties.getRoutingKey(), backendAmqpProperties.getShovels());
 
     final Set<ConstraintViolation<BackendAmqpProperties>> constraintViolations =
         validator.validate(backendAmqpProperties);

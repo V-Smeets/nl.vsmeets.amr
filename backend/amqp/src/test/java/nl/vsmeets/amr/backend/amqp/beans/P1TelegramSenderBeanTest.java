@@ -48,7 +48,8 @@ class P1TelegramSenderBeanTest {
   private static final String exchangeName = "Exchange Name";
   private static final String routingKey = "Routing Key";
 
-  private final BackendAmqpProperties properties = new BackendAmqpProperties();
+  private final BackendAmqpProperties properties =
+      new BackendAmqpProperties(null, null, null, null, exchangeName, routingKey, null);
 
   @Mock
   private AmqpTemplate amqpTemplate;
@@ -68,9 +69,6 @@ class P1TelegramSenderBeanTest {
   @BeforeEach
   void setUp() throws Exception {
     p1TelegramSenderBean = new P1TelegramSenderBean(properties, amqpTemplate);
-
-    properties.setExchangeName(exchangeName);
-    properties.setRoutingKey(routingKey);
   }
 
   @Test
