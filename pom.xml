@@ -46,6 +46,7 @@
         <module>service</module>
         <module>frontend</module>
         <module>test</module>
+        <module>main</module>
     </modules>
 
     <scm>
