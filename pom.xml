@@ -44,6 +44,7 @@
         <module>libs</module>
         <module>backend</module>
         <module>service</module>
+        <module>frontend</module>
     </modules>
 
     <scm>
