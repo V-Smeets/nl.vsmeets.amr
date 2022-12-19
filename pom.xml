@@ -43,6 +43,7 @@
     <modules>
         <module>libs</module>
         <module>backend</module>
+        <module>service</module>
     </modules>
 
     <scm>
