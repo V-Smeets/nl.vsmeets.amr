@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- <parent /> -->
+
+    <groupId>nl.vsmeets.amr</groupId>
+    <artifactId>parent</artifactId>
+    <version>jgitver</version>
+    <packaging>pom</packaging>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>An Automatic Meter Reading (AMR) system for electricity, thermal (heat and cold), gas, water and hot water meters.</description>
+    <url>https://github.com/V-Smeets/nl.vsmeets.amr</url>
+    <inceptionYear>2017</inceptionYear>
+    <organization>
+        <name>V. Smeets</name>
+        <url>https://www.vsmeets.nl</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>GPL-3.0-or-later</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
+            <comments>GNU General Public License v3.0 or later</comments>
+            <distribution>repro</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>V-Smeets</id>
+            <name>Vincent Smeets</name>
+            <email>Vincent.VSmeets@GMail.com</email>
+        </developer>
+    </developers>
+    <contributors />
+
+    <mailingLists />
+
+    <!-- <prerequisites /> -->
+
+    <modules />
+
+    <scm>
+        <connection>scm:git:https://github.com/V-Smeets/nl.vsmeets.amr.git</connection>
+        <developerConnection>scm:git:https://github.com/V-Smeets/nl.vsmeets.amr.git</developerConnection>
+        <url>https://github.com/V-Smeets/nl.vsmeets.amr</url>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/V-Smeets/nl.vsmeets.amr/issues</url>
+    </issueManagement>
+    <ciManagement />
+    <distributionManagement />
+
+    <properties>
+        <!-- mvn versions:display-parent-updates versions:display-property-updates versions:display-plugin-updates -->
+        <com.fazecast.jSerialComm.version>2.9.3</com.fazecast.jSerialComm.version>
+        <com.github.snksoft.crc.version>1.1.0</com.github.snksoft.crc.version>
+        <com.google.guava.guava-testlib.version>31.1-jre</com.google.guava.guava-testlib.version>
+        <fr.brouillard.oss.jgitver-maven-plugin.version>1.9.0</fr.brouillard.oss.jgitver-maven-plugin.version>
+        <maven.compiler.release>17</maven.compiler.release>
+        <maven.requireMavenVersion>3.2.5</maven.requireMavenVersion>
+        <org.apache.maven.plugins.maven-clean-plugin.version>3.2.0</org.apache.maven.plugins.maven-clean-plugin.version>
+        <org.apache.maven.plugins.maven-compiler-plugin.version>3.10.1</org.apache.maven.plugins.maven-compiler-plugin.version>
+        <org.apache.maven.plugins.maven-deploy-plugin.version>3.0.0</org.apache.maven.plugins.maven-deploy-plugin.version>
+        <org.apache.maven.plugins.maven-enforcer-plugin.version>3.1.0</org.apache.maven.plugins.maven-enforcer-plugin.version>
+        <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M7</org.apache.maven.plugins.maven-failsafe-plugin.version>
+        <org.apache.maven.plugins.maven-install-plugin.version>3.1.0</org.apache.maven.plugins.maven-install-plugin.version>
+        <org.apache.maven.plugins.maven-jar-plugin.version>3.3.0</org.apache.maven.plugins.maven-jar-plugin.version>
+        <org.apache.maven.plugins.maven-resources-plugin.version>3.3.0</org.apache.maven.plugins.maven-resources-plugin.version>
+        <org.apache.maven.plugins.maven-site-plugin.version>4.0.0-M4</org.apache.maven.plugins.maven-site-plugin.version>
+        <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M7</org.apache.maven.plugins.maven-surefire-plugin.version>
+        <org.jacoco.jacoco-maven-plugin.version>0.8.8</org.jacoco.jacoco-maven-plugin.version>
+        <org.springframework.boot.spring-boot-dependencies.version>3.0.1</org.springframework.boot.spring-boot-dependencies.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <tech.units.indriya.version>2.1.3</tech.units.indriya.version>
+        <!-- Keep the following versions in synch with spring. https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-dependency-versions.html -->
+        <org.projectlombok.lombok.version>1.18.24</org.projectlombok.lombok.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fazecast</groupId>
+                <artifactId>jSerialComm</artifactId>
+                <version>${com.fazecast.jSerialComm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.snksoft</groupId>
+                <artifactId>crc</artifactId>
+                <version>${com.github.snksoft.crc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava-testlib</artifactId>
+                <version>${com.google.guava.guava-testlib.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.measure</groupId>
+                <artifactId>unit-api</artifactId>
+                <version>${tech.units.indriya.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${org.springframework.boot.spring-boot-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                  <groupId>tech.units</groupId>
+                  <artifactId>indriya</artifactId>
+                  <version>${tech.units.indriya.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies />
+
+    <repositories />
+    <pluginRepositories />
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>fr.brouillard.oss</groupId>
+                    <artifactId>jgitver-maven-plugin</artifactId>
+                    <version>${fr.brouillard.oss.jgitver-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${org.apache.maven.plugins.maven-clean-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${org.projectlombok.lombok.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${org.apache.maven.plugins.maven-deploy-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${org.apache.maven.plugins.maven-enforcer-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${org.apache.maven.plugins.maven-failsafe-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${org.apache.maven.plugins.maven-install-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${org.apache.maven.plugins.maven-jar-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${org.apache.maven.plugins.maven-resources-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${org.apache.maven.plugins.maven-site-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${org.jacoco.jacoco-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>${maven.requireMavenVersion}</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>prepare-agent-integration</id>
+                        <goals>
+                            <goal>prepare-agent-integration</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report-integration</id>
+                        <goals>
+                            <goal>report-integration</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting />
+
+    <profiles />
+
+</project>
