@@ -17,6 +17,7 @@
 
     <modules>
         <module>amqp</module>
+        <module>measure</module>
     </modules>
 
 </project>
