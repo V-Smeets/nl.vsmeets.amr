@@ -85,6 +85,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>libs-amqp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.fazecast</groupId>
                 <artifactId>jSerialComm</artifactId>
                 <version>${com.fazecast.jSerialComm.version}</version>

@@ -5,18 +5,13 @@
 
     <parent>
         <groupId>nl.vsmeets.amr</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>libs</artifactId>
         <version>jgitver</version>
     </parent>
 
-    <artifactId>libs</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>libs-amqp</artifactId>
+    <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>A collection of libraries that can be used by any other module.</description>
-
-    <modules>
-        <module>amqp</module>
-    </modules>
 
 </project>
