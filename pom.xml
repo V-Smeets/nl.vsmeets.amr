@@ -40,7 +40,9 @@
 
     <!-- <prerequisites /> -->
 
-    <modules />
+    <modules>
+        <module>libs</module>
+    </modules>
 
     <scm>
         <connection>scm:git:https://github.com/V-Smeets/nl.vsmeets.amr.git</connection>
