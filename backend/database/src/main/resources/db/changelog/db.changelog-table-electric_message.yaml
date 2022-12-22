@@ -1,0 +1,42 @@
+databaseChangeLog:
+   - changeSet:
+      id: "electric_message-001"
+      author: "vsmeets"
+      changes:
+         - createTable:
+            tableName: "electric_message"
+            remarks: "The electric message."
+            columns:
+               - column:
+                  name: "id"
+                  remarks: "The id is the primary key."
+                  type: "integer"
+                  autoIncrement: true
+                  constraints:
+                     primaryKey: true
+                     primaryKeyName: "pk_electric_message_id"
+                     nullable: false
+               - column:
+                  name: "meter_id"
+                  remarks: "The meter of this message."
+                  type: "integer"
+                  constraints:
+                     references: "meter"
+                     foreignKeyName: "fk_electric_message_meter_id"
+                     nullable: false
+               - column:
+                  name: "local_date_time"
+                  remarks: "0-0:1.0.0.255 The date and time of this message in the sites time zone."
+                  type: "timestamp(0)"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "text_message"
+                  remarks: "0-0:96.13.0.255 The text message."
+                  type: "varchar(1024)"
+                  constraints:
+                     nullable: false
+         - addUniqueConstraint:
+            tableName: "electric_message"
+            constraintName: "uq_electric_message_1"
+            columnNames: "meter_id, local_date_time"

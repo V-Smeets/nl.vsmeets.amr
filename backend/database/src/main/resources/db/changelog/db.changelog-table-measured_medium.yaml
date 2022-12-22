@@ -1,0 +1,216 @@
+databaseChangeLog:
+   - changeSet:
+      id: "measured_medium-0001"
+      author: "vsmeets"
+      changes:
+         - createTable:
+            tableName: "measured_medium"
+            remarks: "The measured medium."
+            columns:
+               - column:
+                  name: "id"
+                  remarks: "The id is the primary key."
+                  type: "integer"
+                  autoIncrement: true
+                  constraints:
+                     primaryKey: true
+                     primaryKeyName: "pk_measured_medium_id"
+                     nullable: false
+               - column:
+                  name: "medium_id"
+                  remarks: "The M-Bus id of the measured medium."
+                  type: "tinyint"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "name"
+                  remarks: "The name of the measured medium."
+                  type: "varchar(72)"
+                  constraints:
+                     nullable: false
+         - addUniqueConstraint:
+            tableName: "measured_medium"
+            constraintName: "uq_measured_medium_1"
+            columnNames: "medium_id"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x00
+               - column:
+                  name: "name"
+                  value: "Other"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x01
+               - column:
+                  name: "name"
+                  value: "Oil"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x02
+               - column:
+                  name: "name"
+                  value: "Electricity"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x03
+               - column:
+                  name: "name"
+                  value: "Gas"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x04
+               - column:
+                  name: "name"
+                  value: "Heat (Volume measured at return temperature: outlet)"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x05
+               - column:
+                  name: "name"
+                  value: "Steam"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x06
+               - column:
+                  name: "name"
+                  value: "Hot Water"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x07
+               - column:
+                  name: "name"
+                  value: "Water"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x08
+               - column:
+                  name: "name"
+                  value: "Heat Cost Allocator."
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x09
+               - column:
+                  name: "name"
+                  value: "Compressed Air"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x0A
+               - column:
+                  name: "name"
+                  value: "Cooling load meter (Volume measured at return temperature: outlet)"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x0B
+               - column:
+                  name: "name"
+                  value: "Cooling load meter (Volume measured at flow temperature: inlet)"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x0C
+               - column:
+                  name: "name"
+                  value: "Heat (Volume measured at flow temperature: inlet)"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x0D
+               - column:
+                  name: "name"
+                  value: "Heat / Cooling load meter"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x0E
+               - column:
+                  name: "name"
+                  value: "Bus / System"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x0F
+               - column:
+                  name: "name"
+                  value: "Unknown Medium"
+         # Reserved .......... 0x10 to 0x15
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x16
+               - column:
+                  name: "name"
+                  value: "Cold Water"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x17
+               - column:
+                  name: "name"
+                  value: "Dual Water"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x18
+               - column:
+                  name: "name"
+                  value: "Pressure"
+         - insert:
+            tableName: "measured_medium"
+            columns:
+               - column:
+                  name: "medium_id"
+                  valueNumeric: 0x19
+               - column:
+                  name: "name"
+                  value: "A/D Converter"
+         # Reserved .......... 0x20 to 0xFF

@@ -1,0 +1,66 @@
+databaseChangeLog:
+   - changeSet:
+      id: "electric_phase_power_reading-001"
+      author: "vsmeets"
+      changes:
+         - createTable:
+            tableName: "electric_phase_power_reading"
+            remarks: "The electric power reading for a phase."
+            columns:
+               - column:
+                  name: "id"
+                  remarks: "The id is the primary key."
+                  type: "integer"
+                  autoIncrement: true
+                  constraints:
+                     primaryKey: true
+                     primaryKeyName: "pk_electric_phase_power_reading_id"
+                     nullable: false
+               - column:
+                  name: "meter_id"
+                  remarks: "The meter of this reading."
+                  type: "integer"
+                  constraints:
+                     references: "meter"
+                     foreignKeyName: "fk_electric_phase_power_reading_meter_id"
+                     nullable: false
+               - column:
+                  name: "local_date_time"
+                  remarks: "0-0:1.0.0.255 The date and time of this reading in the sites time zone."
+                  type: "timestamp(0)"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "phase_number"
+                  remarks: "The phase number."
+                  type: "tinyint"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "instantaneous_voltage"
+                  remarks: "1-0:32.7.0.255 The instantaneous voltage in deci volt (dV)."
+                  type: "smallint"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "instantaneous_current"
+                  remarks: "1-0:31.7.0.255 The instantaneous current in ampere (A)."
+                  type: "smallint"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "instantaneous_consumed_power"
+                  remarks: "1-0:21.7.0.255 The instantaneous consumed power in watt (W)."
+                  type: "integer"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "instantaneous_produced_power"
+                  remarks: "1-0:*.7.0.255 The instantaneous produced power in watt (W)."
+                  type: "integer"
+                  constraints:
+                     nullable: false
+         - addUniqueConstraint:
+            tableName: "electric_phase_power_reading"
+            constraintName: "uq_electric_phase_power_reading_1"
+            columnNames: "meter_id, local_date_time, phase_number"

@@ -1,0 +1,42 @@
+databaseChangeLog:
+   - changeSet:
+      id: "electric_power_failure_event-001"
+      author: "vsmeets"
+      changes:
+         - createTable:
+            tableName: "electric_power_failure_event"
+            remarks: "The electric power failure event."
+            columns:
+               - column:
+                  name: "id"
+                  remarks: "The id is the primary key."
+                  type: "integer"
+                  autoIncrement: true
+                  constraints:
+                     primaryKey: true
+                     primaryKeyName: "pk_electric_power_failure_event_id"
+                     nullable: false
+               - column:
+                  name: "electric_power_failures"
+                  remarks: "The electric power failures."
+                  type: "integer"
+                  constraints:
+                     references: "electric_power_failures"
+                     foreignKeyName: "fk_electric_power_failure_event_electric_power_failures"
+                     nullable: false
+               - column:
+                  name: "end_of_failure_time"
+                  remarks: "0-0:96.7.19.255 The end of failure time."
+                  type: "timestamp(0)"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "failure_duration"
+                  remarks: "0-0:96.7.19.255 The failure duration."
+                  type: "bigint"
+                  constraints:
+                     nullable: false
+         - addUniqueConstraint:
+            tableName: "electric_power_failure_event"
+            constraintName: "uq_electric_power_failure_event_1"
+            columnNames: "electric_power_failures, end_of_failure_time"

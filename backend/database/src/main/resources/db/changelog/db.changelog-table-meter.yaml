@@ -1,0 +1,44 @@
+databaseChangeLog:
+   - changeSet:
+      id: "meter-0001"
+      author: "vsmeets"
+      changes:
+         - createTable:
+            tableName: "meter"
+            remarks: "The meter."
+            columns:
+               - column:
+                  name: "id"
+                  remarks: "The id is the primary key."
+                  type: "integer"
+                  autoIncrement: true
+                  constraints:
+                     primaryKey: true
+                     primaryKeyName: "pk_meter_id"
+                     nullable: false
+               - column:
+                  name: "p1_telegram_id"
+                  remarks: "The P1 telegram of this meter."
+                  type: "integer"
+                  constraints:
+                     references: "p1_telegram"
+                     foreignKeyName: "fk_meter_p1_telegram_id"
+                     nullable: false
+               - column:
+                  name: "measured_medium_id"
+                  remarks: "The measured medium."
+                  type: "integer"
+                  constraints:
+                     references: "measured_medium"
+                     foreignKeyName: "fk_meter_measured_medium_id"
+                     nullable: false
+               - column:
+                  name: "equipment_identifier"
+                  remarks: "0-0:96.1.1.255 The equipment identifier."
+                  type: "varchar(48)"
+                  constraints:
+                     nullable: false
+         - addUniqueConstraint:
+            tableName: "meter"
+            constraintName: "uq_meter_1"
+            columnNames: "p1_telegram_id, measured_medium_id, equipment_identifier"

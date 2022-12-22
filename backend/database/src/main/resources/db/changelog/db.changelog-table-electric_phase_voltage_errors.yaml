@@ -1,0 +1,54 @@
+databaseChangeLog:
+   - changeSet:
+      id: "electric_phase_voltage_errors-001"
+      author: "vsmeets"
+      changes:
+         - createTable:
+            tableName: "electric_phase_voltage_errors"
+            remarks: "The electric voltage errors for a phase."
+            columns:
+               - column:
+                  name: "id"
+                  remarks: "The id is the primary key."
+                  type: "integer"
+                  autoIncrement: true
+                  constraints:
+                     primaryKey: true
+                     primaryKeyName: "pk_electric_phase_voltage_errors_id"
+                     nullable: false
+               - column:
+                  name: "meter_id"
+                  remarks: "The meter of these errors."
+                  type: "integer"
+                  constraints:
+                     references: "meter"
+                     foreignKeyName: "fk_electric_phase_voltage_errors_meter_id"
+                     nullable: false
+               - column:
+                  name: "local_date_time"
+                  remarks: "0-0:1.0.0.255 The date and time of these errors in the sites time zone."
+                  type: "timestamp(0)"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "phase_number"
+                  remarks: "The phase number."
+                  type: "tinyint"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "nr_of_voltage_sags"
+                  remarks: "1-0:*.32.0.255 The number of voltage sags."
+                  type: "integer"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "nr_of_voltage_swells"
+                  remarks: "1-0:*.36.0.255 The number of voltage swells."
+                  type: "integer"
+                  constraints:
+                     nullable: false
+         - addUniqueConstraint:
+            tableName: "electric_phase_voltage_errors"
+            constraintName: "uq_electric_phase_voltage_errors_1"
+            columnNames: "meter_id, local_date_time, phase_number"

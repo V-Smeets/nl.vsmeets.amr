@@ -1,0 +1,48 @@
+databaseChangeLog:
+   - changeSet:
+      id: "electric_power_failures-001"
+      author: "vsmeets"
+      changes:
+         - createTable:
+            tableName: "electric_power_failures"
+            remarks: "The electric power failures."
+            columns:
+               - column:
+                  name: "id"
+                  remarks: "The id is the primary key."
+                  type: "integer"
+                  autoIncrement: true
+                  constraints:
+                     primaryKey: true
+                     primaryKeyName: "pk_electric_power_failures_id"
+                     nullable: false
+               - column:
+                  name: "meter_id"
+                  remarks: "The meter of these failures."
+                  type: "integer"
+                  constraints:
+                     references: "meter"
+                     foreignKeyName: "fk_electric_power_failures_meter_id"
+                     nullable: false
+               - column:
+                  name: "local_date_time"
+                  remarks: "0-0:1.0.0.255 The date and time of these failures in the sites time zone."
+                  type: "timestamp(0)"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "nr_of_power_failures"
+                  remarks: "0-0:96.7.21.255 The number of power failures."
+                  type: "integer"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "nr_of_long_power_failures"
+                  remarks: "0-0:96.7.9.255 The number of long power failures."
+                  type: "integer"
+                  constraints:
+                     nullable: false
+         - addUniqueConstraint:
+            tableName: "electric_power_failures"
+            constraintName: "uq_electric_power_failures_1"
+            columnNames: "meter_id, local_date_time"

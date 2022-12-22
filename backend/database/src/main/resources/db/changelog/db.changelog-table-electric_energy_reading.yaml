@@ -1,0 +1,54 @@
+databaseChangeLog:
+   - changeSet:
+      id: "electric_energy_reading-001"
+      author: "vsmeets"
+      changes:
+         - createTable:
+            tableName: "electric_energy_reading"
+            remarks: "The electric energy reading."
+            columns:
+               - column:
+                  name: "id"
+                  remarks: "The id is the primary key."
+                  type: "integer"
+                  autoIncrement: true
+                  constraints:
+                     primaryKey: true
+                     primaryKeyName: "pk_electric_energy_reading_id"
+                     nullable: false
+               - column:
+                  name: "meter_id"
+                  remarks: "The meter of this reading."
+                  type: "integer"
+                  constraints:
+                     references: "meter"
+                     foreignKeyName: "fk_electric_energy_reading_meter_id"
+                     nullable: false
+               - column:
+                  name: "local_date_time"
+                  remarks: "0-0:1.0.0.255 The date and time of this reading in the sites time zone."
+                  type: "timestamp(0)"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "tariff_indicator"
+                  remarks: "0-0:96.14.0.255 The tariff indicator."
+                  type: "smallint"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "consumed_energy"
+                  remarks: "1-0:1.8.1.255 The consumed energy in watt hour (Wh)."
+                  type: "integer"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "produced_energy"
+                  remarks: "1-0:1.8.2.255 The produced energy in watt hour (Wh)."
+                  type: integer
+                  constraints:
+                     nullable: false
+         - addUniqueConstraint:
+            tableName: "electric_energy_reading"
+            constraintName: "uq_electric_energy_reading_1"
+            columnNames: "meter_id, local_date_time, tariff_indicator"

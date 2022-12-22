@@ -1,0 +1,42 @@
+databaseChangeLog:
+   - changeSet:
+      id: "water_volume_reading-001"
+      author: "vsmeets"
+      changes:
+         - createTable:
+            tableName: "water_volume_reading"
+            remarks: "The water volume reading."
+            columns:
+               - column:
+                  name: "id"
+                  remarks: "The id is the primary key."
+                  type: "integer"
+                  autoIncrement: true
+                  constraints:
+                     primaryKey: true
+                     primaryKeyName: "pk_water_volume_reading_id"
+                     nullable: false
+               - column:
+                  name: "meter_id"
+                  remarks: "The meter of this reading."
+                  type: "integer"
+                  constraints:
+                     references: "meter"
+                     foreignKeyName: "fk_water_volume_reading_meter_id"
+                     nullable: false
+               - column:
+                  name: "local_date_time"
+                  remarks: "0-0:1.0.0.255 The date and time of this reading in the sites time zone."
+                  type: "timestamp(0)"
+                  constraints:
+                     nullable: false
+               - column:
+                  name: "consumed_water"
+                  remarks: "0-n:24.2.1.255 The consumed water in cubic deci meter (dm3)."
+                  type: "integer"
+                  constraints:
+                     nullable: false
+         - addUniqueConstraint:
+            tableName: "water_volume_reading"
+            constraintName: "uq_water_volume_reading_1"
+            columnNames: "meter_id, local_date_time"
