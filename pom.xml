@@ -104,6 +104,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>frontend-fileimporter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>libs-amqp</artifactId>
                 <version>${project.version}</version>
             </dependency>
