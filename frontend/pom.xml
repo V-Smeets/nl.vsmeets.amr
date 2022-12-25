@@ -18,6 +18,7 @@
     <modules>
 	<module>amqp</module>
 	<module>fileimporter</module>
+	<module>serial</module>
     </modules>
 
 </project>
