@@ -5,18 +5,24 @@
 
     <parent>
         <groupId>nl.vsmeets.amr</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>main</artifactId>
         <version>jgitver</version>
     </parent>
 
-    <artifactId>main</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>main-client</artifactId>
+    <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>The modules that provide the main class of the application.</description>
 
-    <modules>
-      <module>client</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>frontend-serial</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
