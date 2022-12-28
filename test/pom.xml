@@ -16,6 +16,7 @@
     <description>The modules that provide the integration tests.</description>
 
     <modules>
+	<module>amqp</module>
     </modules>
 
 </project>
